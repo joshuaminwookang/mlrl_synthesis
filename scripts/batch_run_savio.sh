@@ -207,19 +207,23 @@ batch_controlled_launch() {
   while [ ${i} -lt ${MAX_NUM_RUNS} ]; do
     unset pids
     pids=()
-    for ((j=0;j<${BATCH_SIZE} && i < ${MAX_NUM_RUNS};j++)); do
-      let "k=0"
-      for method in "${synth_method_array[@]}"; do
-        if [ ${IS_BATCH_MODE} = true ]; then
-          echo "BATCH"
-          launch_job "$(( j*${#synth_method_array[@]} + k ))" "${benchmarks[i]}" "${method}" "${i}"
-        else
-          launch_job "$(( j*${#synth_method_array[@]} + k ))" "${BENCHMARK_DIR}" "${method}" "${i}"
-        fi
-        let "k=k+1"
+    if [ ${IS_BATCH_MODE} = true ]; then
+      for ((j=0;j<${BATCH_SIZE} && i < ${MAX_NUM_RUNS};j++)); do
+        for ((k=0;k<${num_benchmarks};k++)); do
+          launch_job "$(( j*${#synth_method_array[@]} + k ))" "${benchmarks[k]}" "${method}" "${i}"
+        done
+        let "i=i+1"
       done
-      let "i=i+1"
-    done
+    else
+      for ((j=0;j<${BATCH_SIZE} && i < ${MAX_NUM_RUNS};j++)); do
+        let "k=0"
+        for method in "${synth_method_array[@]}"; do
+          launch_job "$(( j*${#synth_method_array[@]} + k ))" "${BENCHMARK_DIR}" "${method}" "${i}"
+          let "k=k+1"
+        done
+        let "i=i+1"
+      done
+    fi
     echo "Dispatched ${#pids[@]} jobs"
     for pid in ${pids[*]}; do
       wait ${pid}
@@ -235,21 +239,29 @@ token_controlled_launch() {
   i=$MIN_NUM_RUNS
   tokens=0
   while [ ${i} -lt ${MAX_NUM_RUNS} ]; do
-    for ((j=0;j<${BATCH_SIZE} && i < ${MAX_NUM_RUNS};j++)); do
-      for method in "${synth_method_array[@]}"; do
-        if [ ${IS_BATCH_MODE} = true ]; then
-          echo "BATCH"
-          launch_job "$(( j*${#synth_method_array[@]} + k ))" "${benchmarks[i]}" "${method}" "${i}"
-        else
-          launch_job "$(( j*${#synth_method_array[@]} + k ))" "${BENCHMARK_DIR}" "${method}" "${i}"
-        fi
-        if (( tokens++ >= BATCH_SIZE )); then
-          wait -n
-          let "tokens=tokens-1"
-        fi
+    if [ ${IS_BATCH_MODE} = true ]; then
+      for ((j=0;j<${BATCH_SIZE} && i < ${MAX_NUM_RUNS};j++)); do
+        for bmark in "${benchmarks[@]}"; do
+            launch_job "$(( j*${#num_benchmarks[@]} + k ))" "${bmark}" "${method}" "${i}"
+          if (( tokens++ >= BATCH_SIZE )); then
+            wait -n
+            let "tokens=tokens-1"
+          fi
+        done
+        let "i=i+1"
       done
-      let "i=i+1"
-    done
+    else
+      for ((j=0;j<${BATCH_SIZE} && i < ${MAX_NUM_RUNS};j++)); do
+        for method in "${synth_method_array[@]}"; do
+            launch_job "$(( j*${#synth_method_array[@]} + k ))" "${BENCHMARK_DIR}" "${method}" "${i}"
+          if (( tokens++ >= BATCH_SIZE )); then
+            wait -n
+            let "tokens=tokens-1"
+          fi
+        done
+        let "i=i+1"
+      done
+    fi
   done
 }
 
