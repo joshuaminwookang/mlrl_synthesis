@@ -185,6 +185,7 @@ def main():
         print(get_rand_seq_abc9(args.random_seq_len,lut_lib_num, args.in_idx))
     elif do_abc9:
         print(get_seq_abc9_single_list(args.in_idx, lut_lib_num))
+        print("&ps; &pfeatures stats.txt; &pfanstats fanstats.txt")
     else :
         print(get_seq(args.in_idx))
     # print("write_blif internal.blif")

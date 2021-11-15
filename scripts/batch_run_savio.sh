@@ -12,6 +12,7 @@ DEVICE="xc7a200"
 # SYNTH_METHODS "yosys yosys-abc9"
 SYNTH_METHODS="yosys-abc9"
 LUT_LIB=0
+IS_BATCH_MODE=false
 
 STOCHASTIC=0
 RANDOM_SEQ_LEN=0
@@ -40,18 +41,21 @@ while [ "$1" != "" ]; do
     -j | --batch_size)      shift
                             BATCH_SIZE="$1"
                             ;;
-    -b | --lut_lib)         shift
+    -l | --lut_lib)         shift
                             LUT_LIB="$1"
                             ;;
     -s | --slurm)           USE_SLURM=true
                             ;;
-    -l | --lsf)             USE_LSF=true
+    --lsf)                  USE_LSF=true
                             ;;
     -d | --device )         shift
                             DEVICE="$1"
                             ;;
     -m | --synth_method )   shift
                             SYNTH_METHODS="$1"
+                            ;;
+    -b | --batch )          shift
+                            IS_BATCH_MODE=true
                             ;;
     * )                     echo "computer says no: ${1}"
                             exit 1
@@ -68,18 +72,40 @@ fi
 if ! [ -d "${RUN_DIR}" ]; then
   mkdir -p "${RUN_DIR}"
 fi
-
 pushd ${RUN_DIR}
 
+if [ -d "${BENCHMARK_DIR}" ]; then
+  # TODO(aryap): This is a dangerously-bash bashism
+  shopt -s nullglob
+  #benchmarks=( ${BENCHMARK_DIR}/*.{v,vhdl,gz} )
+  benchmarks=( ${BENCHMARK_DIR}/*.{v,vhdl} )
+  num_benchmarks=${#benchmarks[@]}
+  echo "Found ${num_benchmarks} benchmarks:"
+  # for file in "${benchmarks[@]}"; do
+  #   echo "  ${file}"
+  # done
+  shopt -u nullglob
+elif [ -f "${BENCHMARK_DIR}" ]; then
+  # Input is just one file
+  benchmarks="${BENCHMARK_DIR}"
+  num_benchmarks=1
+else
+  echo "Unsuitable input source: ${BENCHMARK_DIR}"
+  exit 3
+fi
+echo "Input is ${BENCHMARK_DIR}: ${#benchmarks[@]} files"
+echo "Output is: ${RUN_DIR}"
 
 # Calculate which indices to run exhaustive search on
 MIN_PASS_LENGTH=0
 MIN_NUM_RUNS=$(( $PERMUTATIONS * (($NUM_OPTS**($MIN_PASS_LENGTH+1)-1) / ($NUM_OPTS-1) - 1) ))
 
-MAX_PASS_LENGTH=1
+MAX_PASS_LENGTH=0
 MAX_NUM_RUNS=$(( $PERMUTATIONS * (($NUM_OPTS**($MAX_PASS_LENGTH+1)-1) / ($NUM_OPTS-1) - 1)  ))
 echo $(( $MAX_NUM_RUNS - $MIN_NUM_RUNS ))
 
+MIN_NUM_RUNS=0
+MAX_NUM_RUNS=1
 # IF USING RANDOM; set up min/max indices manually
 if [ ${RANDOM_SEQ_LEN} -gt 0 ]; then
   MIN_NUM_RUNS=0
@@ -184,7 +210,12 @@ batch_controlled_launch() {
     for ((j=0;j<${BATCH_SIZE} && i < ${MAX_NUM_RUNS};j++)); do
       let "k=0"
       for method in "${synth_method_array[@]}"; do
-        launch_job "$(( j*${#synth_method_array[@]} + k ))" "${BENCHMARK_DIR}" "${method}" "${i}"
+        if [ ${IS_BATCH_MODE} = true ]; then
+          echo "BATCH"
+          launch_job "$(( j*${#synth_method_array[@]} + k ))" "${benchmarks[i]}" "${method}" "${i}"
+        else
+          launch_job "$(( j*${#synth_method_array[@]} + k ))" "${BENCHMARK_DIR}" "${method}" "${i}"
+        fi
         let "k=k+1"
       done
       let "i=i+1"
@@ -206,7 +237,12 @@ token_controlled_launch() {
   while [ ${i} -lt ${MAX_NUM_RUNS} ]; do
     for ((j=0;j<${BATCH_SIZE} && i < ${MAX_NUM_RUNS};j++)); do
       for method in "${synth_method_array[@]}"; do
-        launch_job 0 "${BENCHMARK_DIR}" "${method}" "${i}"
+        if [ ${IS_BATCH_MODE} = true ]; then
+          echo "BATCH"
+          launch_job "$(( j*${#synth_method_array[@]} + k ))" "${benchmarks[i]}" "${method}" "${i}"
+        else
+          launch_job "$(( j*${#synth_method_array[@]} + k ))" "${BENCHMARK_DIR}" "${method}" "${i}"
+        fi
         if (( tokens++ >= BATCH_SIZE )); then
           wait -n
           let "tokens=tokens-1"
