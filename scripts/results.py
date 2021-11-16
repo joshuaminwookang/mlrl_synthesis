@@ -36,46 +36,63 @@ def load_data_from_dir(dirname):
         index = os.path.basename(script[0]).split('.')[1]
         bmark = os.path.basename(script[0]).split('.')[0]
         bmarks.append(bmark)
-        try:
-            with open(vivado_log[0], "r") as fp:
+        with open(vivado_log[0], "r") as fp:
+            try:
                 path_delay.append(re.findall(r'\d+.\d+', lines_that_contain("Path Delay", fp)[0])[0])
+            except:
+                path_delay.append(np.nan)
+            try:
                 fp.seek(0)
                 logic_delay.append(re.findall(r'\d+.\d+', lines_that_contain("Logic Delay", fp)[0])[0])
+            except:
+                logic_delay.append(np.nan)
+            try:
                 fp.seek(0)
                 net_delay.append(re.findall(r'\d+.\d+', lines_that_contain("Net Delay", fp)[0])[0])
+            except:
+                net_delay.append(np.nan)      
+            try:      
                 fp.seek(0)
                 perecentage= re.findall(r'\d+%', lines_that_contain("Logic Delay", fp)[0])[0]
                 Logic_Delay_Percentage.append(perecentage[:-1])
+            except:
+                Logic_Delay_Percentage.append(np.nan)
+            try:
                 fp.seek(0)
                 Slice_LUTs.append(re.findall(r'\d+.\d+', lines_that_contain("Slice LUTs", fp)[0])[0])
+            except:
+                Slice_LUTs.append(np.nan)
+            try:
                 fp.seek(0)
                 lut_Logic.append(re.findall(r'\d+.\d+', lines_that_contain("LUT as Logic", fp)[0])[0])
+            except:
+                lut_Logic.append(np.nan)
+            try:
                 fp.seek(0)
                 lut_mem.append(re.findall(r'\d+.\d+', lines_that_contain("LUT as Memory", fp)[0])[0])
+            except:
+                lut_mem.append(np.nan)
+            try:
                 fp.seek(0)
                 reg_ff.append(re.findall(r'\d+.\d+', lines_that_contain("Register as Flip Flop", fp)[0])[0])
+            except:
+                reg_ff.append(np.nan)
+            try:
                 fp.seek(0)
                 reg_latch.append(re.findall(r'\d+.\d+', lines_that_contain("Register as Latch", fp)[0])[0])
-        except:
-            path_delay.append(np.nan)
-            logic_delay.append(np.nan)
-            net_delay.append(np.nan)
-            Logic_Delay_Percentage.append(np.nan)
-            Slice_LUTs.append(np.nan)
-            lut_Logic.append(np.nan)
-            lut_mem.append(np.nan)
-            reg_ff.append(np.nan)
-            reg_latch.append(np.nan)
+            except:
+                reg_latch.append(np.nan)
             
-        try:
-            with open(yosys_log[0], "r") as fp:
-                last_if_line =  lines_that_contain("Del =", fp)[-1]
+        with open(yosys_log[0], "r") as fp:
+            last_if_line =  lines_that_contain("Del =", fp)[-1]
+            try:
                 abc_delay.append(re.findall(r'\d+.\d+',last_if_line)[0])
+            except:
+                abc_delay.append(np.nan)
+            try:
                 abc_area.append(re.findall(r'\d+.\d+', last_if_line)[1])
-        except:
-            print(index)
-            abc_delay.append(np.nan)
-            abc_area.append(np.nan)
+            except:
+                abc_area.append(np.nan)
     data["Benchmark"] = bmarks
     data["Path_Delay"] = path_delay; data["Logic_Delay"] = logic_delay; data["Net_Delay"] = net_delay; data["Logic_Delay_Percentage"] = Logic_Delay_Percentage
     data["Slice_LUTs"] = Slice_LUTs; data["LUT_as_Logic"] = lut_Logic; data["LUT_as_Memory"] = lut_mem
@@ -97,10 +114,10 @@ def main():
     df_dict = load_data_from_dir(dir)
     
     for key in df_dict.keys():
-        print(key, len(df_dict[key]))
+        print(key, df_dict[key])
     
     # df["Benchmark"] = ip
-    print("outputting to: " + ip+".out.csv")
+    print("outputting to: " + ip+".pkl")
     # df = pd.DataFrame.from_dict(df_dict)
     # df.to_csv(ip+".out.csv", sep="\t",index=False)
 

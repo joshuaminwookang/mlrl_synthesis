@@ -255,7 +255,7 @@ EOT
   cat >> test_${1}.tcl <<EOT
 #report_timing_summary
 report_design_analysis
-# report_utilization
+report_utilization
 # For now, don't do place and route
 # place_design -directive Explore
 # route_design -directive Explore
