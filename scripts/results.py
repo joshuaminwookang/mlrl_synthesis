@@ -7,7 +7,7 @@ import pickle
 def lines_that_contain(string, fp):
     return [line for line in fp if string in line]
 
-def load_data_from_dir(dirname, ip):
+def load_data_from_dir(dirname):
     data = {}
     # logs = glob.glob(os.path.normpath(dirname + "/*/test_5000.log"))
     subdirs =  glob.glob(os.path.normpath(dirname + "/tab*"))
@@ -15,7 +15,7 @@ def load_data_from_dir(dirname, ip):
     print("Found {} results".format(len(scripts)))
     # yosys_logs = glob.glob(os.path.normpath(dirname + "/*/yosys.log"))
 
-    seqs=[]
+    seqs=[]; bmarks=[];
     path_delay=[]; logic_delay=[]; net_delay=[]; Logic_Delay_Percentage=[]
     Slice_LUTs=[]; lut_Logic=[]; lut_mem = []; reg_ff = []; reg_latch = []
     abc_delay = [];abc_area = []
@@ -34,6 +34,8 @@ def load_data_from_dir(dirname, ip):
         yosys_log = glob.glob(os.path.normpath(subdir + "/yosys.log"))
         script = glob.glob(os.path.normpath(subdir + "/*.abc.script"))
         index = os.path.basename(script[0]).split('.')[1]
+        bmark = os.path.basename(script[0]).split('.')[0]
+        bmarks.append(bmark)
         try:
             with open(vivado_log[0], "r") as fp:
                 path_delay.append(re.findall(r'\d+.\d+', lines_that_contain("Path Delay", fp)[0])[0])
@@ -74,6 +76,7 @@ def load_data_from_dir(dirname, ip):
             print(index)
             abc_delay.append(np.nan)
             abc_area.append(np.nan)
+    data["Benchmark"] = bmarks
     data["Path_Delay"] = path_delay; data["Logic_Delay"] = logic_delay; data["Net_Delay"] = net_delay; data["Logic_Delay_Percentage"] = Logic_Delay_Percentage
     data["Slice_LUTs"] = Slice_LUTs; data["LUT_as_Logic"] = lut_Logic; data["LUT_as_Memory"] = lut_mem
     data["RegsFF"] = reg_ff; data["RegsLatch"] = reg_latch
@@ -91,7 +94,7 @@ def main():
     bmark = os.path.basename(dir)
     ip = bmark[bmark.find('run') + 4 :]
     csv_file = ip+".out.csv"
-    df_dict = load_data_from_dir(dir, ip)
+    df_dict = load_data_from_dir(dir)
     
     for key in df_dict.keys():
         print(key, len(df_dict[key]))
