@@ -35,7 +35,7 @@ while [ "$1" != "" ]; do
     -r | --random )         shift
                             RANDOM_SEQ_LEN=$1
                             ;;
-    -t | --stoch )         shift
+    -t | --stoch )          shift
                             STOCHASTIC=$1
                             ;;
     -j | --batch_size)      shift
@@ -46,7 +46,7 @@ while [ "$1" != "" ]; do
                             ;;
     -s | --slurm)           USE_SLURM=true
                             ;;
-    --lsf)                  USE_LSF=true
+    -f | --lsf)             USE_LSF=true
                             ;;
     -d | --device )         shift
                             DEVICE="$1"
@@ -100,12 +100,12 @@ echo "Output is: ${RUN_DIR}"
 MIN_PASS_LENGTH=0
 MIN_NUM_RUNS=$(( $PERMUTATIONS * (($NUM_OPTS**($MIN_PASS_LENGTH+1)-1) / ($NUM_OPTS-1) - 1) ))
 
-MAX_PASS_LENGTH=0
+MAX_PASS_LENGTH=1
 MAX_NUM_RUNS=$(( $PERMUTATIONS * (($NUM_OPTS**($MAX_PASS_LENGTH+1)-1) / ($NUM_OPTS-1) - 1)  ))
 echo $(( $MAX_NUM_RUNS - $MIN_NUM_RUNS ))
 
 MIN_NUM_RUNS=0
-MAX_NUM_RUNS=1
+MAX_NUM_RUNS=2
 # IF USING RANDOM; set up min/max indices manually
 if [ ${RANDOM_SEQ_LEN} -gt 0 ]; then
   MIN_NUM_RUNS=0
@@ -192,8 +192,8 @@ launch_lsf_job() {
     # Add a meaningful log file to the LSF command if it's being used.
     LSF_PREFIX_LOG="-o bsub_${method}_$(basename ${BENCHMARK_DIR}).log"
   fi
-  echo ${pid_index}: ${LSF_PREFIX} ${LSF_PREFIX_LOG} ${TEST_SCRIPT} -i $benchmark ${STATIC_TEST_ARGS} -m "${method}" -d ${DEVICE} -n ${seq_index} -r ${RANDOM_SEQ_LEN}
-  ${LSF_PREFIX} ${LSF_PREFIX_LOG} ${TEST_SCRIPT} -i $benchmark ${STATIC_TEST_ARGS} -m "${method}" -d ${DEVICE} -n ${seq_index} -r ${RANDOM_SEQ_LEN} &
+  echo ${pid_index}: ${LSF_PREFIX} ${LSF_PREFIX_LOG} ${TEST_SCRIPT} -i $benchmark ${STATIC_TEST_ARGS} -m "${method}" -d ${DEVICE} -n ${seq_index} -r ${RANDOM_SEQ_LEN} -l ${LUT_LIB}  -t ${STOCHASTIC}
+  ${LSF_PREFIX} ${LSF_PREFIX_LOG} ${TEST_SCRIPT} -i $benchmark ${STATIC_TEST_ARGS} -m "${method}" -d ${DEVICE} -n ${seq_index} -r ${RANDOM_SEQ_LEN} -l ${LUT_LIB}  -t ${STOCHASTIC} &
   pids[${pid_index}]=$!
 }
 
@@ -209,8 +209,11 @@ batch_controlled_launch() {
     pids=()
     if [ ${IS_BATCH_MODE} = true ]; then
       for ((j=0;j<${BATCH_SIZE} && i < ${MAX_NUM_RUNS};j++)); do
-        for ((k=0;k<${num_benchmarks};k++)); do
-          launch_job "$(( j*${#synth_method_array[@]} + k ))" "${benchmarks[k]}" "${method}" "${i}"
+        for method in "${synth_method_array[@]}"; do
+          for bmark in "${benchmarks[@]}"; do
+            launch_job "$(( j*${#synth_method_array[@]}*${#benchmarks[@]} + k ))" "${bmark}" "${method}" "${i}"
+            let "k=k+1"
+          done
         done
         let "i=i+1"
       done
@@ -241,12 +244,14 @@ token_controlled_launch() {
   while [ ${i} -lt ${MAX_NUM_RUNS} ]; do
     if [ ${IS_BATCH_MODE} = true ]; then
       for ((j=0;j<${BATCH_SIZE} && i < ${MAX_NUM_RUNS};j++)); do
-        for bmark in "${benchmarks[@]}"; do
-            launch_job "$(( j*${#num_benchmarks[@]} + k ))" "${bmark}" "${method}" "${i}"
-          if (( tokens++ >= BATCH_SIZE )); then
-            wait -n
-            let "tokens=tokens-1"
-          fi
+        for method in "${synth_method_array[@]}"; do
+          for bmark in "${benchmarks[@]}"; do
+              launch_job "$(( j*${#benchmarks[@]}*${#synth_method_array[@]} + k ))" "${bmark}" "${method}" "${i}"
+            if (( tokens++ >= BATCH_SIZE )); then
+              wait -n
+              let "tokens=tokens-1"
+            fi
+          done
         done
         let "i=i+1"
       done
