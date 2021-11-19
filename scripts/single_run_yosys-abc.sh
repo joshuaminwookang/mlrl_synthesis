@@ -50,8 +50,8 @@ while [ "$1" != "" ]; do
     -c | --clean )          shift
                             clean=true
                             ;;
-    -rv | --run_vivado )    shift
-                            run_vivado=true
+    -nv | --no_vivado )     shift
+                            run_vivado=false
                             ;;
     * )                     echo "computer says no: ${1}"
                             exit 1
@@ -267,14 +267,16 @@ report_utilization
 # report_io
 EOT
 
-  echo "${test_name} running test_${1}..."
+  echo "${test_name} running..."
   if [ "$run_vivado" = true ];then
-      if ! $VIVADO -nojournal -log test_${1}.log -mode batch -source test_${1}.tcl > /dev/null 2>&1; then
-	  cat test_${1}.log
-	  exit 1
-      fi
+    echo "${test_name} running test_${1}..."
+    if ! $VIVADO -nojournal -log test_${1}.log -mode batch -source test_${1}.tcl > /dev/null 2>&1; then
+	    cat test_${1}.log
+	    exit 1
+    fi
   fi
 #   mv test_${1}.log test_${1}.txt
+echo "${test_name} done"
 }
 
 

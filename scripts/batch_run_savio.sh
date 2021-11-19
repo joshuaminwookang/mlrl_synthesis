@@ -193,7 +193,7 @@ launch_lsf_job() {
     LSF_PREFIX_LOG="-o bsub_${method}_$(basename ${BENCHMARK_DIR}).log"
   fi
   echo ${pid_index}: ${LSF_PREFIX} ${LSF_PREFIX_LOG} ${TEST_SCRIPT} -i $benchmark ${STATIC_TEST_ARGS} -m "${method}" -d ${DEVICE} -n ${seq_index} -r ${RANDOM_SEQ_LEN} -l ${LUT_LIB}  -t ${STOCHASTIC}
-  ${LSF_PREFIX} ${LSF_PREFIX_LOG} ${TEST_SCRIPT} -i $benchmark ${STATIC_TEST_ARGS} -m "${method}" -d ${DEVICE} -n ${seq_index} -r ${RANDOM_SEQ_LEN} -l ${LUT_LIB}  -t ${STOCHASTIC} &
+  ${LSF_PREFIX} ${LSF_PREFIX_LOG} ${TEST_SCRIPT} -i $benchmark ${STATIC_TEST_ARGS} -m "${method}" -d ${DEVICE} -n ${seq_index} -r ${RANDOM_SEQ_LEN} -l ${LUT_LIB}  -t ${STOCHASTIC} -nv &
   pids[${pid_index}]=$!
 }
 

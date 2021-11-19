@@ -5,7 +5,7 @@ mpl.use('Agg')
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
-import glob, os.path, os
+import glob, os.path, os, pickle
 
 #global params
 fig_dims = (12,8)
@@ -13,6 +13,13 @@ axis_label = 12
 legend_label = 12
 axis_scale = 2.0
 default_abc9_script="&scorr;&sweep;&dc2;&dch -f;&if -W 300 -K 6 -v;&mfs;"
+
+def load_data_pkl(pathname):
+    filename=os.path.basename(pathname)
+    tag=filename[filename.find('_') + 1 :filename.find('.pkl')]
+    data = pd.read_pickle(pathname)
+    data["Benchmark"] = tag
+    return data, tag
 
 # Load the data as Pandas DataFrame
 def load_data(pathname):
@@ -27,14 +34,7 @@ def load_data_from_dir(search):
     search_path = os.path.normpath(os.path.join(os.getcwd(), search))
     csvs = glob.glob(search_path)
     for f in csvs:
-        filename=os.path.basename(f)
-        tag=filename[filename.find('_') + 1:filename.find('.out.csv')]
-        data = pd.read_csv(f, delimiter="\t")
-        data["Benchmark"] = tag
-        
-        # parse into percentage
-        # col = data["LogicDelay"].astype(str).transform(lambda x: x[x.find('(')+1, x.find('%')])
-#        data["Logic Delay Ratio"] =  [s if isinstance(s, float) else int(s[s.find('(')+1: s.find('%')]) / 100  for  s in data["LogicDelay"].to_numpy()]
+        data = pd.DataFrame(pd.read_pickle(f)).transpose()
         dfs.append(data)
     return dfs
 
@@ -119,11 +119,11 @@ def main():
     #     if df.iloc[0]['Benchmark'] == "or1200":
     #         plot_single(df, "Vivado_vs_ABC", ['ABC_Delay', 'Path_Delay'], plot_type="scatter")
     #         plot_single(df, "Vivado_vs_ABC", ['ABC_Area', 'Slice_LUTs'], plot_type="scatter")
-    exh = load_data_from_dir("results/exh*.csv")
-    print(exh)
-    plot_single(exh[0], "VTR_bgm", ['ABC_Delay', 'Path_Delay'], plot_type="scatter")
-    plot_single(exh[0], "VTR_bgm", ['ABC_Area', 'Slice_LUTs'], plot_type="scatter")
-    plot_single(exh[0], "Exhaustive_bgm", ['Slice_LUTs','Path_Delay'], plot_type="scatter-ratios")
+    exh = load_data_from_dir("test*.pkl")
+    print(exh[0])
+    # plot_single(exh[0], "VTR_bgm", ['ABC_Delay', 'Path_Delay'], plot_type="scatter")
+    # plot_single(exh[0], "VTR_bgm", ['ABC_Area', 'Slice_LUTs'], plot_type="scatter")
+    # plot_single(exh[0], "Exhaustive_bgm", ['Slice_LUTs','Path_Delay'], plot_type="scatter-ratios")
 
 
 if __name__ == "__main__":
