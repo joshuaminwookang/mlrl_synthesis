@@ -160,8 +160,9 @@ def preprocess_data(data_path):
     features_normalized = normalize(features_flatted)
 
     sequences_list = preprocess_sequence(sequences)
+    labels_flattened = flatten_all(labels)
 
-    return features_normalized, sequences_list, labels
+    return features_normalized, sequences_list, labels_flattened
 
 if __name__ == '__main__': 
     features, sequences, labels = preprocess_data('../../epfl_arithmetic.pkl')
