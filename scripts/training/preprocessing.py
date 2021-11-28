@@ -33,8 +33,8 @@ def prepare_dataset(data):
     for _, d in data.items():
         feature = {}
         label = {}
-        label['Path_Delay'] = d['Path_Delay']
-        label['Slice_LUTs'] = d['Slice_LUTs']
+        label['Path_Delay'] = d['Path_Delay'] / 1e2
+        label['Slice_LUTs'] = d['Slice_LUTs'] / 1e3
         for f in ['CI', 'CO', 'level', 'level_avg',
                   'cut', 'xor', 'xor_ratio', 'mux', 'mux_ratio', 'and', 'and_ratio',
                   'obj', 'power', 'slack', 'LUT', 'fanin', 'fanout', 'mffc', 

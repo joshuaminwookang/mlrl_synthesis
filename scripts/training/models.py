@@ -1,9 +1,11 @@
-from preprocessing import SEQ_TO_TOKEN, TOKEN_TO_SEQ, preprocess_data
+from tqdm import tqdm 
 
 import torch
 from torch import nn
 from torch.utils.data import Dataset, DataLoader
 from torch.nn.utils.rnn import pad_sequence, pack_padded_sequence, pad_packed_sequence
+
+from preprocessing import SEQ_TO_TOKEN, TOKEN_TO_SEQ, preprocess_data
 
 class FeatureEmbedding(nn.Module):
     def __init__(self, input_dim, hidden_dim, output_dim):
@@ -83,23 +85,38 @@ def pad_collate(batch):
 if __name__ == '__main__': 
     data_path = '../../../epfl_arithmetic.pkl'
     dataset = CustomDataset(data_path)
-    dataloader = DataLoader(dataset, batch_size=4, shuffle=True, num_workers=0, collate_fn=pad_collate)
+    dataloader = DataLoader(dataset, batch_size=64, shuffle=True, num_workers=0, collate_fn=pad_collate)
 
     input_dim = dataset.input_dim
     model = E2ERegression(input_dim, 128, 128, 128, 2)
+    model = model.cuda()
 
     loss_fn = nn.MSELoss()
-    optimizer = torch.optim.Adam(model.parameters(), lr=1e-2)
+    optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
 
-    for i, batch in enumerate(dataloader):
-        features, sequences, sequences_len, labels = batch
-        x = model(features, sequences, sequences_len)
+    for epoch in range(50):
+        loss_all = 0
+        cnt = 0
+        for i, batch in tqdm(enumerate(dataloader)):
+            features, sequences, sequences_len, labels = batch
+            features = features.cuda()
+            sequences = sequences.cuda()
+            labels = labels.cuda()
+            x = model(features, sequences, sequences_len)
 
-        loss = loss_fn(x, labels)
-        optimizer.zero_grad()
-        loss.backward()
-        optimizer.step()
-        print(loss)
+            loss = loss_fn(x, labels)
+            #print(x)
+            #print(labels)
+            #print(loss)
+            #print(AA)
+            optimizer.zero_grad()
+            loss.backward()
+            optimizer.step()
+
+            cnt += 1
+            loss_all += loss
+        print(f"epoch {epoch}, loss {loss_all / cnt}")
+
 
     '''
     features, sequences, labels = preprocess_data(data_path)
