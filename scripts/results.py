@@ -50,6 +50,7 @@ def load_data_from_dir(dirname):
             try:
                 this_data["Path_Delay"] = float(re.findall(r'\d+.\d+', lines_that_contain("Path Delay", fp)[0])[0])
             except:
+                print("No Vivado log for {} {}".format(bmark, index))
                 continue
                 this_data["Path_Delay"] = np.nan
             try:
@@ -94,23 +95,31 @@ def load_data_from_dir(dirname):
             except:
                 this_data["Regs_Latch"] = np.nan
             
-        with open(yosys_log[0], "r") as fp:
-            last_if_line =  lines_that_contain("Del =", fp)[-1]
-            try:
-                this_data["ABC_Delay"] = float(re.findall(r'\d+.\d+',last_if_line)[0])
-                continue
-            except:
-                this_data["ABC_Delay"] = np.nan
-            try:
-                this_data["ABC_Area"] = int(round(float(re.findall(r'\d+.\d+', last_if_line)[1])))
-            except:
-                this_data["ABC_Area"] = np.nan
-        fp_stats1 =  open(stats1[0], "r")
-        stats1_data = json.load(fp_stats1)
-        fp_stats1.close()
-        fp_stats2 =  open(stats2[0], "r")
-        stats2_data = json.load(fp_stats2)
-        fp_stats2.close()
+        # with open(yosys_log[0], "r") as fp:
+        #     last_if_line =  lines_that_contain("Del =", fp)[-1]
+        #     try:
+        #         this_data["ABC_Delay"] = float(re.findall(r'\d+.\d+',last_if_line)[0])
+        #         continue
+        #     except:
+        #         this_data["ABC_Delay"] = np.nan
+        #     try:
+        #         this_data["ABC_Area"] = int(round(float(re.findall(r'\d+.\d+', last_if_line)[1])))
+        #     except:
+        #         this_data["ABC_Area"] = np.nan
+        try:
+            fp_stats1 =  open(stats1[0], "r")
+            stats1_data = json.load(fp_stats1)
+            fp_stats1.close()
+        except:
+            print("No stats.json for {} {}".format(bmark,index))
+            continue
+        try:
+            fp_stats2 =  open(stats2[0], "r")
+            stats2_data = json.load(fp_stats2)
+            fp_stats2.close()
+        except:
+            print("No fanstats.json for {} {}".format(bmark,index))
+            continue
         this_data = {**this_data, **stats1_data, **stats2_data}
         data[i] = this_data
         i += 1

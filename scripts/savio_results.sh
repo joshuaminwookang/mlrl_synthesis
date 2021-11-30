@@ -1,0 +1,18 @@
+#!/bin/bash
+# Job name:
+#SBATCH --job-name=results
+#
+# Account:
+#SBATCH --account=fc_bdmesh
+#
+# Partition:
+#SBATCH --partition=savio	
+#
+# Quality of Service:
+#SBATCH --qos=savio_normal
+#
+# Wall clock limit:
+#SBATCH --time=01:00:00
+#
+## Command(s) to run:
+python scripts/results.py --i $SCRATCH/run_vtr_random_testset

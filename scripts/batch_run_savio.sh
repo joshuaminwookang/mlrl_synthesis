@@ -104,12 +104,10 @@ MAX_PASS_LENGTH=1
 MAX_NUM_RUNS=$(( $PERMUTATIONS * (($NUM_OPTS**($MAX_PASS_LENGTH+1)-1) / ($NUM_OPTS-1) - 1)  ))
 echo $(( $MAX_NUM_RUNS - $MIN_NUM_RUNS ))
 
-MIN_NUM_RUNS=0
-MAX_NUM_RUNS=2
 # IF USING RANDOM; set up min/max indices manually
 if [ ${RANDOM_SEQ_LEN} -gt 0 ]; then
   MIN_NUM_RUNS=0
-  MAX_NUM_RUNS=500
+  MAX_NUM_RUNS=100
 fi
 
 
@@ -193,7 +191,7 @@ launch_lsf_job() {
     LSF_PREFIX_LOG="-o bsub_${method}_$(basename ${BENCHMARK_DIR}).log"
   fi
   echo ${pid_index}: ${LSF_PREFIX} ${LSF_PREFIX_LOG} ${TEST_SCRIPT} -i $benchmark ${STATIC_TEST_ARGS} -m "${method}" -d ${DEVICE} -n ${seq_index} -r ${RANDOM_SEQ_LEN} -l ${LUT_LIB}  -t ${STOCHASTIC}
-  ${LSF_PREFIX} ${LSF_PREFIX_LOG} ${TEST_SCRIPT} -i $benchmark ${STATIC_TEST_ARGS} -m "${method}" -d ${DEVICE} -n ${seq_index} -r ${RANDOM_SEQ_LEN} -l ${LUT_LIB}  -t ${STOCHASTIC} -nv &
+  ${LSF_PREFIX} ${LSF_PREFIX_LOG} ${TEST_SCRIPT} -i $benchmark ${STATIC_TEST_ARGS} -m "${method}" -d ${DEVICE} -n ${seq_index} -r ${RANDOM_SEQ_LEN} -l ${LUT_LIB}  -t ${STOCHASTIC} &
   pids[${pid_index}]=$!
 }
 
