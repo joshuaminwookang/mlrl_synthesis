@@ -9,7 +9,7 @@ def lines_that_contain(string, fp):
 
 def load_data_from_dir(dirname):
     data = {}
-    subdirs =  glob.glob(os.path.normpath(dirname + "/tab*"))
+    subdirs =  glob.glob(os.path.normpath(dirname + "/tab_yosys-abc9_sha*"))
     print("Found {} directories".format(len(subdirs)))
     
     # Get data from Yosys and Vivado logs
@@ -22,39 +22,51 @@ def load_data_from_dir(dirname):
         stats2= glob.glob(os.path.normpath(subdir + "/fanstats.json"))
         index = os.path.basename(script[0]).split('.')[1]
         bmark = os.path.basename(script[0]).split('.')[0]
-
+        print(bmark)
+        print(index)
         this_data['Index'] = index
         this_data['Benchmark'] = bmark
-
         try:
-            fp = open(script[0], "r")
-            this_data['Sequence'] = lines_that_contain("&scorr", fp)[0]
-        except:
-            print("No sequence file for {} {}".format(bmark,index))
-            continue
+            fp_script = open(script[0], "r")
+        except OSError:
+            print("Could not open/read file:", script[0])
+            sys.exit()
+        with fp_script:
+            try:
+                this_data['Sequence'] = lines_that_contain("&scorr", fp_script)[0]
+            except:
+                print("No sequence file for {} {}".format(bmark,index))
+                continue
+        print("read script file")
         try:
             fp = open(vivado_log[0], "r")
-            this_data["Path_Delay"] = float(re.findall(r'\d+.\d+', lines_that_contain("Path Delay", fp)[0])[0])
-            fp.seek(0)
-            this_data["Logic_Delay"] = float(re.findall(r'\d+.\d+', lines_that_contain("Logic Delay", fp)[0])[0])
-            fp.seek(0)
-            this_data["Net_Delay"] = float(re.findall(r'\d+.\d+', lines_that_contain("Net Delay", fp)[0])[0])  
-            fp.seek(0)
-            percentage = re.findall(r'\d+%', lines_that_contain("Logic Delay", fp)[0])[0]
-            this_data["Logic_Delay_Percentage"] = float(percentage[:-1])
-            fp.seek(0)
-            this_data["Slice_LUTs"] = int(re.findall(r'\d+', lines_that_contain("Slice LUTs", fp)[0])[0])
-            fp.seek(0)
-            this_data["LUT_as_Logic"] = int(re.findall(r'\d+', lines_that_contain("LUT as Logic", fp)[0])[0])
-            fp.seek(0)
-            this_data["LUT_as_Memory"] = int(re.findall(r'\d+', lines_that_contain("LUT as Memory", fp)[0])[0])
-            fp.seek(0)
-            this_data["Regs_FF"] = int(re.findall(r'\d+', lines_that_contain("Register as Flip Flop", fp)[0])[0])
-            fp.seek(0)
-            this_data["Regs_Latch"] = int(re.findall(r'\d+', lines_that_contain("Register as Latch", fp)[0])[0])
-        except:
-            print("No Vivado log for {} {}".format(bmark, index))
-            continue    
+        except OSError:
+            print("Could not open/read file:", vivado_log[0])
+            sys.exit()
+        with fp:
+            try:
+                this_data["Path_Delay"] = float(re.findall(r'\d+.\d+', lines_that_contain("Path Delay", fp)[0])[0])
+                fp.seek(0)
+                this_data["Logic_Delay"] = float(re.findall(r'\d+.\d+', lines_that_contain("Logic Delay", fp)[0])[0])
+                fp.seek(0)
+                this_data["Net_Delay"] = float(re.findall(r'\d+.\d+', lines_that_contain("Net Delay", fp)[0])[0])  
+                fp.seek(0)
+                percentage = re.findall(r'\d+%', lines_that_contain("Logic Delay", fp)[0])[0]
+                this_data["Logic_Delay_Percentage"] = float(percentage[:-1])
+                fp.seek(0)
+                this_data["Slice_LUTs"] = int(re.findall(r'\d+', lines_that_contain("Slice LUTs", fp)[0])[0])
+                fp.seek(0)
+                this_data["LUT_as_Logic"] = int(re.findall(r'\d+', lines_that_contain("LUT as Logic", fp)[0])[0])
+                fp.seek(0)
+                this_data["LUT_as_Memory"] = int(re.findall(r'\d+', lines_that_contain("LUT as Memory", fp)[0])[0])
+                fp.seek(0)
+                this_data["Regs_FF"] = int(re.findall(r'\d+', lines_that_contain("Register as Flip Flop", fp)[0])[0])
+                fp.seek(0)
+                this_data["Regs_Latch"] = int(re.findall(r'\d+', lines_that_contain("Register as Latch", fp)[0])[0])
+            except:
+                print("No Vivado log for {} {}".format(bmark, index))
+                continue
+        print("read vivado log")
         try:
             fp_stats1 =  open(stats1[0], "r")
             stats1_data = json.load(fp_stats1)
