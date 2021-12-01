@@ -10,7 +10,7 @@ def lines_that_contain(string, fp):
 def load_data_from_dir(dirname):
     data = {}
     # logs = glob.glob(os.path.normpath(dirname + "/*/test_5000.log"))
-    subdirs =  glob.glob(os.path.normpath(dirname + "/tab*"))
+    subdirs =  glob.glob(os.path.normpath(dirname + "/tab_yosys-abc9_blob_merge*"))
     # scripts = glob.glob(os.path.normpath(dirname + "/*/*.abc.script"))
     print("Found {} directories".format(len(subdirs)))
     # yosys_logs = glob.glob(os.path.normpath(dirname + "/*/yosys.log"))
@@ -50,7 +50,7 @@ def load_data_from_dir(dirname):
             try:
                 this_data["Path_Delay"] = float(re.findall(r'\d+.\d+', lines_that_contain("Path Delay", fp)[0])[0])
             except:
-                print("No Vivado log for {} {}".format(bmark, index))
+                print("No Vivado log in {} {}".format(bmark, index))
                 continue
                 this_data["Path_Delay"] = np.nan
             try:
@@ -111,14 +111,14 @@ def load_data_from_dir(dirname):
             stats1_data = json.load(fp_stats1)
             fp_stats1.close()
         except:
-            print("No stats.json for {} {}".format(bmark,index))
+            print("No stats.json for {} {}".format(bmark, index))
             continue
         try:
             fp_stats2 =  open(stats2[0], "r")
             stats2_data = json.load(fp_stats2)
             fp_stats2.close()
         except:
-            print("No fanstats.json for {} {}".format(bmark,index))
+            print("No fanstats.json for {} {}".format(bmark, index))
             continue
         this_data = {**this_data, **stats1_data, **stats2_data}
         data[i] = this_data
