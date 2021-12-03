@@ -171,10 +171,10 @@ launch_slurm_job() {
 #
 ## Command(s) to run:
 echo ${TEST_SCRIPT} -i $benchmark ${STATIC_TEST_ARGS} -m "${method}" -d ${DEVICE} -n ${seq_index} -r ${RANDOM_SEQ_LEN} -l ${LUT_LIB}  -t ${STOCHASTIC}
-${TEST_SCRIPT} -i $benchmark ${STATIC_TEST_ARGS} -m "${method}" -d ${DEVICE} -n ${seq_index} -r ${RANDOM_SEQ_LEN} -l ${LUT_LIB}  -t ${STOCHASTIC}
+${TEST_SCRIPT} -i $benchmark ${STATIC_TEST_ARGS} -m "${method}" -d ${DEVICE} -n ${seq_index} -r ${RANDOM_SEQ_LEN} -l ${LUT_LIB}  -t ${STOCHASTIC} 
 EOT
   # TODO: run slurm script with sbatch?
-  echo "${pid_index} ${TEST_SCRIPT} -i $benchmark ${STATIC_TEST_ARGS} -m ${method} -d ${DEVICE} -n ${seq_index} -r ${RANDOM_SEQ_LEN} -l ${LUT_LIB} -t ${STOCHASTIC}"
+  echo "${pid_index} ${TEST_SCRIPT} -i $benchmark ${STATIC_TEST_ARGS} -m ${method} -d ${DEVICE} -n ${seq_index} -r ${RANDOM_SEQ_LEN} -l ${LUT_LIB} -t ${STOCHASTIC}" 
   sbatch "${slurm_script_name}.sh"
   pids[${pid_index}]=$!
 }

@@ -9,7 +9,7 @@ def lines_that_contain(string, fp):
 
 def load_data_from_dir(dirname):
     data = {}
-    subdirs =  glob.glob(os.path.normpath(dirname + "/tab_yosys-abc9_sha*"))
+    subdirs =  glob.glob(os.path.normpath(dirname + "/tab_yosys-abc9*"))
     print("Found {} directories".format(len(subdirs)))
     
     # Get data from Yosys and Vivado logs
@@ -22,8 +22,6 @@ def load_data_from_dir(dirname):
         stats2= glob.glob(os.path.normpath(subdir + "/fanstats.json"))
         index = os.path.basename(script[0]).split('.')[1]
         bmark = os.path.basename(script[0]).split('.')[0]
-        print(bmark)
-        print(index)
         this_data['Index'] = index
         this_data['Benchmark'] = bmark
         try:
@@ -37,7 +35,6 @@ def load_data_from_dir(dirname):
             except:
                 print("No sequence file for {} {}".format(bmark,index))
                 continue
-        print("read script file")
         try:
             fp = open(vivado_log[0], "r")
         except OSError:
