@@ -83,7 +83,7 @@ def pad_collate(batch):
 
 #def train(model, 
 if __name__ == '__main__': 
-    data_path = '../../../epfl_arithmetic.pkl'
+    data_path = ['epfl_arithmetic.pkl', 'epfl_control.pkl']
     dataset = CustomDataset(data_path)
     dataloader = DataLoader(dataset, batch_size=64, shuffle=True, num_workers=0, collate_fn=pad_collate)
 
@@ -93,6 +93,9 @@ if __name__ == '__main__':
 
     loss_fn = nn.MSELoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
+
+    import wandb
+    wandb.init(project="synthesis", entity="sehoonkim")
 
     for epoch in range(50):
         loss_all = 0
@@ -115,8 +118,12 @@ if __name__ == '__main__':
 
             cnt += 1
             loss_all += loss
+
+        wandb.log({"loss": loss_all / cnt})
         print(f"epoch {epoch}, loss {loss_all / cnt}")
 
+    print(x)
+    print(labels)
 
     '''
     features, sequences, labels = preprocess_data(data_path)

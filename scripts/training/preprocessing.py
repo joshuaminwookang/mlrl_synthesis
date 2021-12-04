@@ -68,6 +68,7 @@ def preprocess_faninout(data):
 def preprocess_slack(data):
     for d in data:
         slack = d.pop('slack')
+        '''
         slack_threshold = 21 # x10
         slack_all = slack['total_nodes']
         
@@ -89,6 +90,7 @@ def preprocess_slack(data):
                 slack_large += v
         d['slack_ratio_large'] = slack_large / slack_all
         d['slack_all'] = slack_all
+        '''
                 
 def preprocess_mffc(data):
     for d in data:
@@ -147,10 +149,19 @@ def normalize(data):
     return np.transpose(data_t)
 
 def preprocess_data(data_path):
-    with open(data_path, 'rb') as f:
-        data = pickle.load(f)
+    if not isinstance(data_path, list):
+        data_path = [data_path]
+    features, labels, sequences = [], [], []
 
-    features, labels, sequences = prepare_dataset(data)
+    for _data_path in data_path:
+        with open(_data_path, 'rb') as f:
+            data = pickle.load(f)
+
+        _features, _labels, _sequences = prepare_dataset(data)
+        features += _features
+        labels += _labels
+        sequences += _sequences
+
     preprocess_mffc(features)
     preprocess_faninout(features)
     preprocess_slack(features)
