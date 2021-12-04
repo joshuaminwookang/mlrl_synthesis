@@ -182,7 +182,9 @@ def main():
         print(get_abc9_stochastic(args.in_idx, lut_lib_num))
         return
     if do_random:
-        print(get_rand_seq_abc9(args.random_seq_len,lut_lib_num, args.in_idx))
+        #print(get_rand_seq_abc9(args.random_seq_len,lut_lib_num, args.in_idx))
+        print(get_seq_abc9_single_list(random.randint(0,len(abc9_ops)**3), lut_lib_num))
+        print("&ps; &pfeatures stats.json; &pfanstats fanstats.json")
     elif do_abc9:
         print(get_seq_abc9_single_list(args.in_idx, lut_lib_num))
         print("&ps; &pfeatures stats.json; &pfanstats fanstats.json")
