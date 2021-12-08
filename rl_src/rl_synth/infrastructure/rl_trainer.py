@@ -9,17 +9,20 @@ from gym import wrappers
 import numpy as np
 import torch
 
-from cs285.agents.mb_agent import MBAgent
-from cs285.infrastructure import pytorch_util as ptu
-from cs285.infrastructure import utils
-from cs285.infrastructure.logger import Logger
+from rl_synth.agents.mb_agent import MBAgent
+from rl_synth.infrastructure import pytorch_util as ptu
+from rl_synth.infrastructure import utils
+from rl_synth.infrastructure.logger import Logger
 
 # register all of our envs
-from cs285.envs import register_envs
-
-register_envs()
-
-
+# from rl_synth.envs import register_envs
+# register_envs()
+from gym.envs.registration import register
+register(
+    id='synthesis-v0',
+    entry_point='rl_synth.envs.synthesis:SynthesisEnv',
+    max_episode_steps=8,
+ )
 # how many rollouts to save as videos to tensorboard
 MAX_NVIDEO = 2
 MAX_VIDEO_LEN = 40 # we overwrite this in the code below
@@ -66,9 +69,9 @@ class RL_Trainer(object):
         self.env.seed(seed)
 
         # import plotting (locally if 'obstacles' env)
-        if not(self.params['env_name']=='obstacles-cs285-v0'):
-            import matplotlib
-            matplotlib.use('Agg')
+        # if not(self.params['env_name']=='obstacles-cs285-v0'):
+        #     import matplotlib
+        #     matplotlib.use('Agg')
         # import matplotlib
         # matplotlib.use('Agg')
         # Maximum length for episodes

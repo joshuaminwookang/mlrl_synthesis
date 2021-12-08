@@ -1,8 +1,8 @@
 from .base_agent import BaseAgent
-from cs285.models.ff_model import FFModel
-from cs285.policies.MPC_policy import MPCPolicy
-from cs285.infrastructure.replay_buffer import ReplayBuffer
-from cs285.infrastructure.utils import *
+from rl_synth.models.ff_model import FFModel
+from rl_synth.policies.MPC_policy import MPCPolicy
+from rl_synth.infrastructure.replay_buffer import ReplayBuffer
+from rl_synth.infrastructure.utils import *
 
 
 class MBAgent(BaseAgent):

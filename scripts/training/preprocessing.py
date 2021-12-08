@@ -37,7 +37,7 @@ def prepare_dataset(data):
         label['Slice_LUTs'] = d['Slice_LUTs'] / 1e3
         for f in ['CI', 'CO', 'level', 'level_avg',
                   'cut', 'xor', 'xor_ratio', 'mux', 'mux_ratio', 'and', 'and_ratio',
-                  'obj', 'power', 'slack', 'LUT', 'fanin', 'fanout', 'mffc', 
+                  'obj', 'power', 'LUT', 'fanin', 'fanout', 'mffc', 
                   #'fanin_max', 'fanin_avg', 
                   'fanout_max', 'fanout_avg', 'mffc_max', 'mffc_avg']:
             feature[f] = d[f]
@@ -151,11 +151,14 @@ def preprocess_data(data_path):
         data = pickle.load(f)
 
     features, labels, sequences = prepare_dataset(data)
+    print(features[0])
+    print(len(features[0]))
     preprocess_mffc(features)
     preprocess_faninout(features)
-    preprocess_slack(features)
+    # preprocess_slack(features)
     preprocess_LUT(features)
 
+    print(features[0])
     features_flatted = flatten_all(features)
     features_normalized = normalize(features_flatted)
 
@@ -165,6 +168,6 @@ def preprocess_data(data_path):
     return features_normalized, sequences_list, labels_flattened
 
 if __name__ == '__main__': 
-    features, sequences, labels = preprocess_data('../../epfl_arithmetic.pkl')
-    print(features[0])
+    features, sequences, labels = preprocess_data('epfl_arithmetic.pkl')
+    print(len(features[0]))
     print(sequences[0])

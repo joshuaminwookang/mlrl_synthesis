@@ -1,9 +1,10 @@
 import os
 import time
 
-from cs285.infrastructure.rl_trainer import RL_Trainer
-from cs285.agents.mb_agent import MBAgent
-
+from rl_synth.infrastructure.rl_trainer import RL_Trainer
+from rl_synth.agents.mb_agent import MBAgent
+# from rl_synth.envs import register_envs
+# register_envs()
 
 class MB_Trainer(object):
 
@@ -42,7 +43,6 @@ class MB_Trainer(object):
         ################
         ## RL TRAINER
         ################
-
         self.rl_trainer = RL_Trainer(self.params)
 
     def run_training_loop(self):
@@ -85,7 +85,7 @@ def main():
     parser.add_argument('--seed', type=int, default=1)
     parser.add_argument('--no_gpu', '-ngpu', action='store_true')
     parser.add_argument('--which_gpu', '-gpu_id', default=0)
-    parser.add_argument('--video_log_freq', type=int, default=1) #-1 to disable
+    parser.add_argument('--video_log_freq', type=int, default=-1) #-1 to disable
     parser.add_argument('--scalar_log_freq', type=int, default=1) #-1 to disable
     parser.add_argument('--save_params', action='store_true')
     args = parser.parse_args()
@@ -94,18 +94,14 @@ def main():
     params = vars(args)
 
     # HARDCODE EPISODE LENGTHS FOR THE ENVS USED IN THIS MB ASSIGNMENT
-    if params['env_name']=='reacher-cs285-v0':
-        params['ep_len']=200
-    if params['env_name']=='cheetah-cs285-v0':
-        params['ep_len']=500
-    if params['env_name']=='obstacles-cs285-v0':
-        params['ep_len']=100
+    if params['env_name']=='synthesis-v0':
+        params['ep_len']=8
 
     ##################################
     ### CREATE DIRECTORY FOR LOGGING
     ##################################
 
-    logdir_prefix = 'hw4_'  # keep for autograder
+    logdir_prefix = 'proj_'  # keep for autograder
 
     data_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../data')
 

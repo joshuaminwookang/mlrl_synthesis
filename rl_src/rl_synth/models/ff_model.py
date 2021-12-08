@@ -1,9 +1,9 @@
 from torch import nn
 import torch
 from torch import optim
-from cs285.models.base_model import BaseModel
-from cs285.infrastructure.utils import normalize, unnormalize
-from cs285.infrastructure import pytorch_util as ptu
+from rl_synth.models.base_model import BaseModel
+from rl_synth.infrastructure.utils import normalize, unnormalize
+from rl_synth.infrastructure import pytorch_util as ptu
 
 
 class FFModel(nn.Module, BaseModel):
