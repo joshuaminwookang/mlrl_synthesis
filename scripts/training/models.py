@@ -84,8 +84,12 @@ def pad_collate(batch):
 #def train(model, 
 if __name__ == '__main__': 
     data_path = ['epfl_arithmetic.pkl', 'epfl_control.pkl']
+    valid_path = ['vtr_testset_rand.pkl']
     dataset = CustomDataset(data_path)
     dataloader = DataLoader(dataset, batch_size=64, shuffle=True, num_workers=0, collate_fn=pad_collate)
+
+    valid_dataset = CustomDataset(valid_path)
+    valid_dataloader = DataLoader(valid_dataset, batch_size=64, num_workers=0, collate_fn=pad_collate)
 
     input_dim = dataset.input_dim
     model = E2ERegression(input_dim, 128, 128, 128, 2)
@@ -94,12 +98,16 @@ if __name__ == '__main__':
     loss_fn = nn.MSELoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
 
-    import wandb
-    wandb.init(project="synthesis", entity="sehoonkim")
+    #import wandb
+    #wandb.init(project="synthesis", entity="sehoonkim")
 
     for epoch in range(50):
         loss_all = 0
         cnt = 0
+
+        valid_loss_all = 0
+        valid_cnt = 0
+
         for i, batch in tqdm(enumerate(dataloader)):
             features, sequences, sequences_len, labels = batch
             features = features.cuda()
@@ -119,8 +127,24 @@ if __name__ == '__main__':
             cnt += 1
             loss_all += loss
 
-        wandb.log({"loss": loss_all / cnt})
-        print(f"epoch {epoch}, loss {loss_all / cnt}")
+        model.eval()
+
+        for i, batch in tqdm(enumerate(valid_dataloader)):
+            features, sequences, sequences_len, labels = batch
+            features = features.cuda()
+            sequences = sequences.cuda()
+            labels = labels.cuda()
+            x = model(features, sequences, sequences_len)
+
+            loss = loss_fn(x, labels)
+
+            valid_cnt += 1
+            valid_loss_all += loss
+
+        model.train()
+
+        #wandb.log({"loss": loss_all / cnt})
+        print(f"epoch {epoch}, loss {loss_all / cnt}, val_loss {valid_loss_all / cnt}")
 
     print(x)
     print(labels)

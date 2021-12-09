@@ -37,8 +37,8 @@ def prepare_dataset(data):
         label['Slice_LUTs'] = d['Slice_LUTs'] / 1e3
         for f in ['CI', 'CO', 'level', 'level_avg',
                   'cut', 'xor', 'xor_ratio', 'mux', 'mux_ratio', 'and', 'and_ratio',
-                  'obj', 'power', 'slack', 'LUT', 'fanin', 'fanout', 'mffc', 
-                  #'fanin_max', 'fanin_avg', 
+                  'obj', 'power', 'LUT', 'fanin', 'fanout', 'mffc', 
+                  #'fanin_max', 'fanin_avg', 'slack',
                   'fanout_max', 'fanout_avg', 'mffc_max', 'mffc_avg']:
             feature[f] = d[f]
         labels.append(label)
@@ -67,7 +67,8 @@ def preprocess_faninout(data):
         
 def preprocess_slack(data):
     for d in data:
-        slack = d.pop('slack')
+        if 'slack' in d:
+            slack = d.pop('slack')
         '''
         slack_threshold = 21 # x10
         slack_all = slack['total_nodes']
