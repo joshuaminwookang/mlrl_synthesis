@@ -84,7 +84,6 @@ def sample_trajectory(env, policy, max_path_length, render=False, render_mode=('
 
         # take that action and record results
         ob, rew, done, _ = env.step(ac)
-
         # record result of taking that action
         steps += 1
         next_obs.append(ob)
@@ -95,6 +94,7 @@ def sample_trajectory(env, policy, max_path_length, render=False, render_mode=('
         terminals.append(rollout_done)
 
         if rollout_done:
+            print("Done Rollout")
             break
     return Path(obs, image_obs, acs, rewards, next_obs, terminals)
 
@@ -108,6 +108,7 @@ def sample_trajectories(env, policy, min_timesteps_per_batch, max_path_length, r
         this_path = sample_trajectory(env,policy, max_path_length, render, render_mode)
         paths.append(this_path)
         timesteps_this_batch += get_pathlength(this_path)
+        print("timesteps : " + str(timesteps_this_batch))
 
     return paths, timesteps_this_batch
 

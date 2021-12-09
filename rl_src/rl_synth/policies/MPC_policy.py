@@ -1,5 +1,4 @@
 import numpy as np
-
 from .base_policy import BasePolicy
 
 
@@ -31,8 +30,10 @@ class MPCPolicy(BasePolicy):
         # action space
         self.ac_space = self.env.action_space
         self.ac_dim = ac_dim
-        self.low = self.ac_space.low
-        self.high = self.ac_space.high
+        # self.low = self.ac_space.low
+        self.low = 0
+        # self.high = self.ac_space.high
+        self.high = self.env.num_passes -1
 
         # Sampling strategy
         allowed_sampling = ('random', 'cem')
@@ -48,7 +49,8 @@ class MPCPolicy(BasePolicy):
                 + f"num_elites={self.cem_num_elites}, iterations={self.cem_iterations}")
 
     def sample_action_sequences(self, num_sequences, horizon, obs=None):
-        random_action_sequence = self.low + (self.high - self.low) * np.random.rand(num_sequences, horizon, self.ac_dim)
+        random_action_sequence = np.random.randint(self.high, size=(num_sequences, horizon, self.ac_dim))
+        # random_action_sequence = self.low + (self.high - self.low) * np.random.rand(num_sequences, horizon, self.ac_dim)
         if self.sample_strategy == 'random' \
             or (self.sample_strategy == 'cem' and obs is None):
             # TODO(Q1) uniformly sample trajectories and return an array of
@@ -134,17 +136,13 @@ class MPCPolicy(BasePolicy):
         horizon = candidate_action_sequences.shape[1]
         #flattened_acs = np.reshape([candidate_action_sequences[:,t,:] for t in range(horizon)], (num_sequences*horizon, self.ac_dim))
         observation = np.tile(obs, (num_sequences, 1))
-        # obs_list = [observation]
         rewards = [self.env.get_reward(observation, candidate_action_sequences[:,0,:])[0]]
         for t in range(horizon-1):
             observation = model.get_prediction(observation, candidate_action_sequences[:,t,:], self.data_statistics)
             # obs_list.append(observation)
             rewards.append(self.env.get_reward(observation, candidate_action_sequences[:,t+1,:])[0])
          
-        # new_rewards = self.env.get_reward(np.reshape(obs_list, (num_sequences*horizon, self.ob_dim)), flattened_acs)[0]
-        #sum_of_rewards = np.sum(np.reshape(new_rewards, (horizon, num_sequences)), axis=0)
         sum_of_rewards = np.sum(rewards, axis=0)
-        #sum_of_rewards = np.sum(np.reshape(rewards, (self.N, self.horizon)), axis=1)  # TODO (Q2)
 
         # For each candidate action sequence, predict a sequence of
         # states for each dynamics model in your ensemble.

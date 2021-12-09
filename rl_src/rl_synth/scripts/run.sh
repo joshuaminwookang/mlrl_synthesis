@@ -6,16 +6,16 @@ SCRIPT_DIR="$( dirname "$( readlink -f "${BASH_SOURCE[0]}" )" )"
 cd $SCRIPT_DIR/../../
 if [[ $EXP_NUM == 1 ]]; then
     echo "Experiment 1: MBRL with Random Policy "
-    python rl_synth/scripts/run_hw4_mb.py --exp_name debug --env_name synthesis-v0 \
+    python rl_synth/scripts/run.py --exp_name debug --env_name synthesis-v0 \
+        --add_sl_noise --n_iter 1 \
+        --batch_size_initial 20 --num_agent_train_steps_per_iter 5 \
+        --n_layers 1 --size 16 --scalar_log_freq -1 --video_log_freq -1 \
+        --mpc_action_sampling_strategy 'random'
+    # python cs285/scripts/run_hw4_mb.py --exp_name q1_cheetah_n500_arch1x32 --env_name cheetah-cs285-v0 \
     #     --add_sl_noise --n_iter 1 \
     #     --batch_size_initial 20000 --num_agent_train_steps_per_iter 500 \
-    #     --n_layers 1 --size 32 --scalar_log_freq 1 --video_log_freq -1 \
+    #     --n_layers 1 --size 32 --scalar_log_freq -1 --video_log_freq -1 \
     #     --mpc_action_sampling_strategy 'random'
-    python cs285/scripts/run_hw4_mb.py --exp_name q1_cheetah_n500_arch1x32 --env_name cheetah-cs285-v0 \
-        --add_sl_noise --n_iter 1 \
-        --batch_size_initial 20000 --num_agent_train_steps_per_iter 500 \
-        --n_layers 1 --size 32 --scalar_log_freq -1 --video_log_freq -1 \
-        --mpc_action_sampling_strategy 'random'
     # python cs285/scripts/run_hw4_mb.py --exp_name q1_cheetah_n5_arch2x250 --env_name cheetah-cs285-v0 \
     #     --add_sl_noise --n_iter 1 \
     #     --batch_size_initial 20000 --num_agent_train_steps_per_iter 5 \
@@ -28,10 +28,14 @@ if [[ $EXP_NUM == 1 ]]; then
     #     --mpc_action_sampling_strategy 'random'
 elif [[ $EXP_NUM == 2 ]]; then
     echo "Experiment 2: MBRL with Trained MPC Policy"
-    python cs285/scripts/run_hw4_mb.py --exp_name q2_obstacles_singleiteration --env_name obstacles-cs285-v0 \
-    --add_sl_noise --num_agent_train_steps_per_iter 20 --n_iter 1 \
-    --batch_size_initial 5000 --batch_size 1000 --mpc_horizon 10 \
+    python rl_synth/scripts/run.py --exp_name debug2 --env_name synthesis-v0 \
+    --add_sl_noise --num_agent_train_steps_per_iter 2 --n_iter 1 \
+    --batch_size_initial 500 --batch_size 100 --mpc_horizon 3 -tb 50\
     --mpc_action_sampling_strategy 'random' --video_log_freq -1 
+    # python cs285/scripts/run_hw4_mb.py --exp_name q2_obstacles_singleiteration --env_name obstacles-cs285-v0 \
+    # --add_sl_noise --num_agent_train_steps_per_iter 20 --n_iter 1 \
+    # --batch_size_initial 5000 --batch_size 1000 --mpc_horizon 10 \
+    # --mpc_action_sampling_strategy 'random' --video_log_freq -1
 elif [[ $EXP_NUM == 3 ]]; then
     echo "Experiment 3: MBRL with Trained MPC Policy--Longer"
     python cs285/scripts/run_hw4_mb.py --exp_name q3_obstacles --env_name obstacles-cs285-v0 \

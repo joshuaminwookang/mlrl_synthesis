@@ -59,13 +59,13 @@ def main():
     import argparse
     parser = argparse.ArgumentParser()
     parser.add_argument('--env_name', type=str) #reacher-cs285-v0, ant-cs285-v0, cheetah-cs285-v0, obstacles-cs285-v0
-    parser.add_argument('--ep_len', type=int, default=200)
+    parser.add_argument('--ep_len', type=int, default=10)
     parser.add_argument('--exp_name', type=str, default='todo')
     parser.add_argument('--n_iter', '-n', type=int, default=20)
 
     parser.add_argument('--ensemble_size', '-e', type=int, default=3)
-    parser.add_argument('--mpc_horizon', type=int, default=10)
-    parser.add_argument('--mpc_num_action_sequences', type=int, default=1000)
+    parser.add_argument('--mpc_horizon', type=int, default=3)
+    parser.add_argument('--mpc_num_action_sequences', type=int, default=15)
     parser.add_argument('--mpc_action_sampling_strategy', type=str, default='random')
     parser.add_argument('--cem_iterations', type=int, default=4)
     parser.add_argument('--cem_num_elites', type=int, default=5)
@@ -73,14 +73,14 @@ def main():
 
     parser.add_argument('--add_sl_noise', '-noise', action='store_true')
     parser.add_argument('--num_agent_train_steps_per_iter', type=int, default=1000)
-    parser.add_argument('--batch_size_initial', type=int, default=20000) #(random) steps collected on 1st iteration (put into replay buffer)
-    parser.add_argument('--batch_size', '-b', type=int, default=8000) #steps collected per train iteration (put into replay buffer)
-    parser.add_argument('--train_batch_size', '-tb', type=int, default=512) ##steps used per gradient step (used for training)
-    parser.add_argument('--eval_batch_size', '-eb', type=int, default=400) #steps collected per eval iteration
+    parser.add_argument('--batch_size_initial', type=int, default=20) #(random) steps collected on 1st iteration (put into replay buffer)
+    parser.add_argument('--batch_size', '-b', type=int, default=5) #steps collected per train iteration (put into replay buffer)
+    parser.add_argument('--train_batch_size', '-tb', type=int, default=5) ##steps used per gradient step (used for training)
+    parser.add_argument('--eval_batch_size', '-eb', type=int, default=5) #steps collected per eval iteration
 
     parser.add_argument('--learning_rate', '-lr', type=float, default=0.001)
-    parser.add_argument('--n_layers', '-l', type=int, default=2)
-    parser.add_argument('--size', '-s', type=int, default=250)
+    parser.add_argument('--n_layers', '-l', type=int, default=1)
+    parser.add_argument('--size', '-s', type=int, default=16)
 
     parser.add_argument('--seed', type=int, default=1)
     parser.add_argument('--no_gpu', '-ngpu', action='store_true')
@@ -95,7 +95,7 @@ def main():
 
     # HARDCODE EPISODE LENGTHS FOR THE ENVS USED IN THIS MB ASSIGNMENT
     if params['env_name']=='synthesis-v0':
-        params['ep_len']=8
+        params['ep_len']=10
 
     ##################################
     ### CREATE DIRECTORY FOR LOGGING

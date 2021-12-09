@@ -21,7 +21,7 @@ from gym.envs.registration import register
 register(
     id='synthesis-v0',
     entry_point='rl_synth.envs.synthesis:SynthesisEnv',
-    max_episode_steps=8,
+    max_episode_steps=10,
  )
 # how many rollouts to save as videos to tensorboard
 MAX_NVIDEO = 2
@@ -75,7 +75,8 @@ class RL_Trainer(object):
         # import matplotlib
         # matplotlib.use('Agg')
         # Maximum length for episodes
-        self.params['ep_len'] = self.params['ep_len'] or self.env.spec.max_episode_steps
+        #self.params['ep_len'] = self.params['ep_len'] or self.env.spec.max_episode_steps
+        print("EP LEN" + str(self.params['ep_len']))
         global MAX_VIDEO_LEN
         MAX_VIDEO_LEN = self.params['ep_len']
 
@@ -89,7 +90,8 @@ class RL_Trainer(object):
         # Observation and action sizes
 
         ob_dim = self.env.observation_space.shape if img else self.env.observation_space.shape[0]
-        ac_dim = self.env.action_space.n if discrete else self.env.action_space.shape[0]
+        # ac_dim = self.env.action_space.n if discrete else self.env.action_space.shape[0]
+        ac_dim = self.env.ac_dim if discrete else self.env.action_space.shape[0]
         self.params['agent_params']['ac_dim'] = ac_dim
         self.params['agent_params']['ob_dim'] = ob_dim
 
@@ -151,7 +153,6 @@ class RL_Trainer(object):
                 self.collect_training_trajectories(
                     itr, initial_expertdata, collect_policy, use_batchsize)
             )
-
             self.total_envsteps += envsteps_this_batch
 
             # add collected data to replay buffer
@@ -193,7 +194,7 @@ class RL_Trainer(object):
             train_video_paths: paths which also contain videos for visualization purposes
         """
         # TODO: get this from Piazza
-        print("\nCollecting data to be used for training...")
+        print("\nCollecting data {} to be used for training...".format(num_transitions_to_sample))
         paths, envsteps_this_batch = utils.sample_trajectories(self.env, collect_policy, num_transitions_to_sample, self.params['ep_len'])
 
         # collect more rollouts with the same policy, to be saved as videos in tensorboard
@@ -229,16 +230,16 @@ class RL_Trainer(object):
         eval_paths, eval_envsteps_this_batch = utils.sample_trajectories(self.env, eval_policy, self.params['eval_batch_size'], self.params['ep_len'])
 
         # save eval rollouts as videos in tensorboard event file
-        if self.logvideo and train_video_paths != None:
-            print('\nCollecting video rollouts eval')
-            eval_video_paths = utils.sample_n_trajectories(self.env, eval_policy, MAX_NVIDEO, MAX_VIDEO_LEN, True)
+        # if self.logvideo and train_video_paths != None:
+        #     print('\nCollecting video rollouts eval')
+        #     eval_video_paths = utils.sample_n_trajectories(self.env, eval_policy, MAX_NVIDEO, MAX_VIDEO_LEN, True)
 
-            #save train/eval videos
-            print('\nSaving train rollouts as videos...')
-            self.logger.log_paths_as_videos(train_video_paths, itr, fps=self.fps, max_videos_to_save=MAX_NVIDEO,
-                                            video_title='train_rollouts')
-            self.logger.log_paths_as_videos(eval_video_paths, itr, fps=self.fps,max_videos_to_save=MAX_NVIDEO,
-                                            video_title='eval_rollouts')
+        #     #save train/eval videos
+        #     print('\nSaving train rollouts as videos...')
+        #     self.logger.log_paths_as_videos(train_video_paths, itr, fps=self.fps, max_videos_to_save=MAX_NVIDEO,
+        #                                     video_title='train_rollouts')
+        #     self.logger.log_paths_as_videos(eval_video_paths, itr, fps=self.fps,max_videos_to_save=MAX_NVIDEO,
+        #                                     video_title='eval_rollouts')
 
         #######################
 
@@ -285,32 +286,43 @@ class RL_Trainer(object):
     def log_model_predictions(self, itr, all_logs):
         # model predictions
 
-        import matplotlib.pyplot as plt
-        self.fig = plt.figure()
+        # import matplotlib.pyplot as plt
+        # self.fig = plt.figure()
 
         # sample actions
-        action_sequence = self.agent.actor.sample_action_sequences(num_sequences=1, horizon=10) #20 reacher
+        action_sequence = self.agent.actor.sample_action_sequences(num_sequences=1, horizon=2) #20 reacher
         action_sequence = action_sequence[0]
-
+        print("logging action seq : ")
+        print(action_sequence)
         # calculate and log model prediction error
         mpe, true_states, pred_states = utils.calculate_mean_prediction_error(self.env, action_sequence, self.agent.dyn_models, self.agent.actor.data_statistics)
         assert self.params['agent_params']['ob_dim'] == true_states.shape[1] == pred_states.shape[1]
         ob_dim = self.params['agent_params']['ob_dim']
         ob_dim = 2*int(ob_dim/2.0) ## skip last state for plotting when state dim is odd
-
-        # plot the predictions
-        self.fig.clf()
-        for i in range(ob_dim):
-            plt.subplot(ob_dim/2, 2, i+1)
-            plt.plot(true_states[:,i], 'g')
-            plt.plot(pred_states[:,i], 'r')
-        self.fig.suptitle('MPE: ' + str(mpe))
-        self.fig.savefig(self.params['logdir']+'/itr_'+str(itr)+'_predictions.png', dpi=200, bbox_inches='tight')
-
-        # plot all intermediate losses during this iteration
+        
+        #logfp = open(self.params['logdir']+'/itr_'+str(itr)+'_predictions.log', "w")
+        print("true states:")
+        print(true_states)
+        print("predcited states:")
+        print(pred_states)
         all_losses = np.array([log['Training Loss'] for log in all_logs])
-        np.save(self.params['logdir']+'/itr_'+str(itr)+'_losses.npy', all_losses)
-        self.fig.clf()
-        plt.plot(all_losses)
-        self.fig.savefig(self.params['logdir']+'/itr_'+str(itr)+'_losses.png', dpi=200, bbox_inches='tight')
+        print("losses:")
+        print(all_losses)
+
+        # log predictions
+        # plot the predictions
+        # self.fig.clf()
+        # for i in range(ob_dim):
+        #     plt.subplot(ob_dim/2, 2, i+1)
+        #     plt.plot(true_states[:,i], 'g')
+        #     plt.plot(pred_states[:,i], 'r')
+        # self.fig.suptitle('MPE: ' + str(mpe))
+        # self.fig.savefig(self.params['logdir']+'/itr_'+str(itr)+'_predictions.png', dpi=200, bbox_inches='tight')
+
+        # # plot all intermediate losses during this iteration
+        # all_losses = np.array([log['Training Loss'] for log in all_logs])
+        # np.save(self.params['logdir']+'/itr_'+str(itr)+'_losses.npy', all_losses)
+        # self.fig.clf()
+        # plt.plot(all_losses)
+        # self.fig.savefig(self.params['logdir']+'/itr_'+str(itr)+'_losses.png', dpi=200, bbox_inches='tight')
 

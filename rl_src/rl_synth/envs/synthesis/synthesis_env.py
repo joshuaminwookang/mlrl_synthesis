@@ -58,16 +58,16 @@ for x, y in SEQ_TO_TOKEN.items():
     TOKEN_TO_SEQ[y] = x
 
 class SynthesisEnv(gym.Env):
-    def __init__(self, bmark="bfly.abc"):
+    def __init__(self, bmark="adder"):
         # Env Parameters
         self.env_name = 'synthesis'
         self.is_gym = True
         self.num_passes = 15
         self.num_features = 48
-        self.action_dim = self.ac_dim = self.num_passes
+        self.action_dim = self.ac_dim = 1
         self.observation_dim = self.obs_dim = self.num_features #for hand-picked features; TODO change with Graph Embedding Dimension later
-        self.counter = 0
-        self.counter_limit = 5
+        # self.counter = 0
+        # self.counter_limit = 5
         self.eps = 0.1
 
         # Setup action and obs spaces
@@ -82,77 +82,93 @@ class SynthesisEnv(gym.Env):
         self.run_dir = os.getcwd()
         self.script_dir = os.path.dirname(os.path.realpath(__file__))
         #self.bmark_path = glob.glob(self.script_dir +  "/BLIF/" + bmark + ".blif")[0]
-        self.bmark_path = glob.glob(self.script_dir +  "/Verilog/*.v")[0]
+        self.bmark_path = glob.glob(self.script_dir +  "/verilog/*.v")[0]
         self.bmark = os.path.basename(self.bmark_path).split('.')[0] # current circuit benchmark TODO: use Vivado
 
         # save inital features of benchmark 
-        self._run_yosys(self.state)
-        self.baseline_obs = self._get_obs(self.state)
-        self.obs = self.baseline_obs
-        self.baseline_rewards = self.get_reward(self.obs, 0)[0]
+        self.baseline_obs = np.zeros(self.obs_dim)
+        self.last_obs = np.zeros(self.obs_dim)
+        self.baseline_rewards = 0.0
+        self.baseline_rewards = -self.get_reward(np.zeros(self.obs_dim), np.array([-1]))[0][0]
+
+        # print("Try new")
+        # test_obs = np.tile(self.baseline_obs, (3, 1))
+        # print(self.get_reward(test_obs, np.array([12,1,3]))[0] )
 
     def seed(self, seed):
         np.random.seed(seed)
 
-    # action: integer between 0~13
+    # action: np array of dimension (batchsize x 1)
     def step(self, action):
-        print("Iter : " + str(self.counter))
-        print("action : " + str(action + 1))
-        # move, only if its a valid move (else, keep it there because it cant move)
-        self.counter = self.counter + 1
-        state = self.state*self.ac_dim + action +1
-        print("state : " +  str(state))
-        print(self._get_seq(state))
-
-        ## run simulation (Yosys)
-        if action < self.num_passes: # unless stop token
-            try:
-                self._run_yosys(state)
-                ob = self._get_obs(state)
-                self.obs = ob
-            except:
-                print("Invalid run")
-                return self.obs, -1, 0, None
-        # if action is to terminate, no need to re-run yosys and get obervations
-        else:
-            ob = self.obs
+        print("We are in step, action was : " + str(action))
+        ob = self._get_obs(self.state)
+        # get reward of this action
         reward, done = self.get_reward(ob, action)
+        # get score and write env_info
         score = self.get_score(ob)
         env_info = {'ob': ob,
                     'rewards': self.reward_dict,
                     'score': score}
-        self.state = state
-        print(reward)
+        # actual update: update state of env based on this action
+        self.state = self.state + action[0] + 1
+        print(str(reward) + "\n")
         return ob, reward, done, env_info
 
     def reset(self):
         self.state = 0
-        self.obs = self.baseline_obs
-        self.counter = 0
-        return self.obs
+        self.last_obs = self.baseline_obs
+        # self.counter = 0
+        return self.last_obs
 
-    # NO BATCHMODE FOR NOW
+    # action: np array of dimension (batchsize x 1)
+    # observations: np array 
+    # state is always an integer (current state + seqeuence)
     def get_reward(self, observations, actions):
-        try:
-            fp = open("{}/{}.log".format(self.script_dir, self.bmark), "r")
-        except OSError:
-            print("Could not open/read Yosys log")
-            sys.exit()
-        with fp:
-            delay = float(re.findall(r'\d+.\d+', lines_that_contain("Del = ", fp)[-1])[0])
-            fp.seek(0)
-            area = float(re.findall(r'\d+.\d+', lines_that_contain("Ar = ", fp)[-1])[1])
-            self.reward_dict['r_delay'] = delay
-            self.reward_dict['r_area'] = area
-            self.reward_dict['r_total'] = - (delay*10000+area)
-        if actions == self.num_passes-1 :
-            dones = np.ones((observations.shape[0],))
-        else:
-            dones = np.zeros((observations.shape[0],))
-        if (self.state == 0):
-            return self.reward_dict['r_total'], dones[0]
-        else:
-            return self.baseline_rewards - self.reward_dict['r_total'], dones[0]
+        delays = []
+        areas = []
+        totals  = []
+        dones = []
+        # Batch mode: we compute 
+        for ac in actions:
+            ac = int(ac)
+            # self.counter = self.counter + 1
+            state = self.state*self.num_passes + ac +1
+            print("We are in get_reward, state is : " + str(state))
+            ## run simulation and get rewards (Yosys)
+            if ac < self.num_passes: # unless stop token
+                try:
+                    self._run_yosys(state)
+                    ob = self._get_obs(state)
+                    self.last_obs = ob
+                except:
+                    print("Invalid run")
+                    return self.last_obs, -1, 0, None
+            # if action is to terminate, no need to re-run yosys and get obervations
+            else:
+                ob = self.last_obs
+            # print("Iter : " + str(self.counter))
+            # Now read yosys log to get Delay and Area
+            try:
+                fp = open("{}/{}.log".format(self.script_dir, self.bmark), "r")
+            except OSError:
+                print("Could not open/read Yosys log")
+                sys.exit()
+            with fp:
+                delay = float(re.findall(r'\d+.\d+', lines_that_contain("Del = ", fp)[-1])[0])
+                fp.seek(0)
+                area = float(re.findall(r'\d+.\d+', lines_that_contain("Ar = ", fp)[-1])[1])
+                delays.append(delay)
+                areas.append(area)
+                totals.append(-(delay*10000+area))
+                dones.append(int(ac == self.num_passes-1 ))
+
+        self.reward_dict['r_delay'] = np.asarray(delays)
+        self.reward_dict['r_area'] = np.asarray(areas)
+        self.reward_dict['r_total'] = np.asarray(totals)
+        dones = np.asarray(dones)
+        # if (actions.shape[0] == 1) and state == 0: # only for initializing env 
+        #     return self.reward_dict['r_total'][0], dones[0]
+        return self.baseline_rewards - self.reward_dict['r_total'], dones
 
     def get_score(self, observations):
         # read abc results
@@ -194,7 +210,9 @@ class SynthesisEnv(gym.Env):
             return True
         except:
             return False
-            
+ 
+    #@params: state (int)
+    #@return: success or not           
     def _run_yosys(self, state):
         self._write_script(state)
         try:
@@ -206,7 +224,7 @@ class SynthesisEnv(gym.Env):
             return False
     
     def _get_obs(self, state):
-        if (state == 0 and self.counter >0):
+        if (state == 0):
             return self.baseline_obs
         stats1 = glob.glob(os.path.normpath(self.script_dir + "/stats.json"))
         stats2 = glob.glob(os.path.normpath(self.script_dir + "/fanstats.json"))
