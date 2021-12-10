@@ -226,7 +226,7 @@ class RL_Trainer(object):
         #######################
 
         # collect eval trajectories, for logging
-        print("\nCollecting data for eval...")
+        print("\nCollecting {} data for eval...".format(self.params['eval_batch_size']))
         eval_paths, eval_envsteps_this_batch = utils.sample_trajectories(self.env, eval_policy, self.params['eval_batch_size'], self.params['ep_len'])
 
         # save eval rollouts as videos in tensorboard event file
@@ -286,8 +286,10 @@ class RL_Trainer(object):
     def log_model_predictions(self, itr, all_logs):
         # model predictions
 
-        # import matplotlib.pyplot as plt
-        # self.fig = plt.figure()
+        import matplotlib   
+        matplotlib.use('Agg')
+        import matplotlib.pyplot as plt
+        self.fig = plt.figure()
 
         # sample actions
         action_sequence = self.agent.actor.sample_action_sequences(num_sequences=1, horizon=2) #20 reacher
@@ -311,18 +313,18 @@ class RL_Trainer(object):
 
         # log predictions
         # plot the predictions
-        # self.fig.clf()
-        # for i in range(ob_dim):
-        #     plt.subplot(ob_dim/2, 2, i+1)
-        #     plt.plot(true_states[:,i], 'g')
-        #     plt.plot(pred_states[:,i], 'r')
-        # self.fig.suptitle('MPE: ' + str(mpe))
-        # self.fig.savefig(self.params['logdir']+'/itr_'+str(itr)+'_predictions.png', dpi=200, bbox_inches='tight')
+        self.fig.clf()
+        for i in range(ob_dim):
+            plt.subplot(ob_dim/2, 2, i+1)
+            plt.plot(true_states[:,i], 'g')
+            plt.plot(pred_states[:,i], 'r')
+        self.fig.suptitle('MPE: ' + str(mpe))
+        self.fig.savefig(self.params['logdir']+'/itr_'+str(itr)+'_predictions.png', dpi=200, bbox_inches='tight')
 
         # # plot all intermediate losses during this iteration
-        # all_losses = np.array([log['Training Loss'] for log in all_logs])
-        # np.save(self.params['logdir']+'/itr_'+str(itr)+'_losses.npy', all_losses)
-        # self.fig.clf()
-        # plt.plot(all_losses)
-        # self.fig.savefig(self.params['logdir']+'/itr_'+str(itr)+'_losses.png', dpi=200, bbox_inches='tight')
+        all_losses = np.array([log['Training Loss'] for log in all_logs])
+        np.save(self.params['logdir']+'/itr_'+str(itr)+'_losses.npy', all_losses)
+        self.fig.clf()
+        plt.plot(all_losses)
+        self.fig.savefig(self.params['logdir']+'/itr_'+str(itr)+'_losses.png', dpi=200, bbox_inches='tight')
 

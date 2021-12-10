@@ -30,8 +30,12 @@ elif [[ $EXP_NUM == 2 ]]; then
     echo "Experiment 2: MBRL with Trained MPC Policy"
     python rl_synth/scripts/run.py --exp_name debug2 --env_name synthesis-v0 \
     --add_sl_noise --num_agent_train_steps_per_iter 2 --n_iter 1 \
-    --batch_size_initial 500 --batch_size 100 --mpc_horizon 3 -tb 50\
+    --batch_size_initial 100 --batch_size 50 --mpc_horizon 2 -tb 25\
     --mpc_action_sampling_strategy 'random' --video_log_freq -1 
+    # python rl_synth/scripts/run.py --exp_name debug2 --env_name synthesis-v0 \
+    # --add_sl_noise --num_agent_train_steps_per_iter 2 --n_iter 1 \
+    # --batch_size_initial 500 --batch_size 100 --mpc_horizon 3 -tb 50\
+    # --mpc_action_sampling_strategy 'random' --video_log_freq -1 
     # python cs285/scripts/run_hw4_mb.py --exp_name q2_obstacles_singleiteration --env_name obstacles-cs285-v0 \
     # --add_sl_noise --num_agent_train_steps_per_iter 20 --n_iter 1 \
     # --batch_size_initial 5000 --batch_size 1000 --mpc_horizon 10 \

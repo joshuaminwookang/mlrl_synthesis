@@ -65,15 +65,15 @@ def main():
 
     parser.add_argument('--ensemble_size', '-e', type=int, default=3)
     parser.add_argument('--mpc_horizon', type=int, default=3)
-    parser.add_argument('--mpc_num_action_sequences', type=int, default=15)
+    parser.add_argument('--mpc_num_action_sequences', type=int, default=5)
     parser.add_argument('--mpc_action_sampling_strategy', type=str, default='random')
     parser.add_argument('--cem_iterations', type=int, default=4)
     parser.add_argument('--cem_num_elites', type=int, default=5)
     parser.add_argument('--cem_alpha', type=float, default=1)
 
     parser.add_argument('--add_sl_noise', '-noise', action='store_true')
-    parser.add_argument('--num_agent_train_steps_per_iter', type=int, default=1000)
-    parser.add_argument('--batch_size_initial', type=int, default=20) #(random) steps collected on 1st iteration (put into replay buffer)
+    parser.add_argument('--num_agent_train_steps_per_iter', type=int, default=1)
+    parser.add_argument('--batch_size_initial', type=int, default=200) #(random) steps collected on 1st iteration (put into replay buffer)
     parser.add_argument('--batch_size', '-b', type=int, default=5) #steps collected per train iteration (put into replay buffer)
     parser.add_argument('--train_batch_size', '-tb', type=int, default=5) ##steps used per gradient step (used for training)
     parser.add_argument('--eval_batch_size', '-eb', type=int, default=5) #steps collected per eval iteration
