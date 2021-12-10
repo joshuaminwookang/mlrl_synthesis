@@ -1,9 +1,11 @@
 from tqdm import tqdm 
 
+import random
 import torch
 from torch import nn
 from torch.utils.data import Dataset, DataLoader
 from torch.nn.utils.rnn import pad_sequence, pack_padded_sequence, pad_packed_sequence
+import numpy as np
 
 from preprocessing import SEQ_TO_TOKEN, TOKEN_TO_SEQ, preprocess_data
 
@@ -14,11 +16,13 @@ class FeatureEmbedding(nn.Module):
         self.bn1 = nn.BatchNorm1d(hidden_dim)
         self.relu = nn.ReLU()
         self.dense2 = nn.Linear(hidden_dim, output_dim)
+        #self.dropout = nn.Dropout(p=0.1)
     def forward(self, x):
         x = self.dense1(x)
         #x = self.bn1(x)
         x = self.relu(x)
         x = self.dense2(x)
+        #x = self.dropout(x)
         return x
     
 class SequenceEmbedding(nn.Module):
@@ -49,18 +53,26 @@ class E2ERegression(nn.Module):
         self.se = SequenceEmbedding(se_input_dim, fe_output_dim, se_num_lstm_layers)
         self.dense = nn.Linear(fe_output_dim, output_dim)
         self.num_lstm_layers = se_num_lstm_layers
+        #self.dropout = nn.Dropout(p=0.1)
     
     def forward(self, feature, sequence, sequence_len):
         x = self.fe(feature)
         x = torch.stack([x] * self.num_lstm_layers)
         x, x_len = self.se(sequence, sequence_len, x)
         x = torch.stack([x[i, l - 1, :] for i, l in enumerate(x_len)])
+        #x = self.dropout(x)
         x = self.dense(x)
         return x
 
 class CustomDataset(Dataset):
-    def __init__(self, data_path):
-        self.features, self.sequences, self.labels = preprocess_data(data_path)
+    def __init__(self, features=None, sequences=None, labels=None, data_path=None):
+        if data_path is not None:
+            self.features, self.sequences, self.labels = preprocess_data(data_path)
+        else:
+            assert features is not None 
+            assert sequences is not None 
+            assert labels is not None 
+            self.features, self.sequences, self.labels = features, sequences, labels
         self.input_dim = self.features.shape[-1]
 
     def __len__(self):
@@ -73,6 +85,33 @@ class CustomDataset(Dataset):
         #return {'feature': feature, 'sequence': sequence, 'label': label}
         return feature, sequence, label
 
+def generate_datasets(data_path, p_val=0.2):
+    features, sequences, labels = preprocess_data(data_path)
+    num_training_sets = int((1 - p_val) * len(features))
+    indices_all = np.array(list(range(len(features))))
+    random.shuffle(indices_all)
+    train_indices = indices_all[:num_training_sets]
+    val_indices = indices_all[num_training_sets:]
+
+    train_dataset = CustomDataset(
+        features[train_indices], 
+        sequences[train_indices],
+        labels[train_indices],
+    )
+    valid_dataset = CustomDataset(
+        features[val_indices], 
+        sequences[val_indices],
+        labels[val_indices],
+    )
+    print(train_indices)
+    print(val_indices)
+    print(len(features), len(train_indices), len(val_indices))
+    print(len(train_dataset))
+    print(len(valid_dataset))
+
+    return train_dataset, valid_dataset
+
+
 def pad_collate(batch):
     features, sequences, labels, = zip(*batch)
     sequences_len = [len(s) for s in sequences]
@@ -83,23 +122,24 @@ def pad_collate(batch):
 
 #def train(model, 
 if __name__ == '__main__': 
-    data_path = ['epfl_arithmetic.pkl', 'epfl_control.pkl']
-    valid_path = ['vtr_testset_rand.pkl']
-    dataset = CustomDataset(data_path)
-    dataloader = DataLoader(dataset, batch_size=64, shuffle=True, num_workers=0, collate_fn=pad_collate)
+    data_path = ['epfl_arithmetic.pkl', 'epfl_control.pkl', 'vtr_select.pkl']
+    #valid_path = ['vtr_testset_rand.pkl']
+    train_dataset, valid_dataset = generate_datasets(data_path)
+    #dataset = CustomDataset(data_path=data_path)
+    train_dataloader = DataLoader(train_dataset, batch_size=64, shuffle=True, num_workers=0, collate_fn=pad_collate)
 
-    valid_dataset = CustomDataset(valid_path)
+    #valid_dataset = CustomDataset(data_path=valid_path)
     valid_dataloader = DataLoader(valid_dataset, batch_size=64, num_workers=0, collate_fn=pad_collate)
 
-    input_dim = dataset.input_dim
+    input_dim = train_dataset.input_dim
     model = E2ERegression(input_dim, 128, 128, 128, 2)
     model = model.cuda()
 
     loss_fn = nn.MSELoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
 
-    #import wandb
-    #wandb.init(project="synthesis", entity="sehoonkim")
+    import wandb
+    wandb.init(project="synthesis", entity="sehoonkim")
 
     for epoch in range(50):
         loss_all = 0
@@ -108,7 +148,7 @@ if __name__ == '__main__':
         valid_loss_all = 0
         valid_cnt = 0
 
-        for i, batch in tqdm(enumerate(dataloader)):
+        for i, batch in tqdm(enumerate(train_dataloader)):
             features, sequences, sequences_len, labels = batch
             features = features.cuda()
             sequences = sequences.cuda()
@@ -143,8 +183,8 @@ if __name__ == '__main__':
 
         model.train()
 
-        #wandb.log({"loss": loss_all / cnt})
-        print(f"epoch {epoch}, loss {loss_all / cnt}, val_loss {valid_loss_all / cnt}")
+        wandb.log({"loss": loss_all / cnt, "val_loss": valid_loss_all / valid_cnt})
+        print(f"epoch {epoch}, loss {loss_all / cnt}, val_loss {valid_loss_all / valid_cnt}")
 
     print(x)
     print(labels)

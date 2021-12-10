@@ -1,5 +1,6 @@
 import numpy as np
 import pickle
+from tqdm import tqdm
 
 
 SEQ_TO_TOKEN = {
@@ -30,7 +31,8 @@ def prepare_dataset(data):
     labels = []
     features = []
     sequences = []
-    for _, d in data.items():
+    print('preparing dataset')
+    for _, d in tqdm(data.items()):
         feature = {}
         label = {}
         label['Path_Delay'] = d['Path_Delay'] / 1e2
@@ -47,7 +49,8 @@ def prepare_dataset(data):
     return features, labels, sequences
 
 def preprocess_faninout(data):
-    for d in data:
+    print('preprocessing fanin and fanout')
+    for d in tqdm(data):
         fi = d.pop('fanin')
         fo = d.pop('fanout')
         d['fanin_all'] = fi['2'] # assume all fanin's are 2
@@ -66,7 +69,8 @@ def preprocess_faninout(data):
         d['fanout_all'] = fo_all
         
 def preprocess_slack(data):
-    for d in data:
+    print('preprocessing slack')
+    for d in tqdm(data):
         if 'slack' in d:
             slack = d.pop('slack')
         '''
@@ -94,7 +98,8 @@ def preprocess_slack(data):
         '''
                 
 def preprocess_mffc(data):
-    for d in data:
+    print('preprocess mffc')
+    for d in tqdm(data):
         mffc = d.pop('mffc')
         mffc_threshold = 9
         mffc_all, mffc_large = 0, 0
@@ -110,7 +115,8 @@ def preprocess_mffc(data):
         d['mffc_all'] = mffc_all
         
 def preprocess_LUT(data):
-    for d in data:
+    print('preprocess LUT')
+    for d in tqdm(data):
         lut = d.pop('LUT')
         for i in [2, 3, 4, 5, 6]:
             key = f"{i}_LUT_ratio"
@@ -123,8 +129,9 @@ def preprocess_LUT(data):
 
 def preprocess_sequence(sequences):
     # convert the string representation into a list of tokens
+    print('preprocessing sequences')
     seq_list = []
-    for seq in sequences:
+    for seq in tqdm(sequences):
         seq = seq.split(';')[2: -3] # remove the redundant parts
         sl = []
         for s in seq:
@@ -174,7 +181,7 @@ def preprocess_data(data_path):
     sequences_list = preprocess_sequence(sequences)
     labels_flattened = flatten_all(labels)
 
-    return features_normalized, sequences_list, labels_flattened
+    return features_normalized, np.array(sequences_list), labels_flattened
 
 if __name__ == '__main__': 
     features, sequences, labels = preprocess_data('../../epfl_arithmetic.pkl')
