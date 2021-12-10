@@ -1,2 +1,2 @@
-&scorr;&sweep;&b -d;&dch -f;&if -K 6 -v;&mfs;
+&scorr;&sweep;&b -d;&dch -f;&if -W 300 -K 6 -v;&mfs;&st;&if -W 300 -y -K 6;&synch2;&dch -f;&b -d;&dc2;&dc2;&syn2;&if -K 6 -v;&mfs;
 &ps;&pfeatures /home/mkang/mlrl_synthesis/rl_src/rl_synth/envs/synthesis/stats.json;&pfanstats /home/mkang/mlrl_synthesis/rl_src/rl_synth/envs/synthesis/fanstats.json

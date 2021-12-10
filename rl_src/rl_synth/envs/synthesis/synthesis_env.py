@@ -99,13 +99,15 @@ class SynthesisEnv(gym.Env):
 
     # action: np array of dimension (batchsize x 1)
     def step(self, action):
-        # print("We are in step, action was : " + str(action))
-        ob = self._get_obs(self.state)
+        print("We are in step, action was : " + str(action))
+        # ob = self._get_obs(self.state)
         # get reward of this action
-        reward, done = self.get_reward(ob, action)
+        reward, done = self.get_reward(self.last_obs, action)
         # actual update: update state of env based on this action
         self.state = self.state *self.num_passes + action[0] + 1
         ob = self._get_obs(self.state)
+        print(ob)
+        self.obs = ob
         # get score and write env_info
         score = self.get_score(ob)
         env_info = {'ob': ob,
@@ -133,7 +135,7 @@ class SynthesisEnv(gym.Env):
             ac = int(ac)
             # self.counter = self.counter + 1
             state = self.state*self.num_passes + ac +1
-            # print("We are in get_reward, state is : " + str(state))
+            print("We are in get_reward, state is : " + str(state))
             ## run simulation and get rewards (Yosys)
             if ac < self.num_passes: # unless stop token
                 self._run_yosys(state)
@@ -175,11 +177,12 @@ class SynthesisEnv(gym.Env):
         f.close()
     
     def _get_histogram(self, state):
+        print(state)
         i = state - 1
         histogram = np.zeros(self.num_passes)
         while i >= 0 :
             remainder = i % self.num_passes
-            divisor = state // self.num_passes
+            divisor = i // self.num_passes
             histogram[remainder] += 1
             if divisor <= 0 : 
                 break;
