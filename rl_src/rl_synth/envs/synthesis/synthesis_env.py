@@ -63,11 +63,9 @@ class SynthesisEnv(gym.Env):
         self.env_name = 'synthesis'
         self.is_gym = True
         self.num_passes = 15
-        self.num_features = 48
+        self.num_features = 48 + self.num_passes
         self.action_dim = self.ac_dim = 1
         self.observation_dim = self.obs_dim = self.num_features #for hand-picked features; TODO change with Graph Embedding Dimension later
-        # self.counter = 0
-        # self.counter_limit = 5
         self.eps = 0.1
 
         # Setup action and obs spaces
@@ -86,10 +84,11 @@ class SynthesisEnv(gym.Env):
         self.bmark = os.path.basename(self.bmark_path).split('.')[0] # current circuit benchmark TODO: use Vivado
 
         # save inital features of benchmark 
-        self.baseline_obs = np.zeros(self.obs_dim)
-        self.last_obs = np.zeros(self.obs_dim)
+
         self.baseline_rewards = 0.0
         self.baseline_rewards = -self.get_reward(np.zeros(self.obs_dim), np.array([-1]))[0][0]
+        self.baseline_obs = self._get_obs(self.state)
+        self.last_obs = self.baseline_obs
 
         # print("Try new")
         # test_obs = np.tile(self.baseline_obs, (3, 1))
@@ -100,17 +99,18 @@ class SynthesisEnv(gym.Env):
 
     # action: np array of dimension (batchsize x 1)
     def step(self, action):
-        print("We are in step, action was : " + str(action))
+        # print("We are in step, action was : " + str(action))
         ob = self._get_obs(self.state)
         # get reward of this action
         reward, done = self.get_reward(ob, action)
+        # actual update: update state of env based on this action
+        self.state = self.state *self.num_passes + action[0] + 1
+        ob = self._get_obs(self.state)
         # get score and write env_info
         score = self.get_score(ob)
         env_info = {'ob': ob,
                     'rewards': self.reward_dict,
                     'score': score}
-        # actual update: update state of env based on this action
-        self.state = self.state + action[0] + 1
         print(str(reward) + "\n")
         return ob, reward, done, env_info
 
@@ -133,19 +133,11 @@ class SynthesisEnv(gym.Env):
             ac = int(ac)
             # self.counter = self.counter + 1
             state = self.state*self.num_passes + ac +1
-            print("We are in get_reward, state is : " + str(state))
+            # print("We are in get_reward, state is : " + str(state))
             ## run simulation and get rewards (Yosys)
             if ac < self.num_passes: # unless stop token
-                try:
-                    self._run_yosys(state)
-                    ob = self._get_obs(state)
-                    self.last_obs = ob
-                except:
-                    print("Invalid run")
-                    return self.last_obs, -1, 0, None
+                self._run_yosys(state)
             # if action is to terminate, no need to re-run yosys and get obervations
-            else:
-                ob = self.last_obs
             # print("Iter : " + str(self.counter))
             # Now read yosys log to get Delay and Area
             try:
@@ -182,6 +174,19 @@ class SynthesisEnv(gym.Env):
         f.write(self._get_seq(state))
         f.close()
     
+    def _get_histogram(self, state):
+        i = state - 1
+        histogram = np.zeros(self.num_passes)
+        while i >= 0 :
+            remainder = i % self.num_passes
+            divisor = state // self.num_passes
+            histogram[remainder] += 1
+            if divisor <= 0 : 
+                break;
+            else : 
+                i = divisor-1
+        return histogram
+
     #@params: state (int)
     #@return: seq (str)
     def _get_seq(self, state):
@@ -224,8 +229,8 @@ class SynthesisEnv(gym.Env):
             return False
     
     def _get_obs(self, state):
-        if (state == 0):
-            return self.baseline_obs
+        # if (state == 0):
+        #     return self.baseline_obs
         stats1 = glob.glob(os.path.normpath(self.script_dir + "/stats.json"))
         stats2 = glob.glob(os.path.normpath(self.script_dir + "/fanstats.json"))
         try:
@@ -242,10 +247,11 @@ class SynthesisEnv(gym.Env):
         except:
             print("No fanstats.json for {} {}".format(self.bmark, state))
             return 0
-        processed = preprocess_data({ **stats1_data, **stats2_data })
-        if (state > 0 ):
-            return normalize(processed, self.baseline_obs)
-        return normalize(processed, processed)
+        processed = preprocess_data({ **stats1_data, **stats2_data }) 
+        # if (state > 0 ):
+        #     return normalize(processed, self.baseline_obs)
+        # return normalize(processed, processed)
+        return np.concatenate((self._get_histogram(state), processed))
 
 ########################
 # HELPER FUNCTIONS + PREPROCESSING

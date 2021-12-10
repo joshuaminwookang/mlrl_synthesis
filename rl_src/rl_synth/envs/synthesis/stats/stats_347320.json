@@ -1,0 +1,33 @@
+{
+    "CI" : 256,
+    "CO" : 129,
+    "PI" :     256,
+    "PO" :     129,
+    "level" : 287,
+    "level_avg" : 141,
+    "cut" : 15,
+    "xor" : 255,
+    "xor_ratio" :  43.44,
+    "mux" : 0,
+    "mux_ratio" :   0.00,
+    "and" : 996,
+    "and_ratio" :  56.56,
+    "obj" : 1761,
+    "power" :    542.1,
+    "LUT" : {
+        "total" : 299,
+        "2_LUT" : 79,
+        "2_LUT_ratio" : 26.4,
+        "3_LUT" : 83,
+        "3_LUT_ratio" : 27.8,
+        "4_LUT" : 31,
+        "4_LUT_ratio" : 10.4,
+        "5_LUT" : 47,
+        "5_LUT_ratio" : 15.7,
+        "6_LUT" : 59,
+        "6_LUT_ratio" : 19.7,
+        "size_avg" : 3.75,
+        "level" :    48,
+        "level_avg" : 24.55
+    }
+}
