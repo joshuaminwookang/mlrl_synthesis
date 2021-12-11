@@ -34,7 +34,7 @@ python rl_synth/scripts/run.py --exp_name  ${slurm_script_name} --env_name synth
         --n_layers ${NN_LAYERS} --size ${NN_SIZE} --scalar_log_freq -1 --video_log_freq -1 \
         --mpc_action_sampling_strategy 'random'    
 EOT
-    # sbatch "${slurm_script_name}.sh"
+    sbatch "${slurm_script_name}.sh"
 }
 if ! [ -d "runs" ]; then
   mkdir -p "runs"

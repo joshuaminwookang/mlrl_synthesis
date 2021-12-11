@@ -1,2 +1,0 @@
-&scorr;&sweep;&syn3;&if -W 300 -y -K 6;&if -K 6 -v;&mfs;
-&ps;&pfeatures /global/home/users/minwoo_kang/mlrl_synthesis/rl_src/rl_synth/envs/synthesis/stats.json;&pfanstats /global/home/users/minwoo_kang/mlrl_synthesis/rl_src/rl_synth/envs/synthesis/fanstats.json
