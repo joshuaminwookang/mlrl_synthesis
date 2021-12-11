@@ -27,8 +27,9 @@ launch_mbrl_train_job(){
 #SBATCH --time=05:00:00
 #
 ## Command(s) to run:
-conda activate rl
-python rl_synth/scripts/run.py --exp_name  ${slurm_script_name} --env_name synthesis-v0 \
+source /global/home/users/${USER}/.bashrc
+source activate rl
+python ../rl_synth/scripts/run.py --exp_name  ${slurm_script_name} --env_name synthesis-v0 \
         --add_sl_noise --n_iter 1 \
         --batch_size_initial ${1} --num_agent_train_steps_per_iter ${2} --train_batch_size ${3}\
         --n_layers ${NN_LAYERS} --size ${NN_SIZE} --scalar_log_freq -1 --video_log_freq -1 \
