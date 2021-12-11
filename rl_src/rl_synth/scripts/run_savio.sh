@@ -32,8 +32,8 @@ python rl_synth/scripts/run.py --exp_name  ${slurm_script_name} --env_name synth
         --add_sl_noise --n_iter 1 \
         --batch_size_initial ${1} --num_agent_train_steps_per_iter ${2} --train_batch_size ${3}\
         --n_layers ${NN_LAYERS} --size ${NN_SIZE} --scalar_log_freq -1 --video_log_freq -1 \
-        --mpc_action_sampling_strategy 'random'
-EOT    
+        --mpc_action_sampling_strategy 'random'    
+EOT
     # sbatch "${slurm_script_name}.sh"
 }
 if ! [ -d "runs" ]; then
