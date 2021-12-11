@@ -3,6 +3,7 @@ import numpy as np
 from gym import spaces
 import os, glob, subprocess, json,sys, re
 import logging
+import time
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.NOTSET) # capture everything
@@ -79,7 +80,6 @@ class SynthesisEnv(gym.Env):
         # Bookkeeping params
         self.run_dir = os.getcwd()
         self.script_dir = os.path.dirname(os.path.realpath(__file__))
-        #self.bmark_path = glob.glob(self.script_dir +  "/BLIF/" + bmark + ".blif")[0]
         self.bmark_path = glob.glob(self.script_dir +  "/verilog/*.v")[0]
         self.bmark = os.path.basename(self.bmark_path).split('.')[0] # current circuit benchmark TODO: use Vivado
 
@@ -89,11 +89,9 @@ class SynthesisEnv(gym.Env):
         self.baseline_rewards = -self.get_reward(np.zeros(self.obs_dim), np.array([-1]))[0][0]
         self.baseline_obs = self._get_obs(self.state)
         self.last_obs = self.baseline_obs
-
         # print("Try new")
         # test_obs = np.tile(self.baseline_obs, (3, 1))
         # print(self.get_reward(test_obs, np.array([12,1,3]))[0] )
-
     def seed(self, seed):
         np.random.seed(seed)
 
@@ -113,7 +111,7 @@ class SynthesisEnv(gym.Env):
         env_info = {'ob': ob,
                     'rewards': self.reward_dict,
                     'score': score}
-        print(str(reward) + "\n")
+        # print(str(reward) + "\n")
         return ob, reward, done, env_info
 
     def reset(self):
@@ -177,7 +175,6 @@ class SynthesisEnv(gym.Env):
         f.close()
     
     def _get_histogram(self, state):
-        print(state)
         i = state - 1
         histogram = np.zeros(self.num_passes)
         while i >= 0 :
@@ -224,9 +221,12 @@ class SynthesisEnv(gym.Env):
     def _run_yosys(self, state):
         self._write_script(state)
         try:
-            p = subprocess.call(["yosys", "-p" ,"scratchpad -set abc9.script {}/{}.script; \
+            # p = subprocess.call(["yosys", "-p" ,"scratchpad -set abc9.script {}/{}.script; \
+            #     synth_xilinx -dff -flatten -noiopad -abc9 -edif {}/{}.edif".format(self.script_dir, self.bmark, self.script_dir, self.bmark), \
+            #         str(self.bmark_path), '-l', '{}/{}.log'.format(self.script_dir,self.bmark)], stdout=subprocess.DEVNULL) 
+            p = subprocess.check_output(["yosys", "-p" ,"scratchpad -set abc9.script {}/{}.script; \
                 synth_xilinx -dff -flatten -noiopad -abc9 -edif {}/{}.edif".format(self.script_dir, self.bmark, self.script_dir, self.bmark), \
-                    str(self.bmark_path), '-l', '{}/{}.log'.format(self.script_dir,self.bmark)], stdout=subprocess.DEVNULL) 
+                    str(self.bmark_path), '-l', '{}/{}.log'.format(self.script_dir,self.bmark), "-q"]) 
             return True
         except:
             return False
