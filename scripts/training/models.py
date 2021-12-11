@@ -1,11 +1,14 @@
 from tqdm import tqdm 
 
+import argparse
+
 import random
 import torch
 from torch import nn
 from torch.utils.data import Dataset, DataLoader
 from torch.nn.utils.rnn import pad_sequence, pack_padded_sequence, pad_packed_sequence
 import numpy as np
+from scipy import stats
 
 from preprocessing import SEQ_TO_TOKEN, TOKEN_TO_SEQ, preprocess_data
 
@@ -89,7 +92,9 @@ def generate_datasets(data_path, p_val=0.2):
     features, sequences, labels = preprocess_data(data_path)
     num_training_sets = int((1 - p_val) * len(features))
     indices_all = np.array(list(range(len(features))))
+    random.seed(100)
     random.shuffle(indices_all)
+    print(indices_all)
     train_indices = indices_all[:num_training_sets]
     val_indices = indices_all[num_training_sets:]
 
@@ -103,11 +108,13 @@ def generate_datasets(data_path, p_val=0.2):
         sequences[val_indices],
         labels[val_indices],
     )
+    '''
     print(train_indices)
     print(val_indices)
     print(len(features), len(train_indices), len(val_indices))
     print(len(train_dataset))
     print(len(valid_dataset))
+    '''
 
     return train_dataset, valid_dataset
 
@@ -122,6 +129,14 @@ def pad_collate(batch):
 
 #def train(model, 
 if __name__ == '__main__': 
+    parser = argparse.ArgumentParser(prog="Regression")
+    parser.add_argument("--fe_hidden_dim", type=int, default=128, help="Feature embedding hidden dim")
+    parser.add_argument("--fe_output_dim", type=int, default=128, help="Feature embedding output dim")
+    parser.add_argument("--se_input_dim", type=int, default=128, help="Sequence embedding input dim")
+    parser.add_argument("--se_num_layers", type=int, default=2, help="Sequence embedding num lstm layers")
+
+    args = parser.parse_args()
+
     data_path = ['epfl_arithmetic.pkl', 'epfl_control.pkl', 'vtr_select.pkl']
     #valid_path = ['vtr_testset_rand.pkl']
     train_dataset, valid_dataset = generate_datasets(data_path)
@@ -132,14 +147,21 @@ if __name__ == '__main__':
     valid_dataloader = DataLoader(valid_dataset, batch_size=64, num_workers=0, collate_fn=pad_collate)
 
     input_dim = train_dataset.input_dim
-    model = E2ERegression(input_dim, 128, 128, 128, 2)
+    model = E2ERegression(
+        input_dim,
+        args.fe_hidden_dim,
+        args.fe_output_dim,
+        args.se_input_dim,
+        args.se_num_layers
+    )
     model = model.cuda()
 
     loss_fn = nn.MSELoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
 
-    import wandb
-    wandb.init(project="synthesis", entity="sehoonkim")
+    #import wandb
+    #name = f"fh{args.fe_hidden_dim}_fo{args.fe_output_dim}_si{args.se_input_dim}_sl{args.se_num_layers}"
+    #wandb.init(project="synthesis", entity="sehoonkim", name=name)
 
     for epoch in range(50):
         loss_all = 0
@@ -156,10 +178,6 @@ if __name__ == '__main__':
             x = model(features, sequences, sequences_len)
 
             loss = loss_fn(x, labels)
-            #print(x)
-            #print(labels)
-            #print(loss)
-            #print(AA)
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
@@ -168,6 +186,11 @@ if __name__ == '__main__':
             loss_all += loss
 
         model.eval()
+
+        x_delay_all = []
+        x_area_all = []
+        labels_delay_all = []
+        labels_area_all = []
 
         for i, batch in tqdm(enumerate(valid_dataloader)):
             features, sequences, sequences_len, labels = batch
@@ -178,27 +201,23 @@ if __name__ == '__main__':
 
             loss = loss_fn(x, labels)
 
+            x_delay = x[:, 0].cpu().tolist()
+            x_area = x[:, 1].cpu().tolist()
+            labels_delay = labels[:, 0].cpu().tolist()
+            labels_area = labels[:, 1].cpu().tolist()
+            x_delay_all += x_delay
+            x_area_all += x_area
+            labels_delay_all += labels_delay
+            labels_area_all += labels_area
+
             valid_cnt += 1
             valid_loss_all += loss
 
         model.train()
+        corr_delay = stats.spearmanr(x_delay_all, labels_delay_all).correlation
+        corr_area = stats.spearmanr(x_area_all, labels_area_all).correlation
 
-        wandb.log({"loss": loss_all / cnt, "val_loss": valid_loss_all / valid_cnt})
+        #wandb.log({"loss": loss_all / cnt, "val_loss": valid_loss_all / valid_cnt,
+        #    "corr_delay": corr_delay, "corr_area": corr_area})
         print(f"epoch {epoch}, loss {loss_all / cnt}, val_loss {valid_loss_all / valid_cnt}")
-
-    print(x)
-    print(labels)
-
-    '''
-    features, sequences, labels = preprocess_data(data_path)
-    input_dim = features.shape[-1]
-
-    model = E2ERegression(input_dim, 128, 128, 128, 2)
-    feature = torch.tensor(features[0]).to(torch.float)
-    feature = torch.stack([feature + 1, feature])
-    sequence = torch.tensor(sequences[1]).to(torch.long)
-    sequence = torch.stack([sequence + 1, sequence])
-    print(feature.shape, sequence.shape)
-    x = model(feature, sequence, [2, 1])
-    print(x.shape)
-    '''
+        print(f"    corr_delay {corr_delay}, corr_area {corr_area}")
