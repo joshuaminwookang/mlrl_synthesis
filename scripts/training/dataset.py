@@ -1,7 +1,10 @@
-import numpy as np
+import random
 import pickle
 from tqdm import tqdm
-
+import numpy as np
+import torch
+from torch.nn.utils.rnn import pad_sequence
+from torch.utils.data import Dataset, DataLoader
 
 SEQ_TO_TOKEN = {
     '&if -W 300 -K 6 -v': 0, 
@@ -183,7 +186,65 @@ def preprocess_data(data_path):
 
     return features_normalized, np.array(sequences_list), labels_flattened
 
+class CustomDataset(Dataset):
+    def __init__(self, features=None, sequences=None, labels=None, data_path=None):
+        if data_path is not None:
+            self.features, self.sequences, self.labels = preprocess_data(data_path)
+        else:
+            assert features is not None 
+            assert sequences is not None 
+            assert labels is not None 
+            self.features, self.sequences, self.labels = features, sequences, labels
+        self.input_dim = self.features.shape[-1]
+
+    def __len__(self):
+        return len(self.features)
+
+    def __getitem__(self, idx):
+        feature = torch.tensor(self.features[idx]).to(torch.float)
+        sequence = torch.tensor(self.sequences[idx]).to(torch.long)
+        label = torch.tensor(self.labels[idx]).to(torch.float)
+        #return {'feature': feature, 'sequence': sequence, 'label': label}
+        return feature, sequence, label
+
+def generate_datasets(data_path, p_val=0.2):
+    features, sequences, labels = preprocess_data(data_path)
+    num_training_sets = int((1 - p_val) * len(features))
+    indices_all = np.array(list(range(len(features))))
+    random.seed(100)
+    random.shuffle(indices_all)
+    print(indices_all)
+    train_indices = indices_all[:num_training_sets]
+    val_indices = indices_all[num_training_sets:]
+
+    train_dataset = CustomDataset(
+        features[train_indices], 
+        sequences[train_indices],
+        labels[train_indices],
+    )
+    valid_dataset = CustomDataset(
+        features[val_indices], 
+        sequences[val_indices],
+        labels[val_indices],
+    )
+    '''
+    print(train_indices)
+    print(val_indices)
+    print(len(features), len(train_indices), len(val_indices))
+    print(len(train_dataset))
+    print(len(valid_dataset))
+    '''
+
+    return train_dataset, valid_dataset
+
+def pad_collate(batch):
+    features, sequences, labels, = zip(*batch)
+    sequences_len = [len(s) for s in sequences]
+    features_pad = pad_sequence(features, batch_first=True, padding_value=0)
+    sequences_pad = pad_sequence(sequences, batch_first=True, padding_value=0)
+    labels_pad = pad_sequence(labels, batch_first=True, padding_value=0) 
+    return features_pad, sequences_pad, sequences_len, labels_pad
+
+
 if __name__ == '__main__': 
     features, sequences, labels = preprocess_data('../../epfl_arithmetic.pkl')
-    print(features[0])
-    print(sequences[0])
