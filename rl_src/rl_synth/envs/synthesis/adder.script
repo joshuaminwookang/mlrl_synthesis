@@ -1,2 +1,0 @@
-&scorr;&sweep;&if -K 6 -v;&mfs;
-&ps;&pfeatures /home/mkang/mlrl_synthesis/rl_src/rl_synth/envs/synthesis/stats.json;&pfanstats /home/mkang/mlrl_synthesis/rl_src/rl_synth/envs/synthesis/fanstats.json

@@ -54,7 +54,17 @@ class RL_Trainer(object):
         #############
 
         # Make the gym environment
-        self.env = gym.make(self.params['env_name'])
+        env_config = {}
+        env_config['batch_size_initial'] = self.params['batch_size_initial']
+        env_config['natspi'] = self.params['num_agent_train_steps_per_iter']
+        env_config['batch_size'] = self.params['batch_size']
+        env_config['eval_batch_size'] = self.params['eval_batch_size']
+        env_config['train_batch_size'] = self.params['eval_batch_size']
+        env_config['learning_rate'] = self.params['learning_rate']
+        env_config['n_layers'] = self.params['n_layers']
+        env_config['size'] = self.params['size']
+
+        self.env = gym.make(id=self.params['env_name'], **env_config)
         if 'env_wrappers' in self.params:
             # These operations are currently only for Atari envs
             self.env = wrappers.Monitor(self.env, os.path.join(self.params['logdir'], "gym"), force=True)
@@ -76,7 +86,6 @@ class RL_Trainer(object):
         # matplotlib.use('Agg')
         # Maximum length for episodes
         #self.params['ep_len'] = self.params['ep_len'] or self.env.spec.max_episode_steps
-        print("EP LEN" + str(self.params['ep_len']))
         global MAX_VIDEO_LEN
         MAX_VIDEO_LEN = self.params['ep_len']
 

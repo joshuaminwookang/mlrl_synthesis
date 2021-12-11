@@ -59,7 +59,10 @@ for x, y in SEQ_TO_TOKEN.items():
     TOKEN_TO_SEQ[y] = x
 
 class SynthesisEnv(gym.Env):
-    def __init__(self, bmark="adder"):
+    def __init__(
+        self, batch_size_initial, natspi, batch_size, eval_batch_size, train_batch_size, learning_rate, 
+        n_layers, size
+    ):
         # Env Parameters
         self.env_name = 'synthesis'
         self.is_gym = True
@@ -82,9 +85,10 @@ class SynthesisEnv(gym.Env):
         self.script_dir = os.path.dirname(os.path.realpath(__file__))
         self.bmark_path = glob.glob(self.script_dir +  "/verilog/*.v")[0]
         self.bmark = os.path.basename(self.bmark_path).split('.')[0] # current circuit benchmark TODO: use Vivado
-
+        self.tag = "batchinit_" + str(batch_size_initial) + "natspi_" + str(natspi) + "tb_" + str(train_batch_size) + "n_layers" + str(n_layers) + "size" + str(size)
+        if not os.path.exists(self.script_dir+'/temp'):
+            os.makedirs(self.script_dir+'/temp')
         # save inital features of benchmark 
-
         self.baseline_rewards = 0.0
         self.baseline_rewards = -self.get_reward(np.zeros(self.obs_dim), np.array([-1]))[0][0]
         self.baseline_obs = self._get_obs(self.state)
@@ -141,7 +145,7 @@ class SynthesisEnv(gym.Env):
             # print("Iter : " + str(self.counter))
             # Now read yosys log to get Delay and Area
             try:
-                fp = open("{}/{}.log".format(self.script_dir, self.bmark), "r")
+                fp = open("{}/temp/{}_{}.log".format(self.script_dir, self.bmark,self.tag), "r")
             except OSError:
                 print("Could not open/read Yosys log")
                 sys.exit()
@@ -170,7 +174,7 @@ class SynthesisEnv(gym.Env):
     # Env internal functions
     ########################################
     def _write_script(self, state):
-        f = open(self.script_dir+"/{}.script".format(self.bmark),"w")
+        f = open(self.script_dir+"/temp/{}_{}.script".format(self.bmark,self.tag),"w")
         f.write(self._get_seq(state))
         f.close()
     
@@ -200,7 +204,7 @@ class SynthesisEnv(gym.Env):
                 break;
             else : 
                 state = divisor-1
-        seq = "&scorr;&sweep;"+ seq + "&if -K 6 -v;&mfs;\n&ps;&pfeatures {}/stats.json;&pfanstats {}/fanstats.json".format(self.script_dir,self.script_dir)
+        seq = "&scorr;&sweep;"+ seq + "&if -K 6 -v;&mfs;\n&pfeatures {}/temp/stats_{}.json;&pfanstats {}/temp/fanstats_{}.json".format(self.script_dir, self.tag, self.script_dir,self.tag)
         return seq
 
     #@params: state (int)
@@ -224,9 +228,9 @@ class SynthesisEnv(gym.Env):
             # p = subprocess.call(["yosys", "-p" ,"scratchpad -set abc9.script {}/{}.script; \
             #     synth_xilinx -dff -flatten -noiopad -abc9 -edif {}/{}.edif".format(self.script_dir, self.bmark, self.script_dir, self.bmark), \
             #         str(self.bmark_path), '-l', '{}/{}.log'.format(self.script_dir,self.bmark)], stdout=subprocess.DEVNULL) 
-            p = subprocess.check_output(["yosys", "-p" ,"scratchpad -set abc9.script {}/{}.script; \
-                synth_xilinx -dff -flatten -noiopad -abc9 -edif {}/{}.edif".format(self.script_dir, self.bmark, self.script_dir, self.bmark), \
-                    str(self.bmark_path), '-l', '{}/{}.log'.format(self.script_dir,self.bmark), "-q"]) 
+            p = subprocess.check_output(["yosys", "-p" ,"scratchpad -set abc9.script {}/temp/{}_{}.script; \
+                synth_xilinx -dff -flatten -noiopad -abc9".format(self.script_dir, self.bmark, self.tag), \
+                    str(self.bmark_path), '-l', '{}/temp/{}_{}.log'.format(self.script_dir,self.bmark,self.tag), "-q"]) 
             return True
         except:
             return False
@@ -234,8 +238,8 @@ class SynthesisEnv(gym.Env):
     def _get_obs(self, state):
         # if (state == 0):
         #     return self.baseline_obs
-        stats1 = glob.glob(os.path.normpath(self.script_dir + "/stats.json"))
-        stats2 = glob.glob(os.path.normpath(self.script_dir + "/fanstats.json"))
+        stats1 = glob.glob(os.path.normpath(self.script_dir + "/temp/stats_{}.json".format(self.tag)))
+        stats2 = glob.glob(os.path.normpath(self.script_dir + "/temp/fanstats_{}.json".format(self.tag)))
         try:
             fp_stats1 =  open(stats1[0], "r")
             stats1_data = json.load(fp_stats1)
