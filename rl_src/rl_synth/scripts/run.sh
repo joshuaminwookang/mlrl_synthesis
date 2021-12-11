@@ -5,10 +5,20 @@ EXP_NUM=$1
 SCRIPT_DIR="$( dirname "$( readlink -f "${BASH_SOURCE[0]}" )" )"
 cd $SCRIPT_DIR/../../
 if [[ $EXP_NUM == 1 ]]; then
-    echo "Experiment 1: MBRL with Random Policy "
-    python rl_synth/scripts/run.py --exp_name debug --env_name synthesis-v0 \
-        --add_sl_noise --n_iter 1 \
-        --batch_size_initial 20 --num_agent_train_steps_per_iter 5 \
+    echo "Experiment 1: Model Training Hyperparameters: batch size initial "
+    python rl_synth/scripts/run.py --exp_name mbtrain_batch200_natspi5_1x16 --env_name synthesis-v0 \
+        --add_sl_noise --n_iter 1 --train_batch_size 10\
+        --batch_size_initial 200 --num_agent_train_steps_per_iter 5 \
+        --n_layers 1 --size 16 --scalar_log_freq -1 --video_log_freq -1 \
+        --mpc_action_sampling_strategy 'random'
+    python rl_synth/scripts/run.py --exp_name mbtrain_batch500_natspi5_1x16 --env_name synthesis-v0 \
+        --add_sl_noise --n_iter 1 --train_batch_size 10\
+        --batch_size_initial 500 --num_agent_train_steps_per_iter 5 \
+        --n_layers 1 --size 16 --scalar_log_freq -1 --video_log_freq -1 \
+        --mpc_action_sampling_strategy 'random'
+    python rl_synth/scripts/run.py --exp_name mbtrain_batch1000_natspi5_1x16 --env_name synthesis-v0 \
+        --add_sl_noise --n_iter 1 --train_batch_size 10\
+        --batch_size_initial 1000 --num_agent_train_steps_per_iter 5 \
         --n_layers 1 --size 16 --scalar_log_freq -1 --video_log_freq -1 \
         --mpc_action_sampling_strategy 'random'
     # python cs285/scripts/run_hw4_mb.py --exp_name q1_cheetah_n500_arch1x32 --env_name cheetah-cs285-v0 \
