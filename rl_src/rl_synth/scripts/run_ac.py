@@ -96,7 +96,6 @@ def main():
     # to force batch_size = train_batch_size
     # note that, to avoid confusion, you don't even have a train_batch_size argument anymore (above)
     params['train_batch_size'] = params['batch_size']
-
     ##################################
     ### CREATE DIRECTORY FOR LOGGING
     ##################################

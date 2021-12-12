@@ -55,14 +55,7 @@ class RL_Trainer(object):
 
         # Make the gym environment
         env_config = {}
-        env_config['batch_size_initial'] = self.params['batch_size_initial']
-        env_config['natspi'] = self.params['num_agent_train_steps_per_iter']
-        env_config['batch_size'] = self.params['batch_size']
-        env_config['eval_batch_size'] = self.params['eval_batch_size']
-        env_config['train_batch_size'] = self.params['train_batch_size']
-        env_config['learning_rate'] = self.params['learning_rate']
-        env_config['n_layers'] = self.params['n_layers']
-        env_config['size'] = self.params['size']
+        env_config['exp_name'] = self.params['exp_name']
 
         self.env = gym.make(id=self.params['env_name'], **env_config)
         if 'env_wrappers' in self.params:

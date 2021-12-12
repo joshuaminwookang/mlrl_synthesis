@@ -59,10 +59,7 @@ for x, y in SEQ_TO_TOKEN.items():
     TOKEN_TO_SEQ[y] = x
 
 class SynthesisEnv(gym.Env):
-    def __init__(
-        self, batch_size_initial, natspi, batch_size, eval_batch_size, train_batch_size, learning_rate, 
-        n_layers, size
-    ):
+    def __init__(self, exp_name):
         # Env Parameters
         self.env_name = 'synthesis'
         self.is_gym = True
@@ -85,7 +82,7 @@ class SynthesisEnv(gym.Env):
         self.script_dir = os.path.dirname(os.path.realpath(__file__))
         self.bmark_path = glob.glob(self.script_dir +  "/verilog/*.v")[0]
         self.bmark = os.path.basename(self.bmark_path).split('.')[0] # current circuit benchmark TODO: use Vivado
-        self.tag = "batchinit_" + str(batch_size_initial) + "natspi_" + str(natspi) + "tb_" + str(train_batch_size) + "n_layers" + str(n_layers) + "size" + str(size)
+        self.tag = exp_name
         if not os.path.exists(self.script_dir+'/temp'):
             os.makedirs(self.script_dir+'/temp')
         # save inital features of benchmark 

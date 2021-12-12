@@ -78,7 +78,7 @@ elif [[ $EXP_NUM == 2 ]]; then
     # --mpc_action_sampling_strategy 'random' --video_log_freq -1
 elif [[ $EXP_NUM == 3 ]]; then
     echo "Testing AC"
-    python rl_synth/scripts/run_ac.py --exp_name actest --env_name synthesis-v0 \
+    python rl_synth/scripts/run_ac.py --exp_name batch100_eb40 --env_name synthesis-v0 \
     --ep_len 10 --n_iter 2 --batch_size 100 --eval_batch_size 40 --train_batch_size 100
 elif [[ $EXP_NUM == 4 ]]; then
     echo "Experiment 4: MBRL with Trained MPC Policy Variables"
