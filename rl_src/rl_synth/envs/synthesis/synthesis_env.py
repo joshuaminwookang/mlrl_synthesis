@@ -101,12 +101,14 @@ class SynthesisEnv(gym.Env):
 
     # action: np array of dimension (batchsize x 1)
     def step(self, action):
-        # print("We are in step, action was : " + str(action))
-        # ob = self._get_obs(self.state)
         # get reward of this action
+        if isinstance(action, np.ndarray):
+            ac = action[0]
+        else:
+            ac = action
         reward, done = self.get_reward(self.last_obs, action)
         # actual update: update state of env based on this action
-        self.state = self.state *self.num_passes + action[0] + 1
+        self.state = self.state *self.num_passes + ac + 1
         ob = self._get_obs(self.state)
         # print(ob)
         self.obs = ob
@@ -132,18 +134,10 @@ class SynthesisEnv(gym.Env):
         areas = []
         totals  = []
         dones = []
-        # Batch mode: we compute 
-        for ac in actions:
-            ac = int(ac)
-            # self.counter = self.counter + 1
-            state = self.state*self.num_passes + ac +1
-            # print("We are in get_reward, state is : " + str(state))
-            ## run simulation and get rewards (Yosys)
-            if ac < self.num_passes: # unless stop token
+        if not isinstance(actions, np.ndarray):
+            state = self.state*self.num_passes + actions +1
+            if actions < self.num_passes: # unless stop token
                 self._run_yosys(state)
-            # if action is to terminate, no need to re-run yosys and get obervations
-            # print("Iter : " + str(self.counter))
-            # Now read yosys log to get Delay and Area
             try:
                 fp = open("{}/temp/{}_{}.log".format(self.script_dir, self.bmark,self.tag), "r")
             except OSError:
@@ -156,14 +150,38 @@ class SynthesisEnv(gym.Env):
                 delays.append(delay)
                 areas.append(area)
                 totals.append(-(delay*10000+area))
-                dones.append(int(ac == self.num_passes-1 ))
+                dones.append(int(actions == self.num_passes-1 ))
+        else:
+            # Batch mode: we compute 
+            for ac in actions:
+                ac = int(ac)
+                # self.counter = self.counter + 1
+                state = self.state*self.num_passes + ac +1
+                # print("We are in get_reward, state is : " + str(state))
+                ## run simulation and get rewards (Yosys)
+                if ac < self.num_passes: # unless stop token
+                    self._run_yosys(state)
+                # if action is to terminate, no need to re-run yosys and get obervations
+                # print("Iter : " + str(self.counter))
+                # Now read yosys log to get Delay and Area
+                try:
+                    fp = open("{}/temp/{}_{}.log".format(self.script_dir, self.bmark,self.tag), "r")
+                except OSError:
+                    print("Could not open/read Yosys log")
+                    sys.exit()
+                with fp:
+                    delay = float(re.findall(r'\d+.\d+', lines_that_contain("Del = ", fp)[-1])[0])
+                    fp.seek(0)
+                    area = float(re.findall(r'\d+.\d+', lines_that_contain("Ar = ", fp)[-1])[1])
+                    delays.append(delay)
+                    areas.append(area)
+                    totals.append(-(delay*10000+area))
+                    dones.append(int(ac == self.num_passes-1 ))
 
         self.reward_dict['r_delay'] = np.asarray(delays)
         self.reward_dict['r_area'] = np.asarray(areas)
         self.reward_dict['r_total'] = np.asarray(totals)
         dones = np.asarray(dones)
-        # if (actions.shape[0] == 1) and state == 0: # only for initializing env 
-        #     return self.reward_dict['r_total'][0], dones[0]
         return self.baseline_rewards - self.reward_dict['r_total'], dones
 
     def get_score(self, observations):

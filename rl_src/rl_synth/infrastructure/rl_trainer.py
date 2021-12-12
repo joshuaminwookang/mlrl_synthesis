@@ -59,7 +59,7 @@ class RL_Trainer(object):
         env_config['natspi'] = self.params['num_agent_train_steps_per_iter']
         env_config['batch_size'] = self.params['batch_size']
         env_config['eval_batch_size'] = self.params['eval_batch_size']
-        env_config['train_batch_size'] = self.params['eval_batch_size']
+        env_config['train_batch_size'] = self.params['train_batch_size']
         env_config['learning_rate'] = self.params['learning_rate']
         env_config['n_layers'] = self.params['n_layers']
         env_config['size'] = self.params['size']
@@ -156,7 +156,7 @@ class RL_Trainer(object):
                 self.logmetrics = False
 
             use_batchsize = self.params['batch_size']
-            if itr == 0:
+            if isinstance(self.agent, MBAgent) and itr == 0:
                 use_batchsize = self.params['batch_size_initial']
             paths, envsteps_this_batch, train_video_paths = (
                 self.collect_training_trajectories(

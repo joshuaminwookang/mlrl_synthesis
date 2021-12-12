@@ -46,8 +46,6 @@ class ACAgent(BaseAgent):
         #     update the actor
         for _ in range(self.agent_params['num_actor_updates_per_agent_update']) : 
             loss['Actor_Loss'] = self.actor.update(ob_no, ac_na, advantage)
-    
-
         return loss
 
     def estimate_advantage(self, ob_no, next_ob_no, re_n, terminal_n):

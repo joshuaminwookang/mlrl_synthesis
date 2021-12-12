@@ -89,12 +89,20 @@ class MPCPolicy(BasePolicy):
         else:
             raise Exception(f"Invalid sample_strategy: {self.sample_strategy}")
 
+    # def evaluate_candidate_sequences(self, candidate_action_sequences, obs):
+    #     # TODO(Q2): for each model in ensemble, compute the predicted sum of rewards
+    #     # for each candidate action sequence.
+    #     #
+    #     # Then, return the mean predictions across all ensembles.
+    #     # Hint: the return value should be an array of shape (N,)
+    #     rewards = []
+    #     for model in self.dyn_models:
+    #         rewards.append(self.calculate_sum_of_rewards(obs, candidate_action_sequences, model))
+    #     return np.mean(rewards, axis=0)
+
     def evaluate_candidate_sequences(self, candidate_action_sequences, obs):
-        # TODO(Q2): for each model in ensemble, compute the predicted sum of rewards
-        # for each candidate action sequence.
-        #
-        # Then, return the mean predictions across all ensembles.
-        # Hint: the return value should be an array of shape (N,)
+        # new version for synthesis env because 
+        # its get_reward doesn't depend on obs
         rewards = []
         for model in self.dyn_models:
             rewards.append(self.calculate_sum_of_rewards(obs, candidate_action_sequences, model))
@@ -141,7 +149,7 @@ class MPCPolicy(BasePolicy):
             observation = model.get_prediction(observation, candidate_action_sequences[:,t,:], self.data_statistics)
             # obs_list.append(observation)
             rewards.append(self.env.get_reward(observation, candidate_action_sequences[:,t+1,:])[0])
-         
+
         sum_of_rewards = np.sum(rewards, axis=0)
 
         # For each candidate action sequence, predict a sequence of
