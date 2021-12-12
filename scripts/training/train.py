@@ -9,6 +9,7 @@ from scipy import stats
 from models import E2ERegression
 from dataset import pad_collate, generate_datasets
 
+DEFAULT_TRAINING_PATH = ['epfl_arithmetic.pkl', 'epfl_control.pkl', 'vtr_select.pkl']
 
 if __name__ == '__main__': 
     parser = argparse.ArgumentParser(prog="Regression")
@@ -17,16 +18,18 @@ if __name__ == '__main__':
     parser.add_argument("--se_input_dim", type=int, default=64, help="Sequence embedding input dim")
     parser.add_argument("--se_num_layers", type=int, default=4, help="Sequence embedding num lstm layers")
     parser.add_argument("--dump_path", type=str, default=None, help="Save path for the best model")
+    parser.add_argument("--dataset_path", type=str, default=None, help="Dataset paths, separated with comma(,)")
 
     args = parser.parse_args()
 
-    data_path = ['epfl_arithmetic.pkl', 'epfl_control.pkl', 'vtr_select.pkl']
-    #valid_path = ['vtr_testset_rand.pkl']
+    if args.dataset_path is not None:
+        data_path = args.dataset_path.split(',')
+    else:
+        data_path = DEFAULT_TRAINING_PATH
+
     train_dataset, valid_dataset = generate_datasets(data_path)
-    #dataset = CustomDataset(data_path=data_path)
     train_dataloader = DataLoader(train_dataset, batch_size=256, shuffle=True, num_workers=0, collate_fn=pad_collate)
 
-    #valid_dataset = CustomDataset(data_path=valid_path)
     valid_dataloader = DataLoader(valid_dataset, batch_size=256, num_workers=0, collate_fn=pad_collate)
 
     input_dim = train_dataset.input_dim
