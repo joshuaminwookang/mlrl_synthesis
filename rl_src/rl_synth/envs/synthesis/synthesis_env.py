@@ -64,7 +64,7 @@ class SynthesisEnv(gym.Env):
         self.env_name = 'synthesis'
         self.is_gym = True
         self.num_passes = 15
-        self.num_features = 48 + self.num_passes
+        self.num_features = 50 + self.num_passes
         self.action_dim = self.ac_dim = 1
         self.observation_dim = self.obs_dim = self.num_features #for hand-picked features; TODO change with Graph Embedding Dimension later
         self.eps = 0.1
@@ -345,7 +345,7 @@ def preprocess_LUT(d):
     d["LUT_level"] = lut["level"]
     d["LUT_level_avg"] = lut["level_avg"]
     d["LUT_size_avg"] = lut["size_avg"]
-    # d["LUT_total"] = lut["total"]
+    d["LUT_total"] = lut["total"]
 
 def preprocess_sequence(seq):
     # convert the string representation into a list of tokens
@@ -385,7 +385,7 @@ def preprocess_data(data):
 
     # features, labels, sequences = prepare_dataset(data)
     features = {}
-    for f in ['CI', 'CO', 'level_avg', #'level', 
+    for f in ['CI', 'CO', 'level_avg', 'level', 
                   'cut', 'xor', 'xor_ratio', 'mux', 'mux_ratio', 'and', 'and_ratio',
                   'obj', 'power', 'LUT', 'fanin', 'fanout', 'mffc', 
                   #'fanin_max', 'fanin_avg', 

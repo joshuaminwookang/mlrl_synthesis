@@ -53,11 +53,12 @@ class MBRewardAgenet(BaseAgent):
             observations = ob_no[i*num_data_per_ens: (i+1)*num_data_per_ens,:]
 
             actions = ac_na[i*num_data_per_ens: (i+1)*num_data_per_ens,:]
-            next_observations = next_ob_no[i*num_data_per_ens: (i+1)*num_data_per_ens,:]
+            # next_observations = next_ob_no[i*num_data_per_ens: (i+1)*num_data_per_ens,:]
+            rewards = re_n[i*num_data_per_ens: (i+1)*num_data_per_ens,:]
 
             # use datapoints to update one of the dyn_models
             model =  self.dyn_models[i]
-            log = model.update(observations, actions, next_observations,
+            log = model.update(observations, actions, rewards,
                                 self.data_statistics)
             loss = log['Training Loss']
             losses.append(loss)

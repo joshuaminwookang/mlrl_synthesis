@@ -16,9 +16,9 @@ class FFRewardModel(nn.Module, BaseModel):
         self.n_layers = n_layers
         self.size = size
         self.learning_rate = learning_rate
-        self.delta_network = ptu.build_mlp(
+        self.reward_network = ptu.build_mlp(
             input_size=self.ob_dim + self.ac_dim,
-            output_size=self.ob_dim,
+            output_size=1,
             n_layers=self.n_layers,
             size=self.size,
         )
@@ -32,8 +32,8 @@ class FFRewardModel(nn.Module, BaseModel):
         self.obs_std = None
         self.acs_mean = None
         self.acs_std = None
-        self.delta_mean = None
-        self.delta_std = None
+        # self.reward_mean = None
+        # self.delta_std = None
 
     def update_statistics(
             self,
@@ -48,8 +48,8 @@ class FFRewardModel(nn.Module, BaseModel):
         self.obs_std = ptu.from_numpy(obs_std)
         self.acs_mean = ptu.from_numpy(acs_mean)
         self.acs_std = ptu.from_numpy(acs_std)
-        self.delta_mean = ptu.from_numpy(delta_mean)
-        self.delta_std = ptu.from_numpy(delta_std)
+        # self.delta_mean = ptu.from_numpy(delta_mean)
+        # self.delta_std = ptu.from_numpy(delta_std)
 
     def forward(
             self,
@@ -96,9 +96,10 @@ class FFRewardModel(nn.Module, BaseModel):
         # TODO(Q1) compute delta_pred_normalized and next_obs_pred
         # Hint: as described in the PDF, the output of the network is the
         # *normalized change* in state, i.e. normalized(s_t+1 - s_t).
-        delta_pred_normalized = self.delta_network(concatenated_input) # TODO(Q1)
-        next_obs_pred = obs_unnormalized + unnormalize(ptu.to_numpy(delta_pred_normalized), delta_mean, delta_std) # TODO(Q1)
-        return next_obs_pred, delta_pred_normalized
+        pred_reward = self.reward_network(concatenated_input) # TODO(Q1)
+        # next_obs_pred = obs_unnormalized + unnormalize(ptu.to_numpy(delta_pred_normalized), delta_mean, delta_std) # TODO(Q1)
+        # return next_obs_pred, delta_pred_normalized
+        return pred_reward
 
     def get_prediction(self, obs, acs, data_statistics):
         """
@@ -120,7 +121,7 @@ class FFRewardModel(nn.Module, BaseModel):
         # outputs.
         return prediction
 
-    def update(self, observations, actions, next_observations, data_statistics):
+    def update(self, observations, actions, rewards_n, data_statistics):
         """
         :param observations: numpy array of observations
         :param actions: numpy array of actions
@@ -135,12 +136,12 @@ class FFRewardModel(nn.Module, BaseModel):
              - 'delta_std'
         :return:
         """
-        target = normalize(next_observations-observations, data_statistics['delta_mean'], data_statistics['delta_std']) # TODO(Q1) compute the normalized target for the model.
+        # target = normalize(next_observations-observations, data_statistics['delta_mean'], data_statistics['delta_std']) # TODO(Q1) compute the normalized target for the model.
         # Hint: you should use `data_statistics['delta_mean']` and
         # `data_statistics['delta_std']`, which keep track of the mean
         # and standard deviation of the model.
-        _ , delta_pred_normalized = self(observations, actions, **data_statistics)
-        loss = self.loss(ptu.from_numpy(target), delta_pred_normalized) # TODO(Q1) compute the loss
+        pred_rewards = self(observations, actions, **data_statistics)
+        loss = self.loss(ptu.from_numpy(rewards_n), pred_rewards) # TODO(Q1) compute the loss
         # Hint: `self(...)` returns a tuple, but you only need to use one of the
         # outputs.
 
