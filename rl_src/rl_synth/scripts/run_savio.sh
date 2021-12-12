@@ -74,8 +74,8 @@ launch_ac_job(){
 source /global/home/users/${USER}/.bashrc
 source activate rl
 python ../rl_synth/scripts/run_ac.py --exp_name  ${slurm_script_name} --env_name synthesis-v0 \
-        -b ${BATCH_SIZE} -n ${NUM_ITER} --n_layers ${NN_LAYERS} --size ${NN_SIZE} --scalar_log_freq 1 --video_log_freq -1\
-        -ntu ${NTU} -ngstu ${NGSTU} -eb ${EVAL_BATCH} --discount ${DISCOUNT}
+--batch_size ${BATCH_SIZE} --n_iter ${NUM_ITER} --n_layers ${NN_LAYERS} --size ${NN_SIZE} --scalar_log_freq 1 --video_log_freq -1 \
+--num_target_updates ${NTU} --num_grad_steps_per_target_update ${NGSTU} --eval_batch_size ${EVAL_BATCH} --discount ${DISCOUNT}
 EOT
     sbatch "${slurm_script_name}.sh"
 }
