@@ -5,26 +5,47 @@ import copy
 ############################################
 ############################################
 
+# def calculate_mean_prediction_error(env, action_sequence, models, data_statistics):
+
+#     model = models[0]
+
+#     # true
+#     true_states = perform_actions(env, action_sequence)['observation']
+
+#     # predicted
+#     ob = np.expand_dims(true_states[0],0)
+#     pred_states = []
+#     for ac in action_sequence:
+#         pred_states.append(ob)
+#         action = np.expand_dims(ac,0)
+#         ob = model.get_prediction(ob, action, data_statistics)
+#     pred_states = np.squeeze(pred_states)
+
+#     # mpe
+#     mpe = mean_squared_error(pred_states, true_states)
+
+#     return mpe, true_states, pred_states
+
 def calculate_mean_prediction_error(env, action_sequence, models, data_statistics):
 
     model = models[0]
 
     # true
-    true_states = perform_actions(env, action_sequence)['observation']
+    true_rewards = perform_actions(env, action_sequence)['reward']
 
     # predicted
-    ob = np.expand_dims(true_states[0],0)
-    pred_states = []
+    ob = np.expand_dims(true_rewards[0],0)
+    pred_rewards = []
     for ac in action_sequence:
-        pred_states.append(ob)
         action = np.expand_dims(ac,0)
-        ob = model.get_prediction(ob, action, data_statistics)
-    pred_states = np.squeeze(pred_states)
+        reward = model.get_prediction(ob, action, data_statistics)
+        pred_rewards.append(reward)
+    pred_rewards = np.squeeze(pred_rewards)
 
     # mpe
-    mpe = mean_squared_error(pred_states, true_states)
+    mpe = mean_squared_error(pred_rewards, true_rewards)
 
-    return mpe, true_states, pred_states
+    return mpe, true_rewards, pred_rewards
 
 def perform_actions(env, actions):
     ob = env.reset()

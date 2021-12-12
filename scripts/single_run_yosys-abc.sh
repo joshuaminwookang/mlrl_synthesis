@@ -221,8 +221,8 @@ EOT
 #      ${YOSYS} ${pwd}/${ip}.ys > /dev/null 2>&1
     fi
     echo "Running GML generation .."
-
-    echo "&read temp.aig;&put;write_gml ${ip}.gml" | abc 
+    echo "&read temp.aig;&put;write_gml ${ip}_${2}.gml" | abc
+    echo "Finished GML Generation"
     cat >> test_${1}.tcl <<EOT
 read_edif ${edif}
 read_xdc -unmanaged ${xdc_file}

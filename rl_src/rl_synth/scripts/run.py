@@ -3,6 +3,8 @@ import time
 
 from rl_synth.infrastructure.rl_trainer import RL_Trainer
 from rl_synth.agents.mb_agent import MBAgent
+from rl_synth.agents.mb_reward_agent import MBRewardAgent
+
 # from rl_synth.envs import register_envs
 # register_envs()
 
@@ -37,7 +39,7 @@ class MB_Trainer(object):
         agent_params = {**computation_graph_args, **train_args, **controller_args}
 
         self.params = params
-        self.params['agent_class'] = MBAgent
+        self.params['agent_class'] = MBRewardAgent
         self.params['agent_params'] = agent_params
 
         ################

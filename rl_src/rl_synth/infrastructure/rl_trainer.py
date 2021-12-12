@@ -10,6 +10,8 @@ import numpy as np
 import torch
 
 from rl_synth.agents.mb_agent import MBAgent
+from rl_synth.agents.mb_reward_agent import MBRewardAgent
+
 from rl_synth.infrastructure import pytorch_util as ptu
 from rl_synth.infrastructure import utils
 from rl_synth.infrastructure.logger import Logger
@@ -149,7 +151,7 @@ class RL_Trainer(object):
                 self.logmetrics = False
 
             use_batchsize = self.params['batch_size']
-            if isinstance(self.agent, MBAgent) and itr == 0:
+            if (isinstance(self.agent, MBAgent) or isinstance(self.agent, MBRewardAgent)) and itr == 0:
                 use_batchsize = self.params['batch_size_initial']
             paths, envsteps_this_batch, train_video_paths = (
                 self.collect_training_trajectories(
@@ -158,7 +160,7 @@ class RL_Trainer(object):
             self.total_envsteps += envsteps_this_batch
 
             # add collected data to replay buffer
-            if isinstance(self.agent, MBAgent):
+            if isinstance(self.agent, MBAgent) or isinstance(self.agent, MBRewardAgent):
                 self.agent.add_to_replay_buffer(paths, self.params['add_sl_noise'])
             else:
                 self.agent.add_to_replay_buffer(paths)
@@ -169,7 +171,7 @@ class RL_Trainer(object):
             all_logs = self.train_agent()
 
             # if there is a model, log model predictions
-            if isinstance(self.agent, MBAgent) and itr == 0:
+            if (isinstance(self.agent, MBAgent) or isinstance(self.agent, MBRewardAgent)) and itr == 0:
                 self.log_model_predictions(itr, all_logs)
 
             # log/save
@@ -294,13 +296,14 @@ class RL_Trainer(object):
         self.fig = plt.figure()
 
         # sample actions
-        action_sequence = self.agent.actor.sample_action_sequences(num_sequences=1, horizon=2) #20 reacher
+        action_sequence = self.agent.actor.sample_action_sequences(num_sequences=1, horizon=10) #20 reacher
         action_sequence = action_sequence[0]
         print("logging action seq : ")
         print(action_sequence)
         # calculate and log model prediction error
         mpe, true_states, pred_states = utils.calculate_mean_prediction_error(self.env, action_sequence, self.agent.dyn_models, self.agent.actor.data_statistics)
-        assert self.params['agent_params']['ob_dim'] == true_states.shape[1] == pred_states.shape[1]
+        # assert self.params['agent_params']['ob_dim'] == true_states.shape[1] == pred_states.shape[1]
+        assert true_states.shape[1] == pred_states.shape[1]
         ob_dim = self.params['agent_params']['ob_dim']
         ob_dim = 2*int(ob_dim/2.0) ## skip last state for plotting when state dim is odd
         
@@ -315,14 +318,20 @@ class RL_Trainer(object):
 
         # log predictions
         # plot the predictions
-        self.fig.clf()
-        for i in range(ob_dim):
-            plt.subplot(ob_dim/2, 2, i+1)
-            plt.plot(true_states[:,i], 'g')
-            plt.plot(pred_states[:,i], 'r')
-        self.fig.suptitle('MPE: ' + str(mpe))
-        self.fig.savefig(self.params['logdir']+'/itr_'+str(itr)+'_predictions.png', dpi=200, bbox_inches='tight')
-
+        # self.fig.clf()
+        # for i in range(ob_dim):
+        #     plt.subplot(ob_dim/2, 2, i+1)
+        #     plt.plot(true_states[:,i], 'g')
+        #     plt.plot(pred_states[:,i], 'r')
+        # self.fig.suptitle('MPE: ' + str(mpe))
+        # self.fig.savefig(self.params['logdir']+'/itr_'+str(itr)+'_predictions.png', dpi=200, bbox_inches='tight')
+        fp = open(self.params['logdir']+'/itr_'+str(itr)+'_mpe.txt', "w")
+        fp.write("true rewards")
+        fp.write(true_states)
+        fp.write("predicted rewards")
+        fp.write(pred_states)
+        fp.write(mpe)
+        fp.close()
         # # plot all intermediate losses during this iteration
         all_losses = np.array([log['Training Loss'] for log in all_logs])
         np.save(self.params['logdir']+'/itr_'+str(itr)+'_losses.npy', all_losses)

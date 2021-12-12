@@ -1,13 +1,13 @@
 from .base_agent import BaseAgent
 from rl_synth.models.ff_reward_model import FFRewardModel
-from rl_synth.policies.MPC_policy import MPCPolicy
+from rl_synth.policies.MPC_reward_policy import MPCRewardPolicy
 from rl_synth.infrastructure.replay_buffer import ReplayBuffer
 from rl_synth.infrastructure.utils import *
 
 
-class MBRewardAgenet(BaseAgent):
+class MBRewardAgent(BaseAgent):
     def __init__(self, env, agent_params):
-        super(MBRewardAgenet, self).__init__()
+        super(MBRewardAgent, self).__init__()
 
         self.env = env.unwrapped
         self.agent_params = agent_params
@@ -24,7 +24,7 @@ class MBRewardAgenet(BaseAgent):
             )
             self.dyn_models.append(model)
 
-        self.actor = MPCPolicy(
+        self.actor = MPCRewardPolicy(
             self.env,
             ac_dim=self.agent_params['ac_dim'],
             dyn_models=self.dyn_models,

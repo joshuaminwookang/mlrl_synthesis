@@ -134,13 +134,16 @@ class MPCRewardPolicy(BasePolicy):
 
         num_sequences = candidate_action_sequences.shape[0]
         horizon = candidate_action_sequences.shape[1]
-        #flattened_acs = np.reshape([candidate_action_sequences[:,t,:] for t in range(horizon)], (num_sequences*horizon, self.ac_dim))
         observation = np.tile(obs, (num_sequences, 1))
-        rewards = [self.env.get_reward(observation, candidate_action_sequences[:,0,:])[0]]
-        for t in range(horizon-1):
-            observation = model.get_prediction(observation, candidate_action_sequences[:,t,:], self.data_statistics)
+        #rewards = [ self.env.get_reward(observation, candidate_action_sequences[:,0,:])[0] ]
+        rewards = []
+
+        for t in range(horizon):
+            rewards.append(model.get_prediction(observation, candidate_action_sequences[:,t,:], self.data_statistics))
+            observation = self.env.run_sim_get_obs(candidate_action_sequences[:,t,:])
+            # observation = model.get_prediction(observation, candidate_action_sequences[:,t,:], self.data_statistics)
             # obs_list.append(observation)
-            rewards.append(self.env.get_reward(observation, candidate_action_sequences[:,t+1,:])[0])
+            # rewards.append(self.env.get_reward(observation, candidate_action_sequences[:,t+1,:])[0])
 
         sum_of_rewards = np.sum(rewards, axis=0)
 

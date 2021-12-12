@@ -123,6 +123,31 @@ class SynthesisEnv(gym.Env):
         # self.counter = 0
         return self.last_obs
 
+    # Function to run simulation and then get observations (separate from run sim + get reward as in get_reward())
+    # action: np array of dimension (batchsize x 1)
+    # @return: observations with dimension (ob_dim,) or (batch_size, ob_dim) 
+    def run_sim_get_obs(self, actions):
+        # Not batch mode: actions is a scalar value
+        if not isinstance(actions, np.ndarray):
+            state = self.state*self.num_passes + actions + 1
+            if actions < self.num_passes: # unless stop token
+                self._run_yosys(state)
+            ob = self._get_obs(state)
+            
+        else:
+            ob = []
+            # Batch mode:  run Yosys for each action sequentially
+            for ac in actions:
+                ac = int(ac)
+                state = self.state*self.num_passes + ac  +1
+                ## run simulation and get rewards (Yosys)
+                if ac < self.num_passes: # unless stop token
+                    self._run_yosys(state)
+                ob.append(self._get_obs(state))
+            ob = np.asarray(ob)
+        return ob
+
+    # Run Yosys and then get reward from its log file
     # action: np array of dimension (batchsize x 1)
     # observations: np array 
     # state is always an integer (current state + seqeuence)
@@ -149,7 +174,7 @@ class SynthesisEnv(gym.Env):
                 totals.append(-(delay*10000+area))
                 dones.append(int(actions == self.num_passes-1 ))
         else:
-            # Batch mode: we compute 
+            # Batch mode:  run Yosys for each action sequentially
             for ac in actions:
                 ac = int(ac)
                 # self.counter = self.counter + 1
