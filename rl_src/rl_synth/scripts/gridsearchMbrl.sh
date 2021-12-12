@@ -46,7 +46,7 @@ fi
 pushd runs
 
 declare -a BATCH_SIZE_ARR=("500" "1000" "2000" )
-declare -a TB_ARR=("5" "50" "100")
+declare -a TB_ARR=("10" "100")
 declare -a NN_SIZE_ARR=("16" "32")
 declare -a NATSPI_ARR=("5" "50" "100")
 declare -a LR_ARR=("0.1" "0.01" "0.001")

@@ -15,6 +15,7 @@ from rl_synth.agents.mb_reward_agent import MBRewardAgent
 from rl_synth.infrastructure import pytorch_util as ptu
 from rl_synth.infrastructure import utils
 from rl_synth.infrastructure.logger import Logger
+import json
 
 # register all of our envs
 # from rl_synth.envs import register_envs
@@ -300,9 +301,9 @@ class RL_Trainer(object):
         action_sequence = self.agent.actor.sample_action_sequences(num_sequences=1, horizon=10) #20 reacher
         action_sequence = action_sequence[0]
         # calculate and log model prediction error
-        mpe, true_states, pred_states = utils.calculate_mean_prediction_error(self.env, action_sequence, self.agent.dyn_models, self.agent.actor.data_statistics)
+        mpe, true_vals, pred_vals = utils.calculate_mean_prediction_error(self.env, action_sequence, self.agent.dyn_models, self.agent.actor.data_statistics)
         # assert self.params['agent_params']['ob_dim'] == true_states.shape[1] == pred_states.shape[1]
-        assert true_states.shape[0] == pred_states.shape[0]
+        assert true_vals.shape[0] == pred_vals.shape[0]
         ob_dim = self.params['agent_params']['ob_dim']
         ob_dim = 2*int(ob_dim/2.0) ## skip last state for plotting when state dim is odd
         
@@ -320,15 +321,22 @@ class RL_Trainer(object):
         #     plt.plot(pred_states[:,i], 'r')
         # self.fig.suptitle('MPE: ' + str(mpe))
         # self.fig.savefig(self.params['logdir']+'/itr_'+str(itr)+'_predictions.png', dpi=200, bbox_inches='tight')
-        fp = open(self.params['logdir']+'/itr_'+str(itr)+'_mpe.txt', "w")
-        fp.write("true rewards")
-        fp.write(np.array2string(true_states))
-        fp.write("predicted rewards")
-        fp.write(np.array2string(pred_states))
-        fp.write(str(mpe))
-        fp.close()
+
+        # dump_json["true_values"] = true_vals
+        # dump_json["pred_values"] = pred_vals
+        # fp = open(self.params['logdir']+'/itr_'+str(itr)+'_mpe.txt', "w")
+        # fp.write("true rewards")
+        # fp.write(np.array2string(true_states))
+        # fp.write("predicted rewards")
+        # fp.write(np.array2string(pred_states))
+        # fp.write(str(mpe))
+        # fp.close()
         # # plot all intermediate losses during this iteration
         all_losses = np.array([log['Training Loss'] for log in all_logs])
+        # dump_json = {}
+        # dump_json["mpe"] = mpe.item()
+        # dump_json["train_loss"] = all_losses
+        np.save(self.params['logdir']+'/itr_'+str(itr)+'_mpe.npy', mpe)
         np.save(self.params['logdir']+'/itr_'+str(itr)+'_losses.npy', all_losses)
         self.fig.clf()
         plt.plot(all_losses)
