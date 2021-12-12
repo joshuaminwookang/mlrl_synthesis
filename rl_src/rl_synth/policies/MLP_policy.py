@@ -123,7 +123,7 @@ class MLPPolicy(BasePolicy, nn.Module, metaclass=abc.ABCMeta):
 
 #####################################################
 #####################################################
-from cs285.infrastructure.utils import normalize
+from rl_synth.infrastructure.utils import normalize
 
 
 class MLPPolicyAC(MLPPolicy):
