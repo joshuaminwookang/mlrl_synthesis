@@ -48,7 +48,7 @@ launch_ac_job(){
     DISCOUNT=$7
     NTU=$8
     NGSTU=$9
-    slurm_script_name="batch$1_lr$2_tb${10}_eb$6_NN$4x$5_ntu$8_ngstu$9_discount$7"
+    slurm_script_name="batch$1_lr$3_eb$6_NN$4x$5_ntu$8_ngstu$9_discount$7"
     echo $slurm_script_name
     cat > "${slurm_script_name}.sh" <<EOT
 #!/bin/bash
@@ -73,7 +73,7 @@ launch_ac_job(){
 ## Command(s) to run:
 source /global/home/users/${USER}/.bashrc
 source activate rl
-python ../rl_synth/scripts/run_Ac.py --exp_name  ${slurm_script_name} --env_name synthesis-v0 \
+python ../rl_synth/scripts/run_ac.py --exp_name  ${slurm_script_name} --env_name synthesis-v0 \
         -b ${BATCH_SIZE} -n ${NUM_ITER} --n_layers ${NN_LAYERS} --size ${NN_SIZE} --scalar_log_freq 1 --video_log_freq -1\
         -ntu ${NTU} -ngstu ${NGSTU} -eb ${EVAL_BATCH} --discount ${DISCOUNT}
 EOT
@@ -110,7 +110,7 @@ declare -a BATCH_SIZE_ARR=("100" "200" )
 # declare -a EB_ARR=("5" "10" )
 # declare -a TB_ARR=("5" "50" )
 declare -a NN_SIZE_ARR=("16" "32")
-declare -a NN_LAYERS_ARR=("2" )
+# declare -a NN_LAYERS_ARR=("2" )
 declare -a NTU_ARR=("1" "10" "100")
 declare -a NGSTU_ARR=("1" "10" "100")
 declare -a LR_ARR=("0.1" "0.01" "0.001")
@@ -123,12 +123,9 @@ do
         do
             for nnsize in "${NN_SIZE_ARR[@]}"
             do 
-                for nnlayer in "${NN_LAYERS_ARR[@]}"
+                for lr in "${LR_ARR[@]}"
                 do
-                    for lr in "${LR_ARR[@]}"
-                    do
-                        launch_ac_job $batch 20 $lr $nnsize $nnlayer 30 1.0 $ntu $ngstu
-                    done
+                    launch_ac_job $batch 20 $lr $nnsize 2 30 1.0 $ntu $ngstu
                 done
             done
         done
