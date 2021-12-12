@@ -39,13 +39,17 @@ def load_data_from_dir(search):
     dfs = []
     search_path = os.path.normpath(os.path.join(os.getcwd(), search))
     csvs = glob.glob(search_path)
+    print(csvs)
     for f in csvs:
         X = []
         Y = []
         columns = [] 
         filename=os.path.dirname(f)
-        tag=filename[filename.find('/hw4_') + 1:filename.find('-v')]
+        tag=filename[0:filename.find('synthesis')]
+        # tag=filename[filename.find('/hw4_') + 1:filename.find('-v')]
         X, Y = get_section_results(f)
+        print(X)
+        print(Y)
         columns = ["Train_AverageReturn", "Eval_AverageReturn" ]
         data = pd.DataFrame([ [x,y] for x,y in zip(X, Y)], columns = columns)
         data[TAGNAME] = tag
@@ -90,9 +94,10 @@ main function
 def main():
     if not os.path.exists(DIR):
         os.mkdir(DIR)
-    dfs_q2 = load_data_from_dir("data/proj_*/event*")
-    plot_stacked_learning_curves(dfs_q2, ['Iteration', 'Train_AverageReturn'], "Q2_Obstacles_TrainAvg", plot_type="scatter")
-    plot_stacked_learning_curves(dfs_q2, ['Iteration', 'Eval_AverageReturn'], "Q2_Obstacles_EvalAvg", plot_type="scatter")
+    ac_gridsearch1 = load_data_from_dir("ac_hparams_1/*/event*")
+    print(ac_gridsearch1)
+    # plot_stacked_learning_curves(ac_gridsearch1, ['Iteration', 'Train_AverageReturn'], "AC Hyperparameters", plot_type="scatter")
+    # plot_stacked_learning_curves(ac_gridsearch1, ['Iteration', 'Eval_AverageReturn'], "AC Hyperparameters", plot_type="scatter")
 
     # dfs_q3 = load_data_from_dir("data/hw4_q3_*/event*")
     # plot_stacked_learning_curves(dfs_q3, ['Iteration', 'Eval_AverageReturn'], "Q3_MBRL_Random_Shooting", plot_type="line")

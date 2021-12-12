@@ -120,10 +120,13 @@ class MPCPolicy(BasePolicy):
             # CEM: only a single action sequence to consider; return the first action
             return candidate_action_sequences[0][0][None]
         else:
+            print(candidate_action_sequences)
             predicted_rewards = self.evaluate_candidate_sequences(candidate_action_sequences, obs)
             # pick the action sequence and return the 1st element of that sequence
+            print(predicted_rewards)
             best_action_sequence = candidate_action_sequences[np.argmax(predicted_rewards, axis=0)]  # TODO (Q2)
             action_to_take = best_action_sequence[0]  # TODO (Q2)
+            print(action_to_take[None])
             return action_to_take[None]  # Unsqueeze the first index
 
     def calculate_sum_of_rewards(self, obs, candidate_action_sequences, model):

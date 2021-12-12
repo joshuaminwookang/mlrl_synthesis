@@ -61,9 +61,9 @@ if [[ $EXP_NUM == 1 ]]; then
 elif [[ $EXP_NUM == 2 ]]; then
     echo "Experiment 2: MBRL with Trained MPC Policy"
     python rl_synth/scripts/run.py --exp_name mbrl_e2e_test --env_name synthesis-v0 \
-    --add_sl_noise --num_agent_train_steps_per_iter 10 --n_iter 2 \
-    --batch_size_initial 20 --batch_size 20 --mpc_horizon 2 -tb 25 -eb 10\
-    --mpc_action_sampling_strategy 'random' --video_log_freq -1 
+    --add_sl_noise --num_agent_train_steps_per_iter 50 --n_iter 2 \
+    --batch_size_initial 200 --batch_size 100 --mpc_horizon 2 -tb 50 -eb 40\
+    --mpc_action_sampling_strategy 'random' --video_log_freq -1 --scalar_log_freq 1 
     # python rl_synth/scripts/run.py --exp_name test --env_name synthesis-v0 \
     # --add_sl_noise --num_agent_train_steps_per_iter 2 --n_iter 1 \
     # --batch_size_initial 100 --batch_size 50 --mpc_horizon 2 -tb 25\
@@ -79,7 +79,10 @@ elif [[ $EXP_NUM == 2 ]]; then
 elif [[ $EXP_NUM == 3 ]]; then
     echo "Testing AC"
     python rl_synth/scripts/run_ac.py --exp_name batch100_eb40 --env_name synthesis-v0 \
-    --ep_len 10 --n_iter 2 --batch_size 100 --eval_batch_size 40 --train_batch_size 100
+    --ep_len 10 --n_iter 2 --batch_size 100 --eval_batch_size 40 --train_batch_size 100 \
+    --num_target_updates 10 --num_grad_steps_per_target_update  10 --n_layers 2 --size 16 \
+     --scalar_log_freq 1 --video_log_freq -1 \
+    --learning_rate 0.001
 elif [[ $EXP_NUM == 4 ]]; then
     echo "Experiment 4: MBRL with Trained MPC Policy Variables"
     python cs285/scripts/run_hw4_mb.py --exp_name q4_reacher_horizon5 --env_name reacher-cs285-v0 \

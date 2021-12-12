@@ -31,21 +31,24 @@ def calculate_mean_prediction_error(env, action_sequence, models, data_statistic
     model = models[0]
 
     # true
-    true_rewards = perform_actions(env, action_sequence)['reward']
-
+    true_values = perform_actions(env, action_sequence)
+    true_rewards = true_values['reward']
+    true_obs = true_values['observation']
+    true_obs_reward = np.hstack((true_rewards,true_obs))
     # predicted
     ob = np.expand_dims(true_rewards[0],0)
-    pred_rewards = []
+    predictions = []
     for ac in action_sequence:
         action = np.expand_dims(ac,0)
-        reward = model.get_prediction(ob, action, data_statistics)
-        pred_rewards.append(reward)
-    pred_rewards = np.squeeze(pred_rewards)
+        pred_obs, pred_reward = model.get_prediction(ob, action, data_statistics)
+        pred_obs_reward =  np.hstack((np.expand_dims(pred_reward,0).T, pred_obs))
+        predictions.append(pred_obs_reward)
+    predictions = np.squeeze(predictions)
 
     # mpe
-    mpe = mean_squared_error(pred_rewards, true_rewards)
+    mpe = mean_squared_error(predictions, true_obs_reward)
 
-    return mpe, true_rewards, pred_rewards
+    return mpe, true_obs_reward, predictions
 
 def perform_actions(env, actions):
     ob = env.reset()
@@ -102,14 +105,12 @@ def sample_trajectory(env, policy, max_path_length, render=False, render_mode=('
         ac = policy.get_action(ob) # HINT: query the policy's get_action function
         ac = ac[0]
         acs.append(ac)
-
         # take that action and record results
         ob, rew, done, _ = env.step(ac)
         # record result of taking that action
         steps += 1
         next_obs.append(ob)
         rewards.append(rew)
-
         # end the rollout if the rollout ended
         rollout_done = done or  steps == max_path_length# HINT: this is either 0 or 1
         terminals.append(rollout_done)

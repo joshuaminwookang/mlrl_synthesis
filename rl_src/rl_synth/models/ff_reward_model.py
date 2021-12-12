@@ -18,7 +18,7 @@ class FFRewardModel(nn.Module, BaseModel):
         self.learning_rate = learning_rate
         self.reward_network = ptu.build_mlp(
             input_size=self.ob_dim + self.ac_dim,
-            output_size=1,
+            output_size=self.ob_dim + 1,
             n_layers=self.n_layers,
             size=self.size,
         )
@@ -48,8 +48,8 @@ class FFRewardModel(nn.Module, BaseModel):
         self.obs_std = ptu.from_numpy(obs_std)
         self.acs_mean = ptu.from_numpy(acs_mean)
         self.acs_std = ptu.from_numpy(acs_std)
-        # self.delta_mean = ptu.from_numpy(delta_mean)
-        # self.delta_std = ptu.from_numpy(delta_std)
+        self.delta_mean = ptu.from_numpy(delta_mean)
+        self.delta_std = ptu.from_numpy(delta_std)
 
     def forward(
             self,
@@ -78,27 +78,16 @@ class FFRewardModel(nn.Module, BaseModel):
                 unnormalized) output of the delta network. This is needed
         """
         # normalize input data to mean 0, std 1
-        # obs_unnormalized = ptu.from_numpy(obs_unnormalized)
-        # acs_unnormalized = ptu.from_numpy(acs_unnormalized)
-        # obs_mean = ptu.from_numpy(obs_mean)
-        # obs_std = ptu.from_numpy(obs_std)
-        # acs_std = ptu.from_numpy(acs_std)
-        # delta_mean = ptu.from_numpy(delta_mean)
-        # delta_std = ptu.from_numpy(delta_std)
-
         obs_normalized = ptu.from_numpy(normalize(obs_unnormalized, obs_mean, obs_std)) # TODO(Q1)
         acs_normalized = ptu.from_numpy(normalize(acs_unnormalized, acs_mean, acs_std))# TODO(Q1)
-        # print(obs_normalized.shape)
-        # print(acs_normalized.shape)
-
         # predicted change in obs
         concatenated_input = torch.cat([obs_normalized, acs_normalized], dim=1)
         # TODO(Q1) compute delta_pred_normalized and next_obs_pred
         # Hint: as described in the PDF, the output of the network is the
         # *normalized change* in state, i.e. normalized(s_t+1 - s_t).
-        pred_reward = self.reward_network(concatenated_input) # TODO(Q1)
-        # next_obs_pred = obs_unnormalized + unnormalize(ptu.to_numpy(delta_pred_normalized), delta_mean, delta_std) # TODO(Q1)
-        # return next_obs_pred, delta_pred_normalized
+        pred_deltaobs_reward = self.reward_network(concatenated_input) # TODO(Q1)
+        next_obs_pred = obs_unnormalized + unnormalize(ptu.to_numpy(pred_deltaobs_reward[:,1:]), delta_mean, delta_std) # TODO(Q1)
+        return next_obs_pred, pred_deltaobs_reward
         return pred_reward
 
     def get_prediction(self, obs, acs, data_statistics):
@@ -116,12 +105,12 @@ class FFRewardModel(nn.Module, BaseModel):
         :return: a numpy array of the predicted next-states (s_t+1)
         """
         # print("Checking A obs_mean:{}".format(data_statistics['obs_mean']))
-        prediction = self(obs, acs, **data_statistics)# TODO(Q1) get numpy array of the predicted next-states (s_t+1)
+        pred_state, pred_deltaobs_reward = self(obs, acs, **data_statistics)# TODO(Q1) get numpy array of the predicted next-states (s_t+1)
         # Hint: `self(...)` returns a tuple, but you only need to use one of the
         # outputs.
-        return ptu.to_numpy(prediction)
+        return pred_state, ptu.to_numpy(pred_deltaobs_reward)[:,0]
 
-    def update(self, observations, actions, rewards_n, data_statistics):
+    def update(self, observations, actions, next_observations, rewards_n, data_statistics):
         """
         :param observations: numpy array of observations
         :param actions: numpy array of actions
@@ -136,19 +125,15 @@ class FFRewardModel(nn.Module, BaseModel):
              - 'delta_std'
         :return:
         """
-        # target = normalize(next_observations-observations, data_statistics['delta_mean'], data_statistics['delta_std']) # TODO(Q1) compute the normalized target for the model.
-        # Hint: you should use `data_statistics['delta_mean']` and
-        # `data_statistics['delta_std']`, which keep track of the mean
-        # and standard deviation of the model.
-        pred_rewards = self(observations, actions, **data_statistics)
-        loss = self.loss(ptu.from_numpy(rewards_n), pred_rewards) # TODO(Q1) compute the loss
+        obs_target = normalize(next_observations-observations, data_statistics['delta_mean'], data_statistics['delta_std']) # TODO(Q1) compute the normalized target for the model.
+        _,  pred_deltaobs_reward  = self(observations, actions, **data_statistics)
+        loss = self.loss(torch.cat([ptu.from_numpy(obs_target), ptu.from_numpy(rewards_n)], dim=1), pred_deltaobs_reward) # TODO(Q1) compute the loss
         # Hint: `self(...)` returns a tuple, but you only need to use one of the
         # outputs.
 
         self.optimizer.zero_grad()
         loss.backward()
         self.optimizer.step()
-
         return {
             'Training Loss': ptu.to_numpy(loss),
         }

@@ -58,6 +58,7 @@ class RL_Trainer(object):
         # Make the gym environment
         env_config = {}
         env_config['exp_name'] = self.params['exp_name']
+        env_config['bmark'] = self.params['bmark']
 
         self.env = gym.make(id=self.params['env_name'], **env_config)
         if 'env_wrappers' in self.params:
@@ -298,20 +299,14 @@ class RL_Trainer(object):
         # sample actions
         action_sequence = self.agent.actor.sample_action_sequences(num_sequences=1, horizon=10) #20 reacher
         action_sequence = action_sequence[0]
-        print("logging action seq : ")
-        print(action_sequence)
         # calculate and log model prediction error
         mpe, true_states, pred_states = utils.calculate_mean_prediction_error(self.env, action_sequence, self.agent.dyn_models, self.agent.actor.data_statistics)
         # assert self.params['agent_params']['ob_dim'] == true_states.shape[1] == pred_states.shape[1]
-        assert true_states.shape[1] == pred_states.shape[1]
+        assert true_states.shape[0] == pred_states.shape[0]
         ob_dim = self.params['agent_params']['ob_dim']
         ob_dim = 2*int(ob_dim/2.0) ## skip last state for plotting when state dim is odd
         
         #logfp = open(self.params['logdir']+'/itr_'+str(itr)+'_predictions.log', "w")
-        print("true states:")
-        print(true_states)
-        print("predcited states:")
-        print(pred_states)
         all_losses = np.array([log['Training Loss'] for log in all_logs])
         print("losses:")
         print(all_losses)
@@ -327,10 +322,10 @@ class RL_Trainer(object):
         # self.fig.savefig(self.params['logdir']+'/itr_'+str(itr)+'_predictions.png', dpi=200, bbox_inches='tight')
         fp = open(self.params['logdir']+'/itr_'+str(itr)+'_mpe.txt', "w")
         fp.write("true rewards")
-        fp.write(true_states)
+        fp.write(np.array2string(true_states))
         fp.write("predicted rewards")
-        fp.write(pred_states)
-        fp.write(mpe)
+        fp.write(np.array2string(pred_states))
+        fp.write(str(mpe))
         fp.close()
         # # plot all intermediate losses during this iteration
         all_losses = np.array([log['Training Loss'] for log in all_logs])

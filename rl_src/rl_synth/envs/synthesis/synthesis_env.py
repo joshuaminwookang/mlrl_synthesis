@@ -59,7 +59,7 @@ for x, y in SEQ_TO_TOKEN.items():
     TOKEN_TO_SEQ[y] = x
 
 class SynthesisEnv(gym.Env):
-    def __init__(self, exp_name):
+    def __init__(self, exp_name, bmark):
         # Env Parameters
         self.env_name = 'synthesis'
         self.is_gym = True
@@ -80,11 +80,14 @@ class SynthesisEnv(gym.Env):
         # Bookkeeping params
         self.run_dir = os.getcwd()
         self.script_dir = os.path.dirname(os.path.realpath(__file__))
-        self.bmark_path = glob.glob(self.script_dir +  "/verilog/*.v")[0]
-        self.bmark = os.path.basename(self.bmark_path).split('.')[0] # current circuit benchmark TODO: use Vivado
+        # self.bmark_path = glob.glob(self.script_dir +  "/verilog/*.v")[0]
+        # self.bmark = os.path.basename(self.bmark_path).split('.')[0] # current circuit benchmark TODO: use Vivado
+        self.bmark = bmark
+        self.bmark_path = glob.glob(self.script_dir +  "/verilog/{}.v".format(bmark))[0]
         self.tag = exp_name
         if not os.path.exists(self.script_dir+'/temp'):
             os.makedirs(self.script_dir+'/temp')
+
         # save inital features of benchmark 
         self.baseline_rewards = 0.0
         self.baseline_rewards = -self.get_reward(np.zeros(self.obs_dim), np.array([-1]))[0][0]
@@ -171,7 +174,8 @@ class SynthesisEnv(gym.Env):
                 area = float(re.findall(r'\d+.\d+', lines_that_contain("Ar = ", fp)[-1])[1])
                 delays.append(delay)
                 areas.append(area)
-                totals.append(-(delay*10000+area))
+                #totals.append(-(delay*10000+area))
+                totals.append(-(delay+area/10.0))
                 dones.append(int(actions == self.num_passes-1 ))
         else:
             # Batch mode:  run Yosys for each action sequentially
@@ -197,7 +201,8 @@ class SynthesisEnv(gym.Env):
                     area = float(re.findall(r'\d+.\d+', lines_that_contain("Ar = ", fp)[-1])[1])
                     delays.append(delay)
                     areas.append(area)
-                    totals.append(-(delay*10000+area))
+                    #totals.append(-(delay*10000+area))
+                    totals.append(-(delay+area/10.0))
                     dones.append(int(ac == self.num_passes-1 ))
 
         self.reward_dict['r_delay'] = np.asarray(delays)

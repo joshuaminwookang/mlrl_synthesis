@@ -40,6 +40,8 @@ class MB_Trainer(object):
 
         self.params = params
         self.params['agent_class'] = MBRewardAgent
+        #self.params['agent_class'] = MBAgent
+
         self.params['agent_params'] = agent_params
 
         ################
@@ -63,7 +65,7 @@ def main():
     parser.add_argument('--env_name', type=str) #reacher-cs285-v0, ant-cs285-v0, cheetah-cs285-v0, obstacles-cs285-v0
     parser.add_argument('--ep_len', type=int, default=10)
     parser.add_argument('--exp_name', type=str, default='todo')
-    parser.add_argument('--n_iter', '-n', type=int, default=20)
+    parser.add_argument('--n_iter', '-n', type=int, default=10)
 
     parser.add_argument('--ensemble_size', '-e', type=int, default=3)
     parser.add_argument('--mpc_horizon', type=int, default=3)
@@ -74,10 +76,10 @@ def main():
     parser.add_argument('--cem_alpha', type=float, default=1)
 
     parser.add_argument('--add_sl_noise', '-noise', action='store_true')
-    parser.add_argument('--num_agent_train_steps_per_iter', type=int, default=1)
+    parser.add_argument('--num_agent_train_steps_per_iter', type=int, default=50)
     parser.add_argument('--batch_size_initial', type=int, default=1000) #(random) steps collected on 1st iteration (put into replay buffer)
     parser.add_argument('--batch_size', '-b', type=int, default=500) #steps collected per train iteration (put into replay buffer)
-    parser.add_argument('--train_batch_size', '-tb', type=int, default=100) ##steps used per gradient step (used for training)
+    parser.add_argument('--train_batch_size', '-tb', type=int, default=400) ##steps used per gradient step (used for training)
     parser.add_argument('--eval_batch_size', '-eb', type=int, default=50) #steps collected per eval iteration
 
     parser.add_argument('--learning_rate', '-lr', type=float, default=0.001)
@@ -90,6 +92,7 @@ def main():
     parser.add_argument('--video_log_freq', type=int, default=-1) #-1 to disable
     parser.add_argument('--scalar_log_freq', type=int, default=1) #-1 to disable
     parser.add_argument('--save_params', action='store_true')
+    parser.add_argument('--bmark', type=str, default='adder')
     args = parser.parse_args()
 
     # convert to dictionary

@@ -100,7 +100,7 @@ class MPCRewardPolicy(BasePolicy):
             rewards.append(self.calculate_sum_of_rewards(obs, candidate_action_sequences, model))
         return np.mean(rewards, axis=0)
 
-    def get_action(self, obs):
+    def get_action(self, obs):  
         if self.data_statistics is None:
             return self.sample_action_sequences(num_sequences=1, horizon=1)[0]
 
@@ -139,8 +139,9 @@ class MPCRewardPolicy(BasePolicy):
         rewards = []
 
         for t in range(horizon):
-            rewards.append(model.get_prediction(observation, candidate_action_sequences[:,t,:], self.data_statistics))
-            observation = self.env.run_sim_get_obs(candidate_action_sequences[:,t,:])
+            observation, reward = model.get_prediction(observation, candidate_action_sequences[:,t,:], self.data_statistics)
+            rewards.append(reward)
+            #observation = self.env.run_sim_get_obs(candidate_action_sequences[:,t,:])
             # observation = model.get_prediction(observation, candidate_action_sequences[:,t,:], self.data_statistics)
             # obs_list.append(observation)
             # rewards.append(self.env.get_reward(observation, candidate_action_sequences[:,t+1,:])[0])
