@@ -1,6 +1,10 @@
-import numpy as np
+import random
 import pickle
-
+from tqdm import tqdm
+import numpy as np
+import torch
+from torch.nn.utils.rnn import pad_sequence
+from torch.utils.data import Dataset, DataLoader
 
 SEQ_TO_TOKEN = {
     '&if -W 300 -K 6 -v': 0, 
@@ -30,7 +34,8 @@ def prepare_dataset(data):
     labels = []
     features = []
     sequences = []
-    for _, d in data.items():
+    print('preparing dataset')
+    for _, d in tqdm(data.items()):
         feature = {}
         label = {}
         label['Path_Delay'] = d['Path_Delay'] / 1e2
@@ -38,7 +43,6 @@ def prepare_dataset(data):
         for f in ['CI', 'CO', 'level', 'level_avg',
                   'cut', 'xor', 'xor_ratio', 'mux', 'mux_ratio', 'and', 'and_ratio',
                   'obj', 'power', 'LUT', 'fanin', 'fanout', 'mffc', 
-                  #'fanin_max', 'fanin_avg', 
                   'fanout_max', 'fanout_avg', 'mffc_max', 'mffc_avg']:
             feature[f] = d[f]
         labels.append(label)
@@ -47,7 +51,8 @@ def prepare_dataset(data):
     return features, labels, sequences
 
 def preprocess_faninout(data):
-    for d in data:
+    print('preprocessing fanin and fanout')
+    for d in tqdm(data):
         fi = d.pop('fanin')
         fo = d.pop('fanout')
         d['fanin_all'] = fi['2'] # assume all fanin's are 2
@@ -66,8 +71,11 @@ def preprocess_faninout(data):
         d['fanout_all'] = fo_all
         
 def preprocess_slack(data):
-    for d in data:
-        slack = d.pop('slack')
+    print('preprocessing slack')
+    for d in tqdm(data):
+        if 'slack' in d:
+            slack = d.pop('slack')
+        '''
         slack_threshold = 21 # x10
         slack_all = slack['total_nodes']
         
@@ -89,9 +97,11 @@ def preprocess_slack(data):
                 slack_large += v
         d['slack_ratio_large'] = slack_large / slack_all
         d['slack_all'] = slack_all
+        '''
                 
 def preprocess_mffc(data):
-    for d in data:
+    print('preprocess mffc')
+    for d in tqdm(data):
         mffc = d.pop('mffc')
         mffc_threshold = 9
         mffc_all, mffc_large = 0, 0
@@ -107,7 +117,8 @@ def preprocess_mffc(data):
         d['mffc_all'] = mffc_all
         
 def preprocess_LUT(data):
-    for d in data:
+    print('preprocess LUT')
+    for d in tqdm(data):
         lut = d.pop('LUT')
         for i in [2, 3, 4, 5, 6]:
             key = f"{i}_LUT_ratio"
@@ -120,8 +131,9 @@ def preprocess_LUT(data):
 
 def preprocess_sequence(sequences):
     # convert the string representation into a list of tokens
+    print('preprocessing sequences')
     seq_list = []
-    for seq in sequences:
+    for seq in tqdm(sequences):
         seq = seq.split(';')[2: -3] # remove the redundant parts
         sl = []
         for s in seq:
@@ -147,12 +159,19 @@ def normalize(data):
     return np.transpose(data_t)
 
 def preprocess_data(data_path):
-    with open(data_path, 'rb') as f:
-        data = pickle.load(f)
+    if not isinstance(data_path, list):
+        data_path = [data_path]
+    features, labels, sequences = [], [], []
 
-    features, labels, sequences = prepare_dataset(data)
-    print(features[0])
-    print(len(features[0]))
+    for _data_path in data_path:
+        with open(_data_path, 'rb') as f:
+            data = pickle.load(f)
+
+        _features, _labels, _sequences = prepare_dataset(data)
+        features += _features
+        labels += _labels
+        sequences += _sequences
+
     preprocess_mffc(features)
     preprocess_faninout(features)
     # preprocess_slack(features)
@@ -165,9 +184,67 @@ def preprocess_data(data_path):
     sequences_list = preprocess_sequence(sequences)
     labels_flattened = flatten_all(labels)
 
-    return features_normalized, sequences_list, labels_flattened
+    return features_normalized, np.array(sequences_list), labels_flattened
+
+class CustomDataset(Dataset):
+    def __init__(self, features=None, sequences=None, labels=None, data_path=None):
+        if data_path is not None:
+            self.features, self.sequences, self.labels = preprocess_data(data_path)
+        else:
+            assert features is not None 
+            assert sequences is not None 
+            assert labels is not None 
+            self.features, self.sequences, self.labels = features, sequences, labels
+        self.input_dim = self.features.shape[-1]
+
+    def __len__(self):
+        return len(self.features)
+
+    def __getitem__(self, idx):
+        feature = torch.tensor(self.features[idx]).to(torch.float)
+        sequence = torch.tensor(self.sequences[idx]).to(torch.long)
+        label = torch.tensor(self.labels[idx]).to(torch.float)
+        #return {'feature': feature, 'sequence': sequence, 'label': label}
+        return feature, sequence, label
+
+def generate_datasets(data_path, p_val=0.2):
+    features, sequences, labels = preprocess_data(data_path)
+    num_training_sets = int((1 - p_val) * len(features))
+    indices_all = np.array(list(range(len(features))))
+    random.seed(100)
+    random.shuffle(indices_all)
+    print(indices_all)
+    train_indices = indices_all[:num_training_sets]
+    val_indices = indices_all[num_training_sets:]
+
+    train_dataset = CustomDataset(
+        features[train_indices], 
+        sequences[train_indices],
+        labels[train_indices],
+    )
+    valid_dataset = CustomDataset(
+        features[val_indices], 
+        sequences[val_indices],
+        labels[val_indices],
+    )
+    '''
+    print(train_indices)
+    print(val_indices)
+    print(len(features), len(train_indices), len(val_indices))
+    print(len(train_dataset))
+    print(len(valid_dataset))
+    '''
+
+    return train_dataset, valid_dataset
+
+def pad_collate(batch):
+    features, sequences, labels, = zip(*batch)
+    sequences_len = [len(s) for s in sequences]
+    features_pad = pad_sequence(features, batch_first=True, padding_value=0)
+    sequences_pad = pad_sequence(sequences, batch_first=True, padding_value=0)
+    labels_pad = pad_sequence(labels, batch_first=True, padding_value=0) 
+    return features_pad, sequences_pad, sequences_len, labels_pad
+
 
 if __name__ == '__main__': 
-    features, sequences, labels = preprocess_data('epfl_arithmetic.pkl')
-    print(len(features[0]))
-    print(sequences[0])
+   features, sequences, labels = preprocess_data('../../epfl_arithmetic.pkl')
