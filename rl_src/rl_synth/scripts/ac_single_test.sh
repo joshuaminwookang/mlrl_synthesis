@@ -7,7 +7,7 @@
 #SBATCH --account=fc_bdmesh
 #
 # Partition:
-#SBATCH --partition=savio2_gpu
+#SBATCH --partition=savio3
 #
 # Quality of Service:
 #SBATCH --qos=savio_normal

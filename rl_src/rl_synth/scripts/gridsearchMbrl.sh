@@ -41,13 +41,15 @@ EOT
 }
 
 launch_mbrl_run_job(){
-    BATCH_INITIAL=$1
+    BATCH=$1
     AGENT_TRAIN_STEPS=$2
     TRAINING_BATCH=$3
     NN_SIZE=$4
     NN_LAYERS=$5
     LEARNING_RATE=$6
-    slurm_script_name="mbrl_train_batchinit$1_natspi$2_tb$3_model$4x$5_lr$6"
+    MPCNUMSEQS=$7
+    HORIZON=$8
+    slurm_script_name="mbrl_train_batch$1_natspi$2_tb$3_model$4x$5_lr$6_eval$7_horizon$8"
     echo $slurm_script_name
     cat > "${slurm_script_name}.sh" <<EOT
 #!/bin/bash
@@ -59,23 +61,24 @@ launch_mbrl_run_job(){
 #SBATCH --account=fc_bdmesh
 #
 # Partition:
-#SBATCH --partition=savio2
+#SBATCH --partition=savio3
 #
 # Quality of Service:
 #SBATCH --qos=savio_normal
 # Num Cores per Task
-#SBATCH --cpus-per-task=4
+#SBATCH --cpus-per-task=8
 #
 # Wall clock limit:
-#SBATCH --time=05:00:00
+#SBATCH --time=10:00:00
 #
 ## Command(s) to run:
 source /global/home/users/${USER}/.bashrc
 source activate rl
 python ../rl_synth/scripts/run.py --exp_name  ${slurm_script_name} --env_name synthesis-v0 \
-        --add_sl_noise --n_iter 1 \
-        --batch_size_initial ${BATCH_INITIAL} --num_agent_train_steps_per_iter ${AGENT_TRAIN_STEPS}\
-        --train_batch_size ${TRAINING_BATCH} --n_iter 1\
+        --add_sl_noise --n_iter 5 --mpc_horizon ${HORIZON} --mpc_num_action_sequences ${MPCNUMSEQS} \
+        --eval_batch_size 30 \
+        --batch_size_initial 1000 --num_agent_train_steps_per_iter ${AGENT_TRAIN_STEPS}\
+        --train_batch_size ${TRAINING_BATCH} --batch_size ${BATCH} \
         --n_layers ${NN_LAYERS} --size ${NN_SIZE} --scalar_log_freq 1 --video_log_freq -1 \
         --mpc_action_sampling_strategy 'random'  --learning_rate ${LEARNING_RATE} 
 EOT
