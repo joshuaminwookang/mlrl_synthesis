@@ -19,6 +19,28 @@ axis_label = 16
 legend_label = 14
 axis_scale = 3.0
 
+def get_all_section_results(file):
+    """
+        requires tensorflow==1.12.0
+    """
+    X = []
+    Y = []
+    # for e in tf.train.summary_iterator(file):
+    for e in tf.compat.v1.train.summary_iterator(file):
+        for v in e.summary.value:
+            print(v.tag)
+            print(v.simple_value)
+
+def read_data_from_dir(search):
+    search_path = os.path.normpath(os.path.join(os.getcwd(), search))
+    csvs = glob.glob(search_path)
+    for f in csvs:
+        filename=os.path.dirname(f)
+        tag=filename[filename.find('/proj_') +1:filename.find('synthesis')]
+        print(filename)
+        get_all_section_results(f)
+        print("----------------------------------\n")
+
 def get_section_results(file):
     """
         requires tensorflow==1.12.0
@@ -45,7 +67,7 @@ def load_data_from_dir(search):
         Y = []
         columns = [] 
         filename=os.path.dirname(f)
-        tag=filename[0:filename.find('synthesis')]
+        tag=filename[filename.find('/proj_') +1:filename.find('synthesis')]
         # tag=filename[filename.find('/hw4_') + 1:filename.find('-v')]
         X, Y = get_section_results(f)
         print(X)
@@ -94,8 +116,11 @@ main function
 def main():
     if not os.path.exists(DIR):
         os.mkdir(DIR)
-    ac_gridsearch1 = load_data_from_dir("ac_hparams_1/*/event*")
-    print(ac_gridsearch1)
+    mbrl_gridsearch2 = read_data_from_dir("mbrl_train_hparams2/*_BEST/event*")
+    
+    # get_all_section_results(glob.glob( os.path.normpath(os.path.join(os.getcwd(), "mbrl_train_hparams2/batch*/event*")))[0])
+    # ac_gridsearch1 = load_data_from_dir("ac_hparams_1/*/event*")
+    # print(ac_gridsearch1)
     # plot_stacked_learning_curves(ac_gridsearch1, ['Iteration', 'Train_AverageReturn'], "AC Hyperparameters", plot_type="scatter")
     # plot_stacked_learning_curves(ac_gridsearch1, ['Iteration', 'Eval_AverageReturn'], "AC Hyperparameters", plot_type="scatter")
 
