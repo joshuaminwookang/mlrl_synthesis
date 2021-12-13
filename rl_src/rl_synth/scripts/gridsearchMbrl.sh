@@ -19,7 +19,7 @@ launch_mbrl_train_job(){
 #SBATCH --account=fc_bdmesh
 #
 # Partition:
-#SBATCH --partition=savio3
+#SBATCH --partition=savio2_gpu
 #
 # Quality of Service:
 #SBATCH --qos=savio_normal
@@ -66,7 +66,7 @@ launch_mbrl_run_job(){
 #SBATCH --account=fc_bdmesh
 #
 # Partition:
-#SBATCH --partition=savio3
+#SBATCH --partition=savio2_gpu
 #
 # Quality of Service:
 #SBATCH --qos=savio_normal
