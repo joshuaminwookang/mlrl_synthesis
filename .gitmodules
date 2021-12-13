@@ -4,3 +4,6 @@
 [submodule "epfl"]
 	path = epfl
 	url = https://github.com/lsils/benchmarks.git
+[submodule "scripts/graph/graph2vec"]
+	path = scripts/graph/graph2vec
+	url = https://github.com/benedekrozemberczki/graph2vec.git
