@@ -116,9 +116,8 @@ main function
 def main():
     if not os.path.exists(DIR):
         os.mkdir(DIR)
-    mbrl_gridsearch2 = read_data_from_dir("mbrl_train_hparams2/*_BEST/event*")
-    
-    # get_all_section_results(glob.glob( os.path.normpath(os.path.join(os.getcwd(), "mbrl_train_hparams2/batch*/event*")))[0])
+    # mbrl_gridsearch2 = read_data_from_dir("mbrl_train_hparams2/*_BEST/event*")
+    read_data_from_dir("mbrl_train_hparams3/proj_*/event*")
     # ac_gridsearch1 = load_data_from_dir("ac_hparams_1/*/event*")
     # print(ac_gridsearch1)
     # plot_stacked_learning_curves(ac_gridsearch1, ['Iteration', 'Train_AverageReturn'], "AC Hyperparameters", plot_type="scatter")

@@ -54,7 +54,8 @@ launch_mbrl_run_job(){
     LEARNING_RATE=$6
     ENSEMBLE=$7
     HORIZON=$8
-    slurm_script_name="mbrl_run_batch$1_natspi$2_tb$3_model$4x$5_lr$6_ensemble$7_horizon$8"
+    SEED=$9
+    slurm_script_name="mbrl_run_batch$1_natspi$2_tb$3_model$4x$5_lr$6_ensemble$7_horizon$8_seed$9"
     echo $slurm_script_name
     cat > "${slurm_script_name}.sh" <<EOT
 #!/bin/bash
@@ -87,7 +88,7 @@ python ../rl_synth/scripts/run.py --exp_name  ${slurm_script_name} --env_name sy
         --batch_size_initial 1000 --num_agent_train_steps_per_iter ${AGENT_TRAIN_STEPS}\
         --train_batch_size ${TRAINING_BATCH} --batch_size ${BATCH} \
         --n_layers ${NN_LAYERS} --size ${NN_SIZE} --scalar_log_freq 1 --video_log_freq -1 \
-        --mpc_action_sampling_strategy 'random'  --learning_rate ${LEARNING_RATE} 
+        --mpc_action_sampling_strategy 'random'  --learning_rate ${LEARNING_RATE} --seed ${SEED}
 EOT
     sbatch "${slurm_script_name}.sh"
 }
@@ -98,40 +99,13 @@ fi
 pushd runs
 
 # declare -a BATCH_SIZE_ARR=("1000" "2000" )
-declare -a TB_ARR=("200" "500")
-declare -a NATSPI_ARR=("500" "1000")
-declare -a NN_SIZE_ARR=("128" "256")
-declare -a NN_DEPTH=("2" "3")
-declare -a HORIZON_ARR=("3" "5")
-declare -a ENSEMBLE_ARR=("3" "5")
-# declare -a LR_ARR=("0.1" "0.01")
-
-for tb in "${TB_ARR[@]}" 
-do 
-    for natspi in "${NATSPI_ARR[@]}" 
-    do
-        for nnsize in "${NN_SIZE_ARR[@]}"
-        do 
-            for nnlayers in "${NN_DEPTH[@]}"
-            do
-                for horizon in "${HORIZON_ARR[@]}"
-                do
-                    for ensemble in "${ENSEMBLE_ARR[@]}"
-                    do
-                        launch_mbrl_train_job 1000 $natspi $tb $nnsize $nnlayers 0.01 $ensemble $horizon
-                    done
-                done
-            done
-        done
-    done
-done
-
 # declare -a TB_ARR=("200" "500")
+# declare -a NATSPI_ARR=("500" "1000")
 # declare -a NN_SIZE_ARR=("128" "256")
 # declare -a NN_DEPTH=("2" "3")
-# declare -a NATSPI_ARR=("500" "1000")
 # declare -a HORIZON_ARR=("3" "5")
 # declare -a ENSEMBLE_ARR=("3" "5")
+# # declare -a LR_ARR=("0.1" "0.01")
 
 # for tb in "${TB_ARR[@]}" 
 # do 
@@ -145,10 +119,32 @@ done
 #                 do
 #                     for ensemble in "${ENSEMBLE_ARR[@]}"
 #                     do
-#                         launch_mbrl_run_job 1000 $natspi $tb $nnsize $nnlayers 0.01 $ensemble $horizon
+#                         launch_mbrl_train_job 1000 $natspi $tb $nnsize $nnlayers 0.01 $ensemble $horizon
 #                     done
 #                 done
 #             done
 #         done
 #     done
 # done
+
+declare -a TB_ARR=("200" "500")
+# declare -a NN_SIZE_ARR=("128" "256")
+declare -a NN_DEPTH=("2" "3")
+# declare -a NATSPI_ARR=("500" "1000")
+declare -a HORIZON_ARR=("3" "5")
+# declare -a ENSEMBLE_ARR=("3" "5")
+declare -a SEED_ARR=("1" "2" "3")
+
+for tb in "${TB_ARR[@]}" 
+do 
+    for nnlayers in "${NN_DEPTH[@]}"
+    do
+        for horizon in "${HORIZON_ARR[@]}"
+        do
+            for seed in "${SEED_ARR[@]}"
+            do
+                launch_mbrl_run_job 1000 500 $tb 128 $nnlayers 0.01 5 $horizon $seed
+            done
+        done
+    done
+done
