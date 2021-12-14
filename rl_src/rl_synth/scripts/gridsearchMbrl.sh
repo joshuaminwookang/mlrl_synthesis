@@ -55,7 +55,7 @@ launch_mbrl_run_job(){
     ENSEMBLE=$7
     HORIZON=$8
     SEED=$9
-    slurm_script_name="mbrl_run_batch$1_natspi$2_tb$3_model$4x$5_lr$6_ensemble$7_horizon$8_seed$9"
+    slurm_script_name="mbrl_run_tb$3_model$4x$5_ensemble$7_horizon$8_seed$9"
     echo $slurm_script_name
     cat > "${slurm_script_name}.sh" <<EOT
 #!/bin/bash
@@ -67,7 +67,7 @@ launch_mbrl_run_job(){
 #SBATCH --account=fc_bdmesh
 #
 # Partition:
-#SBATCH --partition=savio2_gpu
+#SBATCH --partition=savio3
 #
 # Quality of Service:
 #SBATCH --qos=savio_normal

@@ -61,9 +61,9 @@ if [[ $EXP_NUM == 1 ]]; then
 elif [[ $EXP_NUM == 2 ]]; then
     echo "Experiment 2: MBRL with Trained MPC Policy"
     python rl_synth/scripts/run.py --exp_name mbrl_e2e_test --env_name synthesis-v0 \
-    --add_sl_noise --num_agent_train_steps_per_iter 50 --n_iter 2 \
-    --batch_size_initial 10 --batch_size 100 -tb 50 -eb 40\
-    --mpc_action_sampling_strategy 'random' --video_log_freq -1 --scalar_log_freq -1 
+    --add_sl_noise --num_agent_train_steps_per_iter 50 --n_iter 3 \
+    --batch_size_initial 10 --batch_size 10 -tb 50 -eb 40\
+    --mpc_action_sampling_strategy 'random' --video_log_freq -1 --scalar_log_freq 1 
     # python rl_synth/scripts/run.py --exp_name test --env_name synthesis-v0 \
     # --add_sl_noise --num_agent_train_steps_per_iter 2 --n_iter 1 \
     # --batch_size_initial 100 --batch_size 50 --mpc_horizon 2 -tb 25\

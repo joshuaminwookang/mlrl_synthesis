@@ -61,17 +61,15 @@ def load_data_from_dir(search):
     dfs = []
     search_path = os.path.normpath(os.path.join(os.getcwd(), search))
     csvs = glob.glob(search_path)
-    print(csvs)
     for f in csvs:
         X = []
         Y = []
         columns = [] 
         filename=os.path.dirname(f)
-        tag=filename[filename.find('/proj_') +1:filename.find('synthesis')]
+        tag=filename[filename.find('/proj_') +1:filename.find('_synthesis-v0')]
+        print(tag)
         # tag=filename[filename.find('/hw4_') + 1:filename.find('-v')]
         X, Y = get_section_results(f)
-        print(X)
-        print(Y)
         columns = ["Train_AverageReturn", "Eval_AverageReturn" ]
         data = pd.DataFrame([ [x,y] for x,y in zip(X, Y)], columns = columns)
         data[TAGNAME] = tag
@@ -88,20 +86,20 @@ def plot_stacked_learning_curves(dfs, vars, title, plot_type="scatter", subtitle
     # min_size = np.amin([len(df.index) for df in dfs])
     for df in dfs:
         total_df = total_df.append(df)
-    total_df = total_df.pivot(index=vars[0], columns=TAGNAME, values=vars[1])
+    # total_df = total_df.pivot(index=vars[0], columns=TAGNAME, values=vars[1])
     fig = plt.gcf()
     fig.set_size_inches(fig_dims)
     sns.set_style("darkgrid")
 
     with sns.plotting_context(font_scale=axis_scale):
         if (plot_type == "scatter"):
-            ax = sns.scatterplot(data=total_df)
+            ax = sns.scatterplot(data=total_df, x=vars[0], y=vars[1], hue=TAGNAME)
         else :
             ax = sns.lineplot(data=total_df)
         ax.set_xlabel(vars[0], fontsize=axis_label, weight='bold')
         ax.set_ylabel(vars[1], fontsize=axis_label, weight='bold')
-        plt.xlim([-1,1])
-        plt.ylim(dfs[0].iloc[0][vars[1]]*1.1, dfs[0].iloc[0][vars[1]]*0.9)
+        # plt.xlim([-1,1])
+        # plt.ylim(dfs[0].iloc[0][vars[1]]*1.1, dfs[0].iloc[0][vars[1]]*0.9)
         ax.ticklabel_format(axis="x", style="plain")
         ax.ticklabel_format(axis="y", style="plain")
         plt.legend(fontsize=legend_label,loc="best", prop={'weight': 'bold'})
@@ -117,11 +115,12 @@ def main():
     if not os.path.exists(DIR):
         os.mkdir(DIR)
     # mbrl_gridsearch2 = read_data_from_dir("mbrl_train_hparams2/*_BEST/event*")
-    read_data_from_dir("mbrl_train_hparams3/proj_*/event*")
+    # read_data_from_dir("mbrl_runs/proj_*/event*")
     # ac_gridsearch1 = load_data_from_dir("ac_hparams_1/*/event*")
-    # print(ac_gridsearch1)
-    # plot_stacked_learning_curves(ac_gridsearch1, ['Iteration', 'Train_AverageReturn'], "AC Hyperparameters", plot_type="scatter")
-    # plot_stacked_learning_curves(ac_gridsearch1, ['Iteration', 'Eval_AverageReturn'], "AC Hyperparameters", plot_type="scatter")
+    # print(ac_gridsearch1)'
+    mbrl_runs = load_data_from_dir("mbrl_runs/proj_*/event*")
+    # plot_stacked_learning_curves(mbrl_runs, ['Iteration', 'Train_AverageReturn'], "AC Hyperparameters", plot_type="scatter")
+    plot_stacked_learning_curves(mbrl_runs, ['Iteration', 'Eval_AverageReturn'], "AC Hyperparameters", plot_type="scatter")
 
     # dfs_q3 = load_data_from_dir("data/hw4_q3_*/event*")
     # plot_stacked_learning_curves(dfs_q3, ['Iteration', 'Eval_AverageReturn'], "Q3_MBRL_Random_Shooting", plot_type="line")
