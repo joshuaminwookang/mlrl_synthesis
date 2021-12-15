@@ -103,7 +103,7 @@ def plot_stacked_learning_curves(dfs, vars, title, plot_type="scatter", subtitle
         ax.ticklabel_format(axis="x", style="plain")
         ax.ticklabel_format(axis="y", style="plain")
         plt.legend(fontsize=legend_label,loc="best", prop={'weight': 'bold'})
-        plt.title(title+"\n"+subtitle, fontsize=axis_label, weight='bold')
+        # plt.title(title+"\n"+subtitle, fontsize=axis_label, weight='bold')
 
     plt.savefig(DIR+"/"+title+'.png',  format='png', dpi=300)
     plt.close() 
@@ -114,13 +114,13 @@ main function
 def main():
     if not os.path.exists(DIR):
         os.mkdir(DIR)
-    # mbrl_gridsearch2 = read_data_from_dir("mbrl_train_hparams2/*_BEST/event*")
-    # read_data_from_dir("mbrl_runs/proj_*/event*")
+    mbrl_gridsearch2 = read_data_from_dir("mbrl_runs2/*/event*")
+    # read_data_from_dir("data/proj_*/event*")
     # ac_gridsearch1 = load_data_from_dir("ac_hparams_1/*/event*")
     # print(ac_gridsearch1)'
-    mbrl_runs = load_data_from_dir("mbrl_runs/proj_*/event*")
+    mbrl_runs = load_data_from_dir("mbrl_runs2/proj_*/event*")
     # plot_stacked_learning_curves(mbrl_runs, ['Iteration', 'Train_AverageReturn'], "AC Hyperparameters", plot_type="scatter")
-    plot_stacked_learning_curves(mbrl_runs, ['Iteration', 'Eval_AverageReturn'], "AC Hyperparameters", plot_type="scatter")
+    plot_stacked_learning_curves(mbrl_runs, ['Iteration', 'Eval_AverageReturn'], "mbrl_runs", plot_type="scatter")
 
     # dfs_q3 = load_data_from_dir("data/hw4_q3_*/event*")
     # plot_stacked_learning_curves(dfs_q3, ['Iteration', 'Eval_AverageReturn'], "Q3_MBRL_Random_Shooting", plot_type="line")
