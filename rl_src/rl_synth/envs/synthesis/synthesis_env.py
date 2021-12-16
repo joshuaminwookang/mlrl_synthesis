@@ -91,6 +91,7 @@ class SynthesisEnv(gym.Env):
         # save inital features of benchmark 
         self.baseline_rewards = 0.0
         self.baseline_rewards = -self.get_reward(np.zeros(self.obs_dim), np.array([-1]))[0][0]
+        assert(1==0)
         self.baseline_obs = self._get_obs(self.state)
         self.last_obs = self.baseline_obs
         # print("Try new")
@@ -207,6 +208,8 @@ class SynthesisEnv(gym.Env):
 
         self.reward_dict['r_delay'] = np.asarray(delays)
         self.reward_dict['r_area'] = np.asarray(areas)
+        print( np.asarray(areas))
+        print( np.asarray(delay))
         self.reward_dict['r_total'] = np.asarray(totals)
         dones = np.asarray(dones)
         return self.baseline_rewards - self.reward_dict['r_total'], dones
