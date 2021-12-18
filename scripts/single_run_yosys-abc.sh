@@ -207,7 +207,7 @@ write_verilog -noexpr -norename ${pwd}/${ip}_syn.v
 EOT
 # synth_xilinx -flatten ${synth_with_abc9} -edif ${edif}
 
-      echo "${test_name} running ${ip}.ys..."
+      echo "${test_name} running Yosys with ${ip}.ys..."
       #pushd $(dirname ${path}) > /dev/null
     #   if ! ${YOSYS} -l ${pwd}/yosys.log ${pwd}/${ip}.ys > /dev/null 2>&1; then
     #     cat ${pwd}/yosys.log
@@ -220,7 +220,9 @@ EOT
 #      rm ${pwd}/yosys_og.log
 #      ${YOSYS} ${pwd}/${ip}.ys > /dev/null 2>&1
     fi
+    echo "Running GML generation .."
 
+    echo "&read temp.aig;&put;write_gml ${ip}.gml" | abc 
     cat >> test_${1}.tcl <<EOT
 read_edif ${edif}
 read_xdc -unmanaged ${xdc_file}
@@ -267,7 +269,6 @@ report_utilization
 # report_io
 EOT
 
-  echo "${test_name} running..."
   if [ "$run_vivado" = true ];then
     echo "${test_name} running test_${1}..."
     if ! $VIVADO -nojournal -log test_${1}.log -mode batch -source test_${1}.tcl > /dev/null 2>&1; then
