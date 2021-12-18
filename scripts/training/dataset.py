@@ -175,10 +175,9 @@ def preprocess_data(data_path):
 
     preprocess_mffc(features)
     preprocess_faninout(features)
-    # preprocess_slack(features)
+    preprocess_slack(features)
     preprocess_LUT(features)
 
-    print(features[0])
     features_flatted = flatten_all(features)
     features_normalized = normalize(features_flatted)
 
@@ -249,4 +248,3 @@ def pad_collate(batch):
 
 if __name__ == '__main__': 
     features, sequences, labels = preprocess_data('../../epfl_arithmetic.pkl')
-
