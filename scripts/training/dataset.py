@@ -50,84 +50,6 @@ def prepare_dataset(data):
         sequences.append(d['Sequence'])
     return features, labels, sequences
 
-def preprocess_faninout(data):
-    print('preprocessing fanin and fanout')
-    for d in tqdm(data):
-        fi = d.pop('fanin')
-        fo = d.pop('fanout')
-        d['fanin_all'] = fi['2'] # assume all fanin's are 2
-        
-        fo_threshold = 10
-        fo_all, fo_large = 0, 0
-        
-        for k, v in fo.items():
-            if k not in [str(x) for x in list(range(fo_threshold))]:
-                fo_large += v
-            fo_all += v
-        
-        for i in range(fo_threshold):
-            d['fanout_ratio_%d' % i] = fo['%d' % i] / fo_all
-        d['fanout_ratio_large'] = fo_large / fo_all
-        d['fanout_all'] = fo_all
-        
-def preprocess_slack(data):
-    print('preprocessing slack')
-    for d in tqdm(data):
-        if 'slack' in d:
-            slack = d.pop('slack')
-        '''
-        slack_threshold = 21 # x10
-        slack_all = slack['total_nodes']
-        
-        keys_skip = ['total_nodes']
-        for i in range(slack_threshold):
-            lower = 10 * i
-            upper = lower + 10
-            key = f"{lower}_{upper}"
-            name = f"slack_ratio_{key}"
-            keys_skip.append(key)
-            if key not in slack:
-                d[name] = 0.
-            else:
-                d[name] = slack[key] / slack_all
-        
-        slack_large = 0
-        for k, v in slack.items():
-            if k not in keys_skip:
-                slack_large += v
-        d['slack_ratio_large'] = slack_large / slack_all
-        d['slack_all'] = slack_all
-        '''
-                
-def preprocess_mffc(data):
-    print('preprocess mffc')
-    for d in tqdm(data):
-        mffc = d.pop('mffc')
-        mffc_threshold = 9
-        mffc_all, mffc_large = 0, 0
-        
-        for k, v in mffc.items():
-            if k not in [str(x) for x in list(range(mffc_threshold))]:
-                mffc_large += v
-            mffc_all += v
-        
-        for i in range(mffc_threshold):
-            d['mffc_ratio_%d' % i] = 0. if mffc_all == 0 else mffc['%d' % i] / mffc_all
-        d['mffc_ratio_large'] = 0. if mffc_all == 0 else mffc_large / mffc_all
-        d['mffc_all'] = mffc_all
-        
-def preprocess_LUT(data):
-    print('preprocess LUT')
-    for d in tqdm(data):
-        lut = d.pop('LUT')
-        for i in [2, 3, 4, 5, 6]:
-            key = f"{i}_LUT_ratio"
-            lut_ratio = lut[key] if key in lut else 0.
-            d[f"LUT_ratio_{i}"] = lut_ratio / 100 # convert percentage
-        d["LUT_level"] = lut["level"]
-        d["LUT_level_avg"] = lut["level_avg"]
-        d["LUT_size_avg"] = lut["size_avg"]
-        d["LUT_total"] = lut["total"]
 
 def preprocess_sequence(sequences):
     # convert the string representation into a list of tokens
@@ -172,17 +94,12 @@ def preprocess_data(data_path):
         labels += _labels
         sequences += _sequences
 
-    preprocess_mffc(features)
-    preprocess_faninout(features)
-    # preprocess_slack(features)
-    preprocess_LUT(features)
-
-    print(features[0])
-    features_flatted = flatten_all(features)
-    features_normalized = normalize(features_flatted)
-
     sequences_list = preprocess_sequence(sequences)
     labels_flattened = flatten_all(labels)
+
+    features_flatted = np.random.rand(labels_flattened.shape[0], 1024)
+    #features_normalized = normalize(features_flatted)
+    features_normalized = features_flatted
 
     return features_normalized, np.array(sequences_list), labels_flattened
 
