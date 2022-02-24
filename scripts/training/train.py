@@ -40,7 +40,16 @@ if __name__ == '__main__':
         args.se_input_dim,
         args.se_num_layers
     )
-    model = model.cuda()
+
+    if torch.cuda.is_available():
+        device = torch.device("cuda:" + str(0))
+        print("Using GPU id {}".format(0))
+    else:
+        device = torch.device("cpu")
+        print("GPU not detected. Defaulting to CPU.")
+
+    # model = model.cuda()
+    model = model.to(device=device)
 
     loss_fn = nn.MSELoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
@@ -60,9 +69,12 @@ if __name__ == '__main__':
 
         for i, batch in tqdm(enumerate(train_dataloader)):
             features, sequences, sequences_len, labels = batch
-            features = features.cuda()
-            sequences = sequences.cuda()
-            labels = labels.cuda()
+            # features = features.cuda()
+            # sequences = sequences.cuda()
+            # labels = labels.cuda()
+            features = features.to(device=device)
+            sequences = sequences.to(device=device)
+            labels = labels.to(device=device)
             x = model(features, sequences, sequences_len)
 
             loss = loss_fn(x, labels)
@@ -82,9 +94,12 @@ if __name__ == '__main__':
 
         for i, batch in tqdm(enumerate(valid_dataloader)):
             features, sequences, sequences_len, labels = batch
-            features = features.cuda()
-            sequences = sequences.cuda()
-            labels = labels.cuda()
+            # features = features.cuda()
+            # sequences = sequences.cuda()
+            # labels = labels.cuda()
+            features = features.to(device=device)
+            sequences = sequences.to(device=device)
+            labels = labels.to(device=device)
             x = model(features, sequences, sequences_len)
 
             loss = loss_fn(x, labels)

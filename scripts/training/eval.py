@@ -21,6 +21,13 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
+    if torch.cuda.is_available():
+        device = torch.device("cuda:" + str(0))
+        print("Using GPU id {}".format(0))
+    else:
+        device = torch.device("cpu")
+        print("GPU not detected. Defaulting to CPU.")
+
     data_path = args.dataset_path.split(',')
     _, valid_dataset = generate_datasets(data_path, p_val=1)
     valid_dataloader = DataLoader(valid_dataset, batch_size=256, num_workers=0, collate_fn=pad_collate)
@@ -33,10 +40,11 @@ if __name__ == '__main__':
         args.se_input_dim,
         args.se_num_layers
     )
-    model = model.cuda()
-    model.load_state_dict(torch.load(args.load_path))
-    model.eval()
 
+    # model = model.cuda()
+    model = model.to(device=device)
+    model.load_state_dict(torch.load(args.load_path, map_location=torch.device('cpu')))
+    model.eval()
     loss_fn = nn.MSELoss()
 
     x_delay_all = []
@@ -48,9 +56,12 @@ if __name__ == '__main__':
 
     for i, batch in tqdm(enumerate(valid_dataloader)):
         features, sequences, sequences_len, labels = batch
-        features = features.cuda()
-        sequences = sequences.cuda()
-        labels = labels.cuda()
+        # features = features.cuda()
+        # sequences = sequences.cuda()
+        # labels = labels.cuda()
+        features = features.to(device=device)
+        sequences = sequences.to(device=device)
+        labels = labels.to(device=device)
         x = model(features, sequences, sequences_len)
 
         loss = loss_fn(x, labels)

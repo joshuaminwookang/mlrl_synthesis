@@ -109,7 +109,8 @@ if [ ${RANDOM_SEQ_LEN} -gt 0 ]; then
   MIN_NUM_RUNS=0
   MAX_NUM_RUNS=100
 fi
-
+ MIN_NUM_RUNS=0
+ MAX_NUM_RUNS=1
 
 # LSF config
 LSF_PREFIX=

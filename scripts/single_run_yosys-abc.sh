@@ -200,9 +200,7 @@ EOT
       fi
       python3 $SCRIPT_DIR/gen_synthesis_script.py --in_idx=${2} --random_seq_len=${3} --abc9=$synth_abc9 --lut_library $4 --stochastic $STOCHASTIC > ${ip}.${2}.abc.script
       cat >> ${ip}.ys <<EOT
-#read_verilog ${mem_file}
 synth_xilinx -dff -flatten -noiopad ${synth_with_abc9} -edif ${edif} -script ${ip}.${2}.abc.script
-#synth_xilinx -dff -flatten -noiopad ${synth_with_abc9} -edif ${edif} 
 write_verilog -noexpr -norename ${pwd}/${ip}_syn.v
 EOT
 # synth_xilinx -flatten ${synth_with_abc9} -edif ${edif}
@@ -221,7 +219,7 @@ EOT
 #      ${YOSYS} ${pwd}/${ip}.ys > /dev/null 2>&1
     fi
     echo "Running GML generation .."
-    echo "&read temp.aig;&put;write_gml ${ip}_${2}.gml" | abc
+    echo "&read temp.aig;&put;write_gml ${ip}.gml" | abc
     echo "Finished GML Generation"
     cat >> test_${1}.tcl <<EOT
 read_edif ${edif}

@@ -189,10 +189,11 @@ def main():
         print(get_seq_abc9_single_list(random_num, lut_lib_num))
         print("&ps; &pfeatures stats.json; &pfanstats fanstats.json;&write temp.aig")
     elif do_abc9:
-        print(get_seq_abc9_single_list(args.in_idx, lut_lib_num))
-        print("&ps; &pfeatures stats.json; &pfanstats fanstats.json;&write temp.aig")
+        # print(get_seq_abc9_single_list(args.in_idx, lut_lib_num))
+        # print("&ps; &pfeatures stats.json; &pfanstats fanstats.json;&write temp.aig")
+        print("&write temp.aig")
     else :
-        print(get_seq(args.in_idx))
+        print("write temp.aig; write_gml temp.gml")
     # print("write_blif internal.blif")
 
 if __name__ == '__main__':
