@@ -3,6 +3,7 @@ import pickle
 from tqdm import tqdm
 import numpy as np
 import torch
+import csv
 from torch.nn.utils.rnn import pad_sequence
 from torch.utils.data import Dataset, DataLoader
 
@@ -30,23 +31,19 @@ TOKEN_TO_SEQ = {}
 for x, y in SEQ_TO_TOKEN.items():
     TOKEN_TO_SEQ[y] = x
 
-def prepare_dataset(data):
+def prepare_dataset(data, feature_dict):
     labels = []
     features = []
     sequences = []
     print('preparing dataset')
     for _, d in tqdm(data.items()):
-        feature = {}
         label = {}
         label['Path_Delay'] = d['Path_Delay'] / 1e2
         label['Slice_LUTs'] = d['Slice_LUTs'] / 1e3
-        for f in ['CI', 'CO', 'level', 'level_avg',
-                  'cut', 'xor', 'xor_ratio', 'mux', 'mux_ratio', 'and', 'and_ratio',
-                  'obj', 'power', 'LUT', 'fanin', 'fanout', 'mffc', 
-                  'fanout_max', 'fanout_avg', 'mffc_max', 'mffc_avg']:
-            feature[f] = d[f]
         labels.append(label)
-        features.append(feature)
+        name = d['Benchmark']
+        assert name in feature_dict
+        features.append(feature_dict[name])
         sequences.append(d['Sequence'])
     return features, labels, sequences
 
@@ -80,16 +77,28 @@ def normalize(data):
         data_t[i] = (data_t[i] - mean) / (std + eps)
     return np.transpose(data_t)
 
-def preprocess_data(data_path):
+def parse_features_csv(feature_dim):
+    feature_dict = {}
+    with open(f'feature_vectors/med{feature_dim}.csv') as f:
+        csvreader = csv.reader(f)
+        for i, row in enumerate(csvreader):
+            if i == 0: continue
+            name, features = row[0], row[1:]
+            feature_dict[name] = [float(x) for x in features]
+    return feature_dict
+
+def preprocess_data(data_path, feature_dim):
     if not isinstance(data_path, list):
         data_path = [data_path]
     features, labels, sequences = [], [], []
+
+    feature_dict = parse_features_csv(feature_dim)
 
     for _data_path in data_path:
         with open(_data_path, 'rb') as f:
             data = pickle.load(f)
 
-        _features, _labels, _sequences = prepare_dataset(data)
+        _features, _labels, _sequences = prepare_dataset(data, feature_dict)
         features += _features
         labels += _labels
         sequences += _sequences
@@ -97,9 +106,10 @@ def preprocess_data(data_path):
     sequences_list = preprocess_sequence(sequences)
     labels_flattened = flatten_all(labels)
 
-    features_flatted = np.random.rand(labels_flattened.shape[0], 1024)
-    #features_normalized = normalize(features_flatted)
-    features_normalized = features_flatted
+    features_normalized = np.array(features)
+    # Uncomment the following for testing/ablation
+    #features_normalized = np.zeros_like(features_normalized)
+    #features_normalized = np.random.rand(*features_normalized.shape)
 
     return features_normalized, np.array(sequences_list), labels_flattened
 
@@ -124,8 +134,8 @@ class CustomDataset(Dataset):
         #return {'feature': feature, 'sequence': sequence, 'label': label}
         return feature, sequence, label
 
-def generate_datasets(data_path, p_val=0.2):
-    features, sequences, labels = preprocess_data(data_path)
+def generate_datasets(data_path, p_val=0.2, feature_dim=64):
+    features, sequences, labels = preprocess_data(data_path, feature_dim=feature_dim)
     num_training_sets = int((1 - p_val) * len(features))
     indices_all = np.array(list(range(len(features))))
     random.seed(100)
@@ -144,13 +154,6 @@ def generate_datasets(data_path, p_val=0.2):
         sequences[val_indices],
         labels[val_indices],
     )
-    '''
-    print(train_indices)
-    print(val_indices)
-    print(len(features), len(train_indices), len(val_indices))
-    print(len(train_dataset))
-    print(len(valid_dataset))
-    '''
 
     return train_dataset, valid_dataset
 
