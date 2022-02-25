@@ -69,9 +69,6 @@ if __name__ == '__main__':
 
         for i, batch in tqdm(enumerate(train_dataloader)):
             features, sequences, sequences_len, labels = batch
-            # features = features.cuda()
-            # sequences = sequences.cuda()
-            # labels = labels.cuda()
             features = features.to(device=device)
             sequences = sequences.to(device=device)
             labels = labels.to(device=device)
@@ -94,9 +91,6 @@ if __name__ == '__main__':
 
         for i, batch in tqdm(enumerate(valid_dataloader)):
             features, sequences, sequences_len, labels = batch
-            # features = features.cuda()
-            # sequences = sequences.cuda()
-            # labels = labels.cuda()
             features = features.to(device=device)
             sequences = sequences.to(device=device)
             labels = labels.to(device=device)
