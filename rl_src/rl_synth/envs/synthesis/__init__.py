@@ -1,1 +1,0 @@
-from rl_synth.envs.synthesis.synthesis_env import SynthesisEnv
