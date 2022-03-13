@@ -3,6 +3,7 @@ import pickle
 from tqdm import tqdm
 import numpy as np
 import torch
+import csv
 from torch.nn.utils.rnn import pad_sequence
 from torch.utils.data import Dataset, DataLoader
 
@@ -30,105 +31,22 @@ TOKEN_TO_SEQ = {}
 for x, y in SEQ_TO_TOKEN.items():
     TOKEN_TO_SEQ[y] = x
 
-def prepare_dataset(data):
+def prepare_dataset(data, feature_dict):
     labels = []
     features = []
     sequences = []
     print('preparing dataset')
     for _, d in tqdm(data.items()):
-        feature = {}
         label = {}
         label['Path_Delay'] = d['Path_Delay'] / 1e2
         label['Slice_LUTs'] = d['Slice_LUTs'] / 1e3
-        for f in ['CI', 'CO', 'level', 'level_avg',
-                  'cut', 'xor', 'xor_ratio', 'mux', 'mux_ratio', 'and', 'and_ratio',
-                  'obj', 'power', 'LUT', 'fanin', 'fanout', 'mffc', 
-                  #'fanin_max', 'fanin_avg', 'slack',
-                  'fanout_max', 'fanout_avg', 'mffc_max', 'mffc_avg']:
-            feature[f] = d[f]
         labels.append(label)
-        features.append(feature)
+        name = d['Benchmark']
+        assert name in feature_dict
+        features.append(feature_dict[name])
         sequences.append(d['Sequence'])
     return features, labels, sequences
 
-def preprocess_faninout(data):
-    print('preprocessing fanin and fanout')
-    for d in tqdm(data):
-        fi = d.pop('fanin')
-        fo = d.pop('fanout')
-        d['fanin_all'] = fi['2'] # assume all fanin's are 2
-        
-        fo_threshold = 10
-        fo_all, fo_large = 0, 0
-        
-        for k, v in fo.items():
-            if k not in [str(x) for x in list(range(fo_threshold))]:
-                fo_large += v
-            fo_all += v
-        
-        for i in range(fo_threshold):
-            d['fanout_ratio_%d' % i] = fo['%d' % i] / fo_all
-        d['fanout_ratio_large'] = fo_large / fo_all
-        d['fanout_all'] = fo_all
-        
-def preprocess_slack(data):
-    print('preprocessing slack')
-    for d in tqdm(data):
-        if 'slack' in d:
-            slack = d.pop('slack')
-        '''
-        slack_threshold = 21 # x10
-        slack_all = slack['total_nodes']
-        
-        keys_skip = ['total_nodes']
-        for i in range(slack_threshold):
-            lower = 10 * i
-            upper = lower + 10
-            key = f"{lower}_{upper}"
-            name = f"slack_ratio_{key}"
-            keys_skip.append(key)
-            if key not in slack:
-                d[name] = 0.
-            else:
-                d[name] = slack[key] / slack_all
-        
-        slack_large = 0
-        for k, v in slack.items():
-            if k not in keys_skip:
-                slack_large += v
-        d['slack_ratio_large'] = slack_large / slack_all
-        d['slack_all'] = slack_all
-        '''
-                
-def preprocess_mffc(data):
-    print('preprocess mffc')
-    for d in tqdm(data):
-        mffc = d.pop('mffc')
-        mffc_threshold = 9
-        mffc_all, mffc_large = 0, 0
-        
-        for k, v in mffc.items():
-            if k not in [str(x) for x in list(range(mffc_threshold))]:
-                mffc_large += v
-            mffc_all += v
-        
-        for i in range(mffc_threshold):
-            d['mffc_ratio_%d' % i] = 0. if mffc_all == 0 else mffc['%d' % i] / mffc_all
-        d['mffc_ratio_large'] = 0. if mffc_all == 0 else mffc_large / mffc_all
-        d['mffc_all'] = mffc_all
-        
-def preprocess_LUT(data):
-    print('preprocess LUT')
-    for d in tqdm(data):
-        lut = d.pop('LUT')
-        for i in [2, 3, 4, 5, 6]:
-            key = f"{i}_LUT_ratio"
-            lut_ratio = lut[key] if key in lut else 0.
-            d[f"LUT_ratio_{i}"] = lut_ratio / 100 # convert percentage
-        d["LUT_level"] = lut["level"]
-        d["LUT_level_avg"] = lut["level_avg"]
-        d["LUT_size_avg"] = lut["size_avg"]
-        d["LUT_total"] = lut["total"]
 
 def preprocess_sequence(sequences):
     # convert the string representation into a list of tokens
@@ -159,30 +77,39 @@ def normalize(data):
         data_t[i] = (data_t[i] - mean) / (std + eps)
     return np.transpose(data_t)
 
-def preprocess_data(data_path):
+def parse_features_csv(feature_dim):
+    feature_dict = {}
+    with open(f'feature_vectors/med{feature_dim}.csv') as f:
+        csvreader = csv.reader(f)
+        for i, row in enumerate(csvreader):
+            if i == 0: continue
+            name, features = row[0], row[1:]
+            feature_dict[name] = [float(x) for x in features]
+    return feature_dict
+
+def preprocess_data(data_path, feature_dim):
     if not isinstance(data_path, list):
         data_path = [data_path]
     features, labels, sequences = [], [], []
+
+    feature_dict = parse_features_csv(feature_dim)
 
     for _data_path in data_path:
         with open(_data_path, 'rb') as f:
             data = pickle.load(f)
 
-        _features, _labels, _sequences = prepare_dataset(data)
+        _features, _labels, _sequences = prepare_dataset(data, feature_dict)
         features += _features
         labels += _labels
         sequences += _sequences
 
-    preprocess_mffc(features)
-    preprocess_faninout(features)
-    preprocess_slack(features)
-    preprocess_LUT(features)
-
-    features_flatted = flatten_all(features)
-    features_normalized = normalize(features_flatted)
-
     sequences_list = preprocess_sequence(sequences)
     labels_flattened = flatten_all(labels)
+
+    features_normalized = np.array(features)
+    # Uncomment the following for testing/ablation
+    #features_normalized = np.zeros_like(features_normalized)
+    #features_normalized = np.random.rand(*features_normalized.shape)
 
     return features_normalized, np.array(sequences_list), labels_flattened
 
@@ -207,8 +134,8 @@ class CustomDataset(Dataset):
         #return {'feature': feature, 'sequence': sequence, 'label': label}
         return feature, sequence, label
 
-def generate_datasets(data_path, p_val=0.2):
-    features, sequences, labels = preprocess_data(data_path)
+def generate_datasets(data_path, p_val=0.2, feature_dim=64):
+    features, sequences, labels = preprocess_data(data_path, feature_dim=feature_dim)
     num_training_sets = int((1 - p_val) * len(features))
     indices_all = np.array(list(range(len(features))))
     random.seed(100)
@@ -227,13 +154,6 @@ def generate_datasets(data_path, p_val=0.2):
         sequences[val_indices],
         labels[val_indices],
     )
-    '''
-    print(train_indices)
-    print(val_indices)
-    print(len(features), len(train_indices), len(val_indices))
-    print(len(train_dataset))
-    print(len(valid_dataset))
-    '''
 
     return train_dataset, valid_dataset
 

@@ -13,6 +13,7 @@ DEFAULT_TRAINING_PATH = ['epfl_arithmetic.pkl', 'epfl_control.pkl', 'vtr_select.
 
 if __name__ == '__main__': 
     parser = argparse.ArgumentParser(prog="Regression")
+    parser.add_argument("--feature_dim", type=int, default=64, help="Feature graph embedding dim")
     parser.add_argument("--fe_hidden_dim", type=int, default=64, help="Feature embedding hidden dim")
     parser.add_argument("--fe_output_dim", type=int, default=256, help="Feature embedding output dim")
     parser.add_argument("--se_input_dim", type=int, default=64, help="Sequence embedding input dim")
@@ -27,7 +28,7 @@ if __name__ == '__main__':
     else:
         data_path = DEFAULT_TRAINING_PATH
 
-    train_dataset, valid_dataset = generate_datasets(data_path)
+    train_dataset, valid_dataset = generate_datasets(data_path, feature_dim=args.feature_dim)
     train_dataloader = DataLoader(train_dataset, batch_size=256, shuffle=True, num_workers=0, collate_fn=pad_collate)
 
     valid_dataloader = DataLoader(valid_dataset, batch_size=256, num_workers=0, collate_fn=pad_collate)
@@ -69,9 +70,6 @@ if __name__ == '__main__':
 
         for i, batch in tqdm(enumerate(train_dataloader)):
             features, sequences, sequences_len, labels = batch
-            # features = features.cuda()
-            # sequences = sequences.cuda()
-            # labels = labels.cuda()
             features = features.to(device=device)
             sequences = sequences.to(device=device)
             labels = labels.to(device=device)
@@ -94,9 +92,6 @@ if __name__ == '__main__':
 
         for i, batch in tqdm(enumerate(valid_dataloader)):
             features, sequences, sequences_len, labels = batch
-            # features = features.cuda()
-            # sequences = sequences.cuda()
-            # labels = labels.cuda()
             features = features.to(device=device)
             sequences = sequences.to(device=device)
             labels = labels.to(device=device)
