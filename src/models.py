@@ -4,8 +4,8 @@ from torch import nn
 from torch.nn.utils.rnn import pack_padded_sequence, pad_packed_sequence
 import numpy as np
 
-from torch_geometric.nn import MessagePassing
-from torch_geometric.utils import add_self_loops, degree
+from torch_geometric.nn import GCNConv,global_mean_pool 
+# from torch_geometric.utils import add_self_loops, degree
 
 from dataset import SEQ_TO_TOKEN, TOKEN_TO_SEQ
 
@@ -25,31 +25,31 @@ class FeatureEmbedding(nn.Module):
         #x = self.dropout(x)
         return x
     
-class GCNConv(MessagePassing):
-    def __init__(self, in_channels, out_channels):
-        super(GCNConv, self).__init__(aggr='add')
-        self.lin = torch.nn.Linear(in_channels, out_channels)
+# class GCNConv(MessagePassing):
+#     def __init__(self, in_channels, out_channels):
+#         super(GCNConv, self).__init__(aggr='add')
+#         self.lin = torch.nn.Linear(in_channels, out_channels)
 
-    def forward(self, x, edge_index):
-        # Step 1: Add self-loops
-        edge_index, _ = add_self_loops(edge_index, num_nodes=x.size(0))
+#     def forward(self, x, edge_index):
+#         # Step 1: Add self-loops
+#         edge_index, _ = add_self_loops(edge_index, num_nodes=x.size(0))
 
-        # Step 2: Multiply with weights
-        x = self.lin(x)
+#         # Step 2: Multiply with weights
+#         x = self.lin(x)
 
-        # Step 3: Calculate the normalization
-        row, col = edge_index
-        deg = degree(row, x.size(0), dtype=x.dtype)
-        deg_inv_sqrt = deg.pow(-0.5)
-        norm = deg_inv_sqrt[row] * deg_inv_sqrt[col]
+#         # Step 3: Calculate the normalization
+#         row, col = edge_index
+#         deg = degree(row, x.size(0), dtype=x.dtype)
+#         deg_inv_sqrt = deg.pow(-0.5)
+#         norm = deg_inv_sqrt[row] * deg_inv_sqrt[col]
 
-        # Step 4: Propagate the embeddings to the next layer
-        return self.propagate(edge_index, size=(x.size(0), x.size(0)), x=x,
-                              norm=norm)
+#         # Step 4: Propagate the embeddings to the next layer
+#         return self.propagate(edge_index, size=(x.size(0), x.size(0)), x=x,
+#                               norm=norm)
 
-    def message(self, x_j, norm):
-        # Normalize node features.
-        return norm.view(-1, 1) * x_j
+#     def message(self, x_j, norm):
+#         # Normalize node features.
+#         return norm.view(-1, 1) * x_j
     
 class GraphEmbedding(nn.Module):
     def __init__(self, input_dim, hidden_dim, output_dim):
@@ -57,16 +57,12 @@ class GraphEmbedding(nn.Module):
         self.conv1 = GCNConv(input_dim, hidden_dim)
         self.relu = nn.ReLU()
         self.conv2 = GCNConv(hidden_dim, output_dim)
-        # self.dense1 = nn.Linear(input_dim, hidden_dim)
-        # self.bn1 = nn.BatchNorm1d(hidden_dim)
-        # self.relu = nn.ReLU()
-        #self.dense2 = nn.Linear(hidden_dim, output_dim)
-        #self.dropout = nn.Dropout(p=0.1)
     def forward(self, x):
-        x = self.conv1(x, edge_index)
+        x = self.conv1(x)
         x = self.relu(x)
 #        x = F.dropout(x, training=self.training)
-        x = self.conv2(x, edge_index)
+        x = self.conv2(x)
+        x = global_mean_pool(x)
         return x
     
 class SequenceEmbedding(nn.Module):
