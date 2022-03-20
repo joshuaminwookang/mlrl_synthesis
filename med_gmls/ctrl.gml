@@ -1,632 +1,841 @@
-# GML for "temp" written by ABC on Thu Feb 24 13:06:24 2022
+# GML for "temp" written by ABC on Sat Mar 19 00:15:37 2022
 # This is a netlist: 0 , logic 0, has mapping: 0 or aig 1
 graph [
 
     node [ id     0 label "n0"
+        invert0 0 
+        invert1 0 
     ]
     node [ id     8 label "po00_PO"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id     9 label "po01_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    10 label "po02_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    11 label "po03_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    12 label "po04_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    13 label "po05_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    14 label "po06_PO"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id    15 label "po07_PO"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id    16 label "po08_PO"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id    17 label "po09_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    18 label "po10_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    19 label "po11_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    20 label "po12_PO"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id    21 label "po13_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    22 label "po14_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    23 label "po15_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    24 label "po16_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    25 label "po17_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    26 label "po18_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    27 label "po19_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    28 label "po20_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    29 label "po21_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    30 label "po22_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    31 label "po23_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    32 label "po24_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    33 label "po25_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
 
     node [ id     1 label "pi0_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id     2 label "pi1_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id     3 label "pi2_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id     4 label "pi3_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id     5 label "pi4_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id     6 label "pi5_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id     7 label "pi6_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
 
 
     node [ id    34 label "n34_Node"
-        invert 10 
+        invert0 0 
+        invert1 1 
     ]
     node [ id    35 label "n35_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    36 label "n36_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    37 label "n37_Node"
-        invert 11 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    38 label "n38_Node"
-        invert 11 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    39 label "n39_Node"
-        invert 01 
+        invert0 1 
+        invert1 1 
     ]
     node [ id    40 label "n40_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id    41 label "n41_Node"
-        invert 01 
+        invert0 1 
+        invert1 0 
     ]
     node [ id    42 label "n42_Node"
-        invert 01 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    43 label "n43_Node"
-        invert 00 
+        invert0 1 
+        invert1 1 
     ]
     node [ id    44 label "n44_Node"
-        invert 00 
+        invert0 1 
+        invert1 1 
     ]
     node [ id    45 label "n45_Node"
-        invert 00 
+        invert0 0 
+        invert1 1 
     ]
     node [ id    46 label "n46_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id    47 label "n47_Node"
-        invert 11 
+        invert0 0 
+        invert1 1 
     ]
     node [ id    48 label "n48_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id    49 label "n49_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id    50 label "n50_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id    51 label "n51_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id    52 label "n52_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id    53 label "n53_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id    54 label "n54_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id    55 label "n55_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id    56 label "n56_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id    57 label "n57_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id    58 label "n58_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id    59 label "n59_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id    60 label "n60_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id    61 label "n61_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id    62 label "n62_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id    63 label "n63_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id    64 label "n64_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id    65 label "n65_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id    66 label "n66_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id    67 label "n67_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id    68 label "n68_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id    69 label "n69_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id    70 label "n70_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id    71 label "n71_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id    72 label "n72_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id    73 label "n73_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id    74 label "n74_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id    75 label "n75_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id    76 label "n76_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id    77 label "n77_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id    78 label "n78_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id    79 label "n79_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id    80 label "n80_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    81 label "n81_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    82 label "n82_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id    83 label "n83_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id    84 label "n84_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id    85 label "n85_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id    86 label "n86_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    87 label "n87_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id    88 label "n88_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id    89 label "n89_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id    90 label "n90_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id    91 label "n91_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id    92 label "n92_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id    93 label "n93_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id    94 label "n94_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id    95 label "n95_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id    96 label "n96_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id    97 label "n97_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id    98 label "n98_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    99 label "n99_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   100 label "n100_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   101 label "n101_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   102 label "n102_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   103 label "n103_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   104 label "n104_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   105 label "n105_Node"
-        invert 00 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   106 label "n106_Node"
-        invert 00 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   107 label "n107_Node"
-        invert 11 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   108 label "n108_Node"
-        invert 10 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   109 label "n109_Node"
-        invert 10 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   110 label "n110_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   111 label "n111_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   112 label "n112_Node"
-        invert 01 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   113 label "n113_Node"
-        invert 11 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   114 label "n114_Node"
-        invert 11 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   115 label "n115_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   116 label "n116_Node"
-        invert 01 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   117 label "n117_Node"
-        invert 11 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   118 label "n118_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   119 label "n119_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   120 label "n120_Node"
-        invert 10 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   121 label "n121_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   122 label "n122_Node"
-        invert 00 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   123 label "n123_Node"
-        invert 10 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   124 label "n124_Node"
-        invert 11 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   125 label "n125_Node"
-        invert 11 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   126 label "n126_Node"
-        invert 01 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   127 label "n127_Node"
-        invert 01 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   128 label "n128_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   129 label "n129_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   130 label "n130_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   131 label "n131_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   132 label "n132_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   133 label "n133_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   134 label "n134_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   135 label "n135_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   136 label "n136_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   137 label "n137_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   138 label "n138_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   139 label "n139_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   140 label "n140_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   141 label "n141_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   142 label "n142_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   143 label "n143_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   144 label "n144_Node"
-        invert 10 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   145 label "n145_Node"
-        invert 01 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   146 label "n146_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   147 label "n147_Node"
-        invert 01 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   148 label "n148_Node"
-        invert 11 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   149 label "n149_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   150 label "n150_Node"
-        invert 11 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   151 label "n151_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   152 label "n152_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   153 label "n153_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   154 label "n154_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   155 label "n155_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   156 label "n156_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   157 label "n157_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   158 label "n158_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   159 label "n159_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   160 label "n160_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   161 label "n161_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   162 label "n162_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   163 label "n163_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   164 label "n164_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   165 label "n165_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   166 label "n166_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   167 label "n167_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   168 label "n168_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   169 label "n169_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   170 label "n170_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   171 label "n171_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   172 label "n172_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   173 label "n173_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   174 label "n174_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   175 label "n175_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   176 label "n176_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   177 label "n177_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   178 label "n178_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   179 label "n179_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   180 label "n180_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   181 label "n181_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   182 label "n182_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   183 label "n183_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   184 label "n184_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   185 label "n185_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   186 label "n186_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   187 label "n187_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   188 label "n188_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   189 label "n189_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   190 label "n190_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   191 label "n191_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   192 label "n192_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   193 label "n193_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   194 label "n194_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   195 label "n195_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   196 label "n196_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   197 label "n197_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   198 label "n198_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   199 label "n199_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   200 label "n200_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   201 label "n201_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   202 label "n202_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   203 label "n203_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   204 label "n204_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   205 label "n205_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   206 label "n206_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   207 label "n207_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     edge [ source     8   target    48
     ]
@@ -680,55 +889,55 @@ graph [
     ]
     edge [ source    33   target   207
     ]
+    edge [ source    34   target     1
+    ]
     edge [ source    34   target     2
     ]
-    edge [ source    34   target     4
+    edge [ source    35   target     4
     ]
     edge [ source    35   target     5
     ]
-    edge [ source    35   target    34
+    edge [ source    36   target    34
     ]
-    edge [ source    36   target     4
+    edge [ source    36   target    35
     ]
-    edge [ source    36   target     5
+    edge [ source    37   target     2
     ]
     edge [ source    37   target     4
     ]
-    edge [ source    37   target     5
-    ]
-    edge [ source    38   target    36
+    edge [ source    38   target     5
     ]
     edge [ source    38   target    37
     ]
-    edge [ source    39   target     2
+    edge [ source    39   target    36
     ]
     edge [ source    39   target    38
     ]
-    edge [ source    40   target    35
+    edge [ source    40   target     3
     ]
     edge [ source    40   target    39
     ]
-    edge [ source    41   target     3
+    edge [ source    41   target     2
     ]
-    edge [ source    41   target    40
+    edge [ source    41   target     4
     ]
-    edge [ source    42   target     1
+    edge [ source    42   target     5
     ]
-    edge [ source    42   target     2
+    edge [ source    42   target    41
     ]
-    edge [ source    43   target    36
+    edge [ source    43   target     4
     ]
-    edge [ source    43   target    42
+    edge [ source    43   target     5
     ]
-    edge [ source    44   target     2
+    edge [ source    44   target    35
     ]
-    edge [ source    44   target     4
+    edge [ source    44   target    43
     ]
-    edge [ source    45   target     5
+    edge [ source    45   target     2
     ]
     edge [ source    45   target    44
     ]
-    edge [ source    46   target    43
+    edge [ source    46   target    42
     ]
     edge [ source    46   target    45
     ]
@@ -736,13 +945,13 @@ graph [
     ]
     edge [ source    47   target    46
     ]
-    edge [ source    48   target    41
+    edge [ source    48   target    40
     ]
     edge [ source    48   target    47
     ]
     edge [ source    49   target     1
     ]
-    edge [ source    49   target    36
+    edge [ source    49   target    35
     ]
     edge [ source    50   target     1
     ]
@@ -754,7 +963,7 @@ graph [
     ]
     edge [ source    52   target     4
     ]
-    edge [ source    52   target    37
+    edge [ source    52   target    43
     ]
     edge [ source    53   target     2
     ]
@@ -794,11 +1003,11 @@ graph [
     ]
     edge [ source    62   target     1
     ]
-    edge [ source    62   target    38
+    edge [ source    62   target    44
     ]
     edge [ source    63   target     4
     ]
-    edge [ source    63   target    36
+    edge [ source    63   target    35
     ]
     edge [ source    64   target     1
     ]
@@ -834,7 +1043,7 @@ graph [
     ]
     edge [ source    72   target     1
     ]
-    edge [ source    72   target    38
+    edge [ source    72   target    44
     ]
     edge [ source    73   target    71
     ]
@@ -876,7 +1085,7 @@ graph [
     ]
     edge [ source    82   target     7
     ]
-    edge [ source    83   target    36
+    edge [ source    83   target    35
     ]
     edge [ source    83   target    82
     ]
@@ -884,7 +1093,7 @@ graph [
     ]
     edge [ source    84   target     6
     ]
-    edge [ source    85   target    36
+    edge [ source    85   target    35
     ]
     edge [ source    85   target    84
     ]
@@ -964,91 +1173,91 @@ graph [
     ]
     edge [ source   104   target   103
     ]
-    edge [ source   105   target     3
+    edge [ source   105   target     2
     ]
-    edge [ source   105   target     4
+    edge [ source   105   target    35
     ]
-    edge [ source   106   target     5
+    edge [ source   106   target    43
     ]
     edge [ source   106   target   105
     ]
-    edge [ source   107   target     2
+    edge [ source   107   target    43
     ]
-    edge [ source   107   target    36
+    edge [ source   107   target    49
     ]
-    edge [ source   108   target    37
+    edge [ source   108   target     1
     ]
-    edge [ source   108   target   107
+    edge [ source   108   target    57
     ]
-    edge [ source   109   target    37
+    edge [ source   109   target   107
     ]
-    edge [ source   109   target    49
+    edge [ source   109   target   108
     ]
-    edge [ source   110   target     1
+    edge [ source   110   target     2
     ]
-    edge [ source   110   target    57
+    edge [ source   110   target   109
     ]
-    edge [ source   111   target   109
+    edge [ source   111   target   106
     ]
     edge [ source   111   target   110
     ]
-    edge [ source   112   target     2
+    edge [ source   112   target     3
     ]
     edge [ source   112   target   111
     ]
-    edge [ source   113   target   108
+    edge [ source   113   target     3
     ]
-    edge [ source   113   target   112
+    edge [ source   113   target     4
     ]
-    edge [ source   114   target     3
+    edge [ source   114   target     5
     ]
     edge [ source   114   target   113
     ]
-    edge [ source   115   target   106
+    edge [ source   115   target   112
     ]
     edge [ source   115   target   114
     ]
     edge [ source   116   target     2
     ]
-    edge [ source   116   target    73
+    edge [ source   116   target     3
     ]
-    edge [ source   117   target    43
+    edge [ source   117   target    51
     ]
     edge [ source   117   target   116
     ]
-    edge [ source   118   target     3
+    edge [ source   118   target     2
     ]
-    edge [ source   118   target   117
+    edge [ source   118   target    73
     ]
-    edge [ source   119   target     2
+    edge [ source   119   target    36
     ]
-    edge [ source   119   target     3
+    edge [ source   119   target   118
     ]
-    edge [ source   120   target    51
+    edge [ source   120   target     3
     ]
     edge [ source   120   target   119
     ]
-    edge [ source   121   target   118
+    edge [ source   121   target   117
     ]
     edge [ source   121   target   120
     ]
-    edge [ source   122   target     2
+    edge [ source   122   target     1
     ]
-    edge [ source   122   target     3
+    edge [ source   122   target    52
     ]
-    edge [ source   123   target    38
+    edge [ source   123   target     1
     ]
     edge [ source   123   target   122
     ]
-    edge [ source   124   target     1
+    edge [ source   124   target     2
     ]
-    edge [ source   124   target    52
+    edge [ source   124   target   123
     ]
-    edge [ source   125   target     1
+    edge [ source   125   target     2
     ]
-    edge [ source   125   target   124
+    edge [ source   125   target     3
     ]
-    edge [ source   126   target     2
+    edge [ source   126   target   124
     ]
     edge [ source   126   target   125
     ]
@@ -1056,17 +1265,17 @@ graph [
     ]
     edge [ source   127   target     3
     ]
-    edge [ source   128   target   126
+    edge [ source   128   target    44
     ]
     edge [ source   128   target   127
     ]
-    edge [ source   129   target   123
+    edge [ source   129   target   126
     ]
     edge [ source   129   target   128
     ]
-    edge [ source   130   target   107
+    edge [ source   130   target   105
     ]
-    edge [ source   130   target   126
+    edge [ source   130   target   124
     ]
     edge [ source   131   target     3
     ]
@@ -1078,7 +1287,7 @@ graph [
     ]
     edge [ source   133   target    79
     ]
-    edge [ source   133   target   110
+    edge [ source   133   target   108
     ]
     edge [ source   134   target     2
     ]
@@ -1086,7 +1295,7 @@ graph [
     ]
     edge [ source   135   target     3
     ]
-    edge [ source   135   target   108
+    edge [ source   135   target   106
     ]
     edge [ source   136   target   134
     ]
@@ -1122,25 +1331,25 @@ graph [
     ]
     edge [ source   144   target     2
     ]
-    edge [ source   144   target     5
+    edge [ source   144   target   133
     ]
-    edge [ source   145   target     2
+    edge [ source   145   target    58
     ]
-    edge [ source   145   target    63
+    edge [ source   145   target   144
     ]
-    edge [ source   146   target   144
+    edge [ source   146   target     3
     ]
     edge [ source   146   target   145
     ]
-    edge [ source   147   target     3
+    edge [ source   147   target     2
     ]
-    edge [ source   147   target   146
+    edge [ source   147   target     5
     ]
     edge [ source   148   target     2
     ]
-    edge [ source   148   target   133
+    edge [ source   148   target    63
     ]
-    edge [ source   149   target    58
+    edge [ source   149   target   147
     ]
     edge [ source   149   target   148
     ]
@@ -1148,13 +1357,13 @@ graph [
     ]
     edge [ source   150   target   149
     ]
-    edge [ source   151   target   147
+    edge [ source   151   target   146
     ]
     edge [ source   151   target   150
     ]
     edge [ source   152   target     1
     ]
-    edge [ source   152   target   110
+    edge [ source   152   target   108
     ]
     edge [ source   153   target     3
     ]
@@ -1264,7 +1473,7 @@ graph [
     ]
     edge [ source   179   target   178
     ]
-    edge [ source   180   target    42
+    edge [ source   180   target    34
     ]
     edge [ source   180   target    64
     ]
@@ -1280,7 +1489,7 @@ graph [
     ]
     edge [ source   183   target    50
     ]
-    edge [ source   184   target   107
+    edge [ source   184   target   105
     ]
     edge [ source   184   target   183
     ]
@@ -1294,7 +1503,7 @@ graph [
     ]
     edge [ source   187   target     6
     ]
-    edge [ source   187   target    36
+    edge [ source   187   target    35
     ]
     edge [ source   188   target     7
     ]
@@ -1342,7 +1551,7 @@ graph [
     ]
     edge [ source   199   target     2
     ]
-    edge [ source   199   target   125
+    edge [ source   199   target   123
     ]
     edge [ source   200   target     2
     ]

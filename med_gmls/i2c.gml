@@ -1,4904 +1,6537 @@
-# GML for "temp" written by ABC on Thu Feb 24 13:06:28 2022
+# GML for "temp" written by ABC on Sat Mar 19 00:15:49 2022
 # This is a netlist: 0 , logic 0, has mapping: 0 or aig 1
 graph [
 
     node [ id     0 label "n0"
+        invert0 0 
+        invert1 0 
     ]
     node [ id   148 label "po000_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   149 label "po001_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   150 label "po002_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   151 label "po003_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   152 label "po004_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   153 label "po005_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   154 label "po006_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   155 label "po007_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   156 label "po008_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   157 label "po009_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   158 label "po010_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   159 label "po011_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   160 label "po012_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   161 label "po013_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   162 label "po014_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   163 label "po015_PO"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   164 label "po016_PO"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   165 label "po017_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   166 label "po018_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   167 label "po019_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   168 label "po020_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   169 label "po021_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   170 label "po022_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   171 label "po023_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   172 label "po024_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   173 label "po025_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   174 label "po026_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   175 label "po027_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   176 label "po028_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   177 label "po029_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   178 label "po030_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   179 label "po031_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   180 label "po032_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   181 label "po033_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   182 label "po034_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   183 label "po035_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   184 label "po036_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   185 label "po037_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   186 label "po038_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   187 label "po039_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   188 label "po040_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   189 label "po041_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   190 label "po042_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   191 label "po043_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   192 label "po044_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   193 label "po045_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   194 label "po046_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   195 label "po047_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   196 label "po048_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   197 label "po049_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   198 label "po050_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   199 label "po051_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   200 label "po052_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   201 label "po053_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   202 label "po054_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   203 label "po055_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   204 label "po056_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   205 label "po057_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   206 label "po058_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   207 label "po059_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   208 label "po060_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   209 label "po061_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   210 label "po062_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   211 label "po063_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   212 label "po064_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   213 label "po065_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   214 label "po066_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   215 label "po067_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   216 label "po068_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   217 label "po069_PO"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   218 label "po070_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   219 label "po071_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   220 label "po072_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   221 label "po073_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   222 label "po074_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   223 label "po075_PO"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   224 label "po076_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   225 label "po077_PO"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   226 label "po078_PO"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   227 label "po079_PO"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   228 label "po080_PO"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   229 label "po081_PO"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   230 label "po082_PO"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   231 label "po083_PO"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   232 label "po084_PO"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   233 label "po085_PO"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   234 label "po086_PO"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   235 label "po087_PO"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   236 label "po088_PO"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   237 label "po089_PO"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   238 label "po090_PO"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   239 label "po091_PO"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   240 label "po092_PO"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   241 label "po093_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   242 label "po094_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   243 label "po095_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   244 label "po096_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   245 label "po097_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   246 label "po098_PO"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   247 label "po099_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   248 label "po100_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   249 label "po101_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   250 label "po102_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   251 label "po103_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   252 label "po104_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   253 label "po105_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   254 label "po106_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   255 label "po107_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   256 label "po108_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   257 label "po109_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   258 label "po110_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   259 label "po111_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   260 label "po112_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   261 label "po113_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   262 label "po114_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   263 label "po115_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   264 label "po116_PO"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   265 label "po117_PO"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   266 label "po118_PO"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   267 label "po119_PO"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   268 label "po120_PO"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   269 label "po121_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   270 label "po122_PO"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   271 label "po123_PO"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   272 label "po124_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   273 label "po125_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   274 label "po126_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   275 label "po127_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   276 label "po128_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   277 label "po129_PO"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   278 label "po130_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   279 label "po131_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   280 label "po132_PO"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   281 label "po133_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   282 label "po134_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   283 label "po135_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   284 label "po136_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   285 label "po137_PO"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   286 label "po138_PO"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   287 label "po139_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   288 label "po140_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   289 label "po141_PO"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
 
     node [ id     1 label "pi000_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id     2 label "pi001_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id     3 label "pi002_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id     4 label "pi003_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id     5 label "pi004_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id     6 label "pi005_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id     7 label "pi006_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id     8 label "pi007_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id     9 label "pi008_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    10 label "pi009_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    11 label "pi010_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    12 label "pi011_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    13 label "pi012_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    14 label "pi013_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    15 label "pi014_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    16 label "pi015_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    17 label "pi016_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    18 label "pi017_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    19 label "pi018_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    20 label "pi019_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    21 label "pi020_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    22 label "pi021_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    23 label "pi022_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    24 label "pi023_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    25 label "pi024_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    26 label "pi025_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    27 label "pi026_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    28 label "pi027_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    29 label "pi028_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    30 label "pi029_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    31 label "pi030_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    32 label "pi031_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    33 label "pi032_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    34 label "pi033_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    35 label "pi034_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    36 label "pi035_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    37 label "pi036_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    38 label "pi037_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    39 label "pi038_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    40 label "pi039_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    41 label "pi040_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    42 label "pi041_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    43 label "pi042_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    44 label "pi043_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    45 label "pi044_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    46 label "pi045_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    47 label "pi046_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    48 label "pi047_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    49 label "pi048_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    50 label "pi049_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    51 label "pi050_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    52 label "pi051_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    53 label "pi052_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    54 label "pi053_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    55 label "pi054_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    56 label "pi055_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    57 label "pi056_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    58 label "pi057_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    59 label "pi058_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    60 label "pi059_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    61 label "pi060_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    62 label "pi061_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    63 label "pi062_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    64 label "pi063_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    65 label "pi064_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    66 label "pi065_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    67 label "pi066_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    68 label "pi067_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    69 label "pi068_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    70 label "pi069_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    71 label "pi070_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    72 label "pi071_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    73 label "pi072_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    74 label "pi073_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    75 label "pi074_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    76 label "pi075_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    77 label "pi076_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    78 label "pi077_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    79 label "pi078_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    80 label "pi079_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    81 label "pi080_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    82 label "pi081_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    83 label "pi082_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    84 label "pi083_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    85 label "pi084_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    86 label "pi085_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    87 label "pi086_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    88 label "pi087_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    89 label "pi088_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    90 label "pi089_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    91 label "pi090_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    92 label "pi091_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    93 label "pi092_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    94 label "pi093_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    95 label "pi094_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    96 label "pi095_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    97 label "pi096_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    98 label "pi097_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id    99 label "pi098_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   100 label "pi099_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   101 label "pi100_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   102 label "pi101_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   103 label "pi102_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   104 label "pi103_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   105 label "pi104_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   106 label "pi105_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   107 label "pi106_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   108 label "pi107_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   109 label "pi108_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   110 label "pi109_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   111 label "pi110_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   112 label "pi111_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   113 label "pi112_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   114 label "pi113_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   115 label "pi114_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   116 label "pi115_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   117 label "pi116_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   118 label "pi117_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   119 label "pi118_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   120 label "pi119_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   121 label "pi120_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   122 label "pi121_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   123 label "pi122_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   124 label "pi123_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   125 label "pi124_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   126 label "pi125_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   127 label "pi126_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   128 label "pi127_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   129 label "pi128_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   130 label "pi129_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   131 label "pi130_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   132 label "pi131_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   133 label "pi132_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   134 label "pi133_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   135 label "pi134_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   136 label "pi135_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   137 label "pi136_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   138 label "pi137_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   139 label "pi138_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   140 label "pi139_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   141 label "pi140_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   142 label "pi141_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   143 label "pi142_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   144 label "pi143_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   145 label "pi144_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   146 label "pi145_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   147 label "pi146_PI"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
 
 
     node [ id   290 label "n290_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   291 label "n291_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   292 label "n292_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   293 label "n293_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   294 label "n294_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   295 label "n295_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   296 label "n296_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   297 label "n297_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   298 label "n298_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   299 label "n299_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   300 label "n300_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   301 label "n301_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   302 label "n302_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   303 label "n303_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   304 label "n304_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   305 label "n305_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   306 label "n306_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   307 label "n307_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   308 label "n308_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   309 label "n309_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   310 label "n310_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   311 label "n311_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   312 label "n312_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   313 label "n313_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   314 label "n314_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   315 label "n315_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   316 label "n316_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   317 label "n317_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   318 label "n318_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   319 label "n319_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   320 label "n320_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   321 label "n321_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   322 label "n322_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   323 label "n323_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   324 label "n324_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   325 label "n325_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   326 label "n326_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   327 label "n327_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   328 label "n328_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   329 label "n329_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   330 label "n330_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   331 label "n331_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   332 label "n332_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   333 label "n333_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   334 label "n334_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   335 label "n335_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   336 label "n336_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   337 label "n337_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   338 label "n338_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   339 label "n339_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   340 label "n340_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   341 label "n341_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   342 label "n342_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   343 label "n343_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   344 label "n344_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   345 label "n345_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   346 label "n346_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   347 label "n347_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   348 label "n348_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   349 label "n349_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   350 label "n350_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   351 label "n351_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   352 label "n352_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   353 label "n353_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   354 label "n354_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   355 label "n355_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   356 label "n356_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   357 label "n357_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   358 label "n358_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   359 label "n359_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   360 label "n360_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   361 label "n361_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   362 label "n362_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   363 label "n363_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   364 label "n364_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   365 label "n365_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   366 label "n366_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   367 label "n367_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   368 label "n368_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   369 label "n369_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   370 label "n370_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   371 label "n371_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   372 label "n372_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   373 label "n373_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   374 label "n374_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   375 label "n375_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   376 label "n376_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   377 label "n377_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   378 label "n378_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   379 label "n379_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   380 label "n380_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   381 label "n381_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   382 label "n382_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   383 label "n383_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   384 label "n384_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   385 label "n385_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   386 label "n386_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   387 label "n387_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   388 label "n388_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   389 label "n389_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   390 label "n390_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   391 label "n391_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   392 label "n392_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   393 label "n393_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   394 label "n394_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   395 label "n395_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   396 label "n396_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   397 label "n397_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   398 label "n398_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   399 label "n399_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   400 label "n400_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   401 label "n401_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   402 label "n402_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   403 label "n403_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   404 label "n404_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   405 label "n405_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   406 label "n406_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   407 label "n407_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   408 label "n408_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   409 label "n409_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   410 label "n410_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   411 label "n411_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   412 label "n412_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   413 label "n413_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   414 label "n414_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   415 label "n415_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   416 label "n416_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   417 label "n417_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   418 label "n418_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   419 label "n419_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   420 label "n420_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   421 label "n421_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   422 label "n422_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   423 label "n423_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   424 label "n424_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   425 label "n425_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   426 label "n426_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   427 label "n427_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   428 label "n428_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   429 label "n429_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   430 label "n430_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   431 label "n431_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   432 label "n432_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   433 label "n433_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   434 label "n434_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   435 label "n435_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   436 label "n436_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   437 label "n437_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   438 label "n438_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   439 label "n439_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   440 label "n440_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   441 label "n441_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   442 label "n442_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   443 label "n443_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   444 label "n444_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   445 label "n445_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   446 label "n446_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   447 label "n447_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   448 label "n448_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   449 label "n449_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   450 label "n450_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   451 label "n451_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   452 label "n452_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   453 label "n453_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   454 label "n454_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   455 label "n455_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   456 label "n456_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   457 label "n457_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   458 label "n458_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   459 label "n459_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   460 label "n460_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   461 label "n461_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   462 label "n462_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   463 label "n463_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   464 label "n464_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   465 label "n465_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   466 label "n466_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   467 label "n467_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   468 label "n468_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   469 label "n469_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   470 label "n470_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   471 label "n471_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   472 label "n472_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   473 label "n473_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   474 label "n474_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   475 label "n475_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   476 label "n476_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   477 label "n477_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   478 label "n478_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   479 label "n479_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   480 label "n480_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   481 label "n481_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   482 label "n482_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   483 label "n483_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   484 label "n484_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   485 label "n485_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   486 label "n486_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   487 label "n487_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   488 label "n488_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   489 label "n489_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   490 label "n490_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   491 label "n491_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   492 label "n492_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   493 label "n493_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   494 label "n494_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   495 label "n495_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   496 label "n496_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   497 label "n497_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   498 label "n498_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   499 label "n499_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   500 label "n500_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   501 label "n501_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   502 label "n502_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   503 label "n503_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   504 label "n504_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   505 label "n505_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   506 label "n506_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   507 label "n507_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   508 label "n508_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   509 label "n509_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   510 label "n510_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   511 label "n511_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   512 label "n512_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   513 label "n513_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   514 label "n514_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   515 label "n515_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   516 label "n516_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   517 label "n517_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   518 label "n518_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   519 label "n519_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   520 label "n520_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   521 label "n521_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   522 label "n522_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   523 label "n523_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   524 label "n524_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   525 label "n525_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   526 label "n526_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   527 label "n527_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   528 label "n528_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   529 label "n529_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   530 label "n530_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   531 label "n531_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   532 label "n532_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   533 label "n533_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   534 label "n534_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   535 label "n535_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   536 label "n536_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   537 label "n537_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   538 label "n538_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   539 label "n539_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   540 label "n540_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   541 label "n541_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   542 label "n542_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   543 label "n543_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   544 label "n544_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   545 label "n545_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   546 label "n546_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   547 label "n547_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   548 label "n548_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   549 label "n549_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   550 label "n550_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   551 label "n551_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   552 label "n552_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   553 label "n553_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   554 label "n554_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   555 label "n555_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   556 label "n556_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   557 label "n557_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   558 label "n558_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   559 label "n559_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   560 label "n560_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   561 label "n561_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   562 label "n562_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   563 label "n563_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   564 label "n564_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   565 label "n565_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   566 label "n566_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   567 label "n567_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   568 label "n568_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   569 label "n569_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   570 label "n570_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   571 label "n571_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   572 label "n572_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   573 label "n573_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   574 label "n574_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   575 label "n575_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   576 label "n576_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   577 label "n577_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   578 label "n578_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   579 label "n579_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   580 label "n580_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   581 label "n581_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   582 label "n582_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   583 label "n583_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   584 label "n584_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   585 label "n585_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   586 label "n586_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   587 label "n587_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   588 label "n588_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   589 label "n589_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   590 label "n590_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   591 label "n591_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   592 label "n592_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   593 label "n593_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   594 label "n594_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   595 label "n595_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   596 label "n596_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   597 label "n597_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   598 label "n598_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   599 label "n599_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   600 label "n600_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   601 label "n601_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   602 label "n602_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   603 label "n603_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   604 label "n604_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   605 label "n605_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   606 label "n606_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   607 label "n607_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   608 label "n608_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   609 label "n609_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   610 label "n610_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   611 label "n611_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   612 label "n612_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   613 label "n613_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   614 label "n614_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   615 label "n615_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   616 label "n616_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   617 label "n617_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   618 label "n618_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   619 label "n619_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   620 label "n620_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   621 label "n621_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   622 label "n622_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   623 label "n623_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   624 label "n624_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   625 label "n625_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   626 label "n626_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   627 label "n627_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   628 label "n628_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   629 label "n629_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   630 label "n630_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   631 label "n631_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   632 label "n632_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   633 label "n633_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   634 label "n634_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   635 label "n635_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   636 label "n636_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   637 label "n637_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   638 label "n638_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   639 label "n639_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   640 label "n640_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   641 label "n641_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   642 label "n642_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   643 label "n643_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   644 label "n644_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   645 label "n645_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   646 label "n646_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   647 label "n647_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   648 label "n648_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   649 label "n649_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   650 label "n650_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   651 label "n651_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   652 label "n652_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   653 label "n653_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   654 label "n654_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   655 label "n655_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   656 label "n656_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   657 label "n657_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   658 label "n658_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   659 label "n659_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   660 label "n660_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   661 label "n661_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   662 label "n662_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   663 label "n663_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   664 label "n664_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   665 label "n665_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   666 label "n666_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   667 label "n667_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   668 label "n668_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   669 label "n669_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   670 label "n670_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   671 label "n671_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   672 label "n672_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   673 label "n673_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   674 label "n674_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   675 label "n675_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   676 label "n676_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   677 label "n677_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   678 label "n678_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   679 label "n679_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   680 label "n680_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   681 label "n681_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   682 label "n682_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   683 label "n683_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   684 label "n684_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   685 label "n685_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   686 label "n686_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   687 label "n687_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   688 label "n688_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   689 label "n689_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   690 label "n690_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   691 label "n691_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   692 label "n692_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   693 label "n693_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   694 label "n694_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   695 label "n695_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   696 label "n696_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   697 label "n697_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   698 label "n698_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   699 label "n699_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   700 label "n700_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   701 label "n701_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   702 label "n702_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   703 label "n703_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   704 label "n704_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   705 label "n705_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   706 label "n706_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   707 label "n707_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   708 label "n708_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   709 label "n709_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   710 label "n710_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   711 label "n711_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   712 label "n712_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   713 label "n713_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   714 label "n714_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   715 label "n715_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   716 label "n716_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   717 label "n717_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   718 label "n718_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   719 label "n719_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   720 label "n720_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   721 label "n721_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   722 label "n722_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   723 label "n723_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   724 label "n724_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   725 label "n725_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   726 label "n726_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   727 label "n727_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   728 label "n728_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   729 label "n729_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   730 label "n730_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   731 label "n731_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   732 label "n732_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   733 label "n733_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   734 label "n734_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   735 label "n735_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   736 label "n736_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   737 label "n737_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   738 label "n738_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   739 label "n739_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   740 label "n740_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   741 label "n741_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   742 label "n742_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   743 label "n743_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   744 label "n744_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   745 label "n745_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   746 label "n746_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   747 label "n747_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   748 label "n748_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   749 label "n749_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   750 label "n750_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   751 label "n751_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   752 label "n752_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   753 label "n753_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   754 label "n754_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   755 label "n755_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   756 label "n756_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   757 label "n757_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   758 label "n758_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   759 label "n759_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   760 label "n760_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   761 label "n761_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   762 label "n762_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   763 label "n763_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   764 label "n764_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   765 label "n765_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   766 label "n766_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   767 label "n767_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   768 label "n768_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   769 label "n769_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   770 label "n770_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   771 label "n771_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   772 label "n772_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   773 label "n773_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   774 label "n774_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   775 label "n775_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   776 label "n776_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   777 label "n777_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   778 label "n778_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   779 label "n779_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   780 label "n780_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   781 label "n781_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   782 label "n782_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   783 label "n783_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   784 label "n784_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   785 label "n785_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   786 label "n786_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   787 label "n787_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   788 label "n788_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   789 label "n789_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   790 label "n790_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   791 label "n791_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   792 label "n792_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   793 label "n793_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   794 label "n794_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   795 label "n795_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   796 label "n796_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   797 label "n797_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   798 label "n798_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   799 label "n799_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   800 label "n800_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   801 label "n801_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   802 label "n802_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   803 label "n803_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   804 label "n804_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   805 label "n805_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   806 label "n806_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   807 label "n807_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   808 label "n808_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   809 label "n809_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   810 label "n810_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   811 label "n811_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   812 label "n812_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   813 label "n813_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   814 label "n814_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   815 label "n815_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   816 label "n816_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   817 label "n817_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   818 label "n818_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   819 label "n819_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   820 label "n820_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   821 label "n821_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   822 label "n822_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   823 label "n823_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   824 label "n824_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   825 label "n825_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   826 label "n826_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   827 label "n827_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   828 label "n828_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   829 label "n829_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   830 label "n830_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   831 label "n831_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   832 label "n832_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   833 label "n833_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   834 label "n834_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   835 label "n835_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   836 label "n836_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   837 label "n837_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   838 label "n838_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   839 label "n839_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   840 label "n840_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   841 label "n841_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   842 label "n842_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   843 label "n843_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   844 label "n844_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   845 label "n845_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   846 label "n846_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   847 label "n847_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   848 label "n848_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   849 label "n849_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   850 label "n850_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   851 label "n851_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   852 label "n852_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   853 label "n853_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   854 label "n854_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   855 label "n855_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   856 label "n856_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   857 label "n857_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   858 label "n858_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   859 label "n859_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   860 label "n860_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   861 label "n861_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   862 label "n862_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   863 label "n863_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   864 label "n864_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   865 label "n865_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   866 label "n866_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   867 label "n867_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   868 label "n868_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   869 label "n869_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   870 label "n870_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   871 label "n871_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   872 label "n872_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   873 label "n873_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   874 label "n874_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   875 label "n875_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   876 label "n876_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   877 label "n877_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   878 label "n878_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   879 label "n879_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   880 label "n880_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   881 label "n881_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   882 label "n882_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   883 label "n883_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   884 label "n884_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   885 label "n885_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   886 label "n886_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   887 label "n887_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   888 label "n888_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   889 label "n889_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   890 label "n890_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   891 label "n891_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   892 label "n892_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   893 label "n893_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   894 label "n894_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   895 label "n895_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   896 label "n896_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   897 label "n897_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   898 label "n898_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   899 label "n899_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   900 label "n900_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   901 label "n901_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   902 label "n902_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   903 label "n903_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   904 label "n904_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   905 label "n905_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   906 label "n906_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   907 label "n907_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   908 label "n908_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   909 label "n909_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   910 label "n910_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   911 label "n911_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   912 label "n912_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   913 label "n913_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   914 label "n914_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   915 label "n915_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   916 label "n916_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   917 label "n917_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   918 label "n918_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   919 label "n919_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   920 label "n920_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   921 label "n921_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   922 label "n922_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   923 label "n923_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   924 label "n924_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   925 label "n925_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   926 label "n926_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   927 label "n927_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   928 label "n928_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   929 label "n929_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   930 label "n930_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   931 label "n931_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   932 label "n932_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   933 label "n933_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   934 label "n934_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   935 label "n935_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   936 label "n936_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   937 label "n937_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   938 label "n938_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   939 label "n939_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   940 label "n940_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   941 label "n941_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   942 label "n942_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   943 label "n943_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   944 label "n944_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   945 label "n945_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   946 label "n946_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   947 label "n947_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   948 label "n948_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   949 label "n949_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   950 label "n950_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   951 label "n951_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   952 label "n952_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   953 label "n953_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   954 label "n954_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   955 label "n955_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   956 label "n956_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   957 label "n957_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   958 label "n958_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   959 label "n959_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   960 label "n960_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   961 label "n961_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   962 label "n962_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   963 label "n963_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   964 label "n964_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   965 label "n965_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   966 label "n966_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   967 label "n967_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   968 label "n968_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   969 label "n969_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   970 label "n970_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   971 label "n971_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   972 label "n972_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   973 label "n973_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   974 label "n974_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   975 label "n975_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   976 label "n976_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   977 label "n977_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   978 label "n978_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   979 label "n979_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   980 label "n980_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   981 label "n981_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   982 label "n982_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   983 label "n983_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   984 label "n984_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   985 label "n985_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   986 label "n986_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   987 label "n987_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   988 label "n988_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   989 label "n989_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   990 label "n990_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   991 label "n991_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   992 label "n992_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id   993 label "n993_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   994 label "n994_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   995 label "n995_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id   996 label "n996_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id   997 label "n997_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   998 label "n998_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id   999 label "n999_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1000 label "n1000_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1001 label "n1001_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1002 label "n1002_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1003 label "n1003_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1004 label "n1004_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1005 label "n1005_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1006 label "n1006_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1007 label "n1007_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1008 label "n1008_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1009 label "n1009_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1010 label "n1010_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1011 label "n1011_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1012 label "n1012_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1013 label "n1013_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1014 label "n1014_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1015 label "n1015_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1016 label "n1016_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1017 label "n1017_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1018 label "n1018_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1019 label "n1019_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1020 label "n1020_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1021 label "n1021_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1022 label "n1022_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1023 label "n1023_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1024 label "n1024_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1025 label "n1025_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1026 label "n1026_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1027 label "n1027_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1028 label "n1028_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1029 label "n1029_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1030 label "n1030_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1031 label "n1031_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1032 label "n1032_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1033 label "n1033_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1034 label "n1034_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1035 label "n1035_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1036 label "n1036_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1037 label "n1037_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1038 label "n1038_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1039 label "n1039_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1040 label "n1040_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1041 label "n1041_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1042 label "n1042_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1043 label "n1043_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1044 label "n1044_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1045 label "n1045_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1046 label "n1046_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1047 label "n1047_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1048 label "n1048_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1049 label "n1049_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1050 label "n1050_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1051 label "n1051_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1052 label "n1052_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1053 label "n1053_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1054 label "n1054_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1055 label "n1055_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1056 label "n1056_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1057 label "n1057_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1058 label "n1058_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1059 label "n1059_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1060 label "n1060_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1061 label "n1061_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1062 label "n1062_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1063 label "n1063_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1064 label "n1064_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1065 label "n1065_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1066 label "n1066_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1067 label "n1067_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1068 label "n1068_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1069 label "n1069_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1070 label "n1070_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1071 label "n1071_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1072 label "n1072_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1073 label "n1073_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1074 label "n1074_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1075 label "n1075_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1076 label "n1076_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1077 label "n1077_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1078 label "n1078_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1079 label "n1079_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1080 label "n1080_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1081 label "n1081_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1082 label "n1082_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1083 label "n1083_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1084 label "n1084_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1085 label "n1085_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1086 label "n1086_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1087 label "n1087_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1088 label "n1088_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1089 label "n1089_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1090 label "n1090_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1091 label "n1091_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1092 label "n1092_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1093 label "n1093_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1094 label "n1094_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1095 label "n1095_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1096 label "n1096_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1097 label "n1097_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1098 label "n1098_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1099 label "n1099_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1100 label "n1100_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1101 label "n1101_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1102 label "n1102_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1103 label "n1103_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1104 label "n1104_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1105 label "n1105_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1106 label "n1106_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1107 label "n1107_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1108 label "n1108_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1109 label "n1109_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1110 label "n1110_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1111 label "n1111_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1112 label "n1112_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1113 label "n1113_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1114 label "n1114_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1115 label "n1115_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1116 label "n1116_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1117 label "n1117_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1118 label "n1118_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1119 label "n1119_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1120 label "n1120_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1121 label "n1121_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1122 label "n1122_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1123 label "n1123_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1124 label "n1124_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1125 label "n1125_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1126 label "n1126_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1127 label "n1127_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1128 label "n1128_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1129 label "n1129_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1130 label "n1130_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1131 label "n1131_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1132 label "n1132_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1133 label "n1133_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1134 label "n1134_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1135 label "n1135_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1136 label "n1136_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1137 label "n1137_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1138 label "n1138_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1139 label "n1139_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1140 label "n1140_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1141 label "n1141_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1142 label "n1142_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1143 label "n1143_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1144 label "n1144_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1145 label "n1145_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1146 label "n1146_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1147 label "n1147_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1148 label "n1148_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1149 label "n1149_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1150 label "n1150_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1151 label "n1151_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1152 label "n1152_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1153 label "n1153_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1154 label "n1154_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1155 label "n1155_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1156 label "n1156_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1157 label "n1157_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1158 label "n1158_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1159 label "n1159_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1160 label "n1160_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1161 label "n1161_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1162 label "n1162_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1163 label "n1163_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1164 label "n1164_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1165 label "n1165_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1166 label "n1166_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1167 label "n1167_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1168 label "n1168_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1169 label "n1169_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1170 label "n1170_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1171 label "n1171_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1172 label "n1172_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1173 label "n1173_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1174 label "n1174_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1175 label "n1175_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1176 label "n1176_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1177 label "n1177_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1178 label "n1178_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1179 label "n1179_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1180 label "n1180_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1181 label "n1181_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1182 label "n1182_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1183 label "n1183_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1184 label "n1184_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1185 label "n1185_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1186 label "n1186_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1187 label "n1187_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1188 label "n1188_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1189 label "n1189_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1190 label "n1190_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1191 label "n1191_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1192 label "n1192_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1193 label "n1193_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1194 label "n1194_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1195 label "n1195_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1196 label "n1196_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1197 label "n1197_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1198 label "n1198_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1199 label "n1199_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1200 label "n1200_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1201 label "n1201_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1202 label "n1202_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1203 label "n1203_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1204 label "n1204_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1205 label "n1205_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1206 label "n1206_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1207 label "n1207_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1208 label "n1208_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1209 label "n1209_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1210 label "n1210_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1211 label "n1211_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1212 label "n1212_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1213 label "n1213_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1214 label "n1214_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1215 label "n1215_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1216 label "n1216_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1217 label "n1217_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1218 label "n1218_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1219 label "n1219_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1220 label "n1220_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1221 label "n1221_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1222 label "n1222_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1223 label "n1223_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1224 label "n1224_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1225 label "n1225_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1226 label "n1226_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1227 label "n1227_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1228 label "n1228_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1229 label "n1229_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1230 label "n1230_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1231 label "n1231_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1232 label "n1232_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1233 label "n1233_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1234 label "n1234_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1235 label "n1235_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1236 label "n1236_Node"
-        invert 00 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1237 label "n1237_Node"
-        invert 01 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1238 label "n1238_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1239 label "n1239_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1240 label "n1240_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1241 label "n1241_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1242 label "n1242_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1243 label "n1243_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1244 label "n1244_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1245 label "n1245_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1246 label "n1246_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1247 label "n1247_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1248 label "n1248_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1249 label "n1249_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1250 label "n1250_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1251 label "n1251_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1252 label "n1252_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1253 label "n1253_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1254 label "n1254_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1255 label "n1255_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1256 label "n1256_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1257 label "n1257_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1258 label "n1258_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1259 label "n1259_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1260 label "n1260_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1261 label "n1261_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1262 label "n1262_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1263 label "n1263_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1264 label "n1264_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1265 label "n1265_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1266 label "n1266_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1267 label "n1267_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1268 label "n1268_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1269 label "n1269_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1270 label "n1270_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1271 label "n1271_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1272 label "n1272_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1273 label "n1273_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1274 label "n1274_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1275 label "n1275_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1276 label "n1276_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1277 label "n1277_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1278 label "n1278_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1279 label "n1279_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1280 label "n1280_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1281 label "n1281_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1282 label "n1282_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1283 label "n1283_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1284 label "n1284_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1285 label "n1285_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1286 label "n1286_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1287 label "n1287_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1288 label "n1288_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1289 label "n1289_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1290 label "n1290_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1291 label "n1291_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1292 label "n1292_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1293 label "n1293_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1294 label "n1294_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1295 label "n1295_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1296 label "n1296_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1297 label "n1297_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1298 label "n1298_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1299 label "n1299_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1300 label "n1300_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1301 label "n1301_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1302 label "n1302_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1303 label "n1303_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1304 label "n1304_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1305 label "n1305_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1306 label "n1306_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1307 label "n1307_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1308 label "n1308_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1309 label "n1309_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1310 label "n1310_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1311 label "n1311_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1312 label "n1312_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1313 label "n1313_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1314 label "n1314_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1315 label "n1315_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1316 label "n1316_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1317 label "n1317_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1318 label "n1318_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1319 label "n1319_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1320 label "n1320_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1321 label "n1321_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1322 label "n1322_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1323 label "n1323_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1324 label "n1324_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1325 label "n1325_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1326 label "n1326_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1327 label "n1327_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1328 label "n1328_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1329 label "n1329_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1330 label "n1330_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1331 label "n1331_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1332 label "n1332_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1333 label "n1333_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1334 label "n1334_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1335 label "n1335_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1336 label "n1336_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1337 label "n1337_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1338 label "n1338_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1339 label "n1339_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1340 label "n1340_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1341 label "n1341_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1342 label "n1342_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1343 label "n1343_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1344 label "n1344_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1345 label "n1345_Node"
-        invert 10 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1346 label "n1346_Node"
-        invert 01 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1347 label "n1347_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1348 label "n1348_Node"
-        invert 11 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1349 label "n1349_Node"
-        invert 01 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1350 label "n1350_Node"
-        invert 00 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1351 label "n1351_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1352 label "n1352_Node"
-        invert 01 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1353 label "n1353_Node"
-        invert 00 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1354 label "n1354_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1355 label "n1355_Node"
-        invert 11 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1356 label "n1356_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1357 label "n1357_Node"
-        invert 00 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1358 label "n1358_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1359 label "n1359_Node"
-        invert 11 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1360 label "n1360_Node"
-        invert 11 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1361 label "n1361_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1362 label "n1362_Node"
-        invert 11 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1363 label "n1363_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1364 label "n1364_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1365 label "n1365_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1366 label "n1366_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1367 label "n1367_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1368 label "n1368_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1369 label "n1369_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1370 label "n1370_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1371 label "n1371_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1372 label "n1372_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1373 label "n1373_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1374 label "n1374_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1375 label "n1375_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1376 label "n1376_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1377 label "n1377_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1378 label "n1378_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1379 label "n1379_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1380 label "n1380_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1381 label "n1381_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1382 label "n1382_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1383 label "n1383_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1384 label "n1384_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1385 label "n1385_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1386 label "n1386_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1387 label "n1387_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1388 label "n1388_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1389 label "n1389_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1390 label "n1390_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1391 label "n1391_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1392 label "n1392_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1393 label "n1393_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1394 label "n1394_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1395 label "n1395_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1396 label "n1396_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1397 label "n1397_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1398 label "n1398_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1399 label "n1399_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1400 label "n1400_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1401 label "n1401_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1402 label "n1402_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1403 label "n1403_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1404 label "n1404_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1405 label "n1405_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1406 label "n1406_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1407 label "n1407_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1408 label "n1408_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1409 label "n1409_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1410 label "n1410_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1411 label "n1411_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1412 label "n1412_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1413 label "n1413_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1414 label "n1414_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1415 label "n1415_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1416 label "n1416_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1417 label "n1417_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1418 label "n1418_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1419 label "n1419_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1420 label "n1420_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1421 label "n1421_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1422 label "n1422_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1423 label "n1423_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1424 label "n1424_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1425 label "n1425_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1426 label "n1426_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1427 label "n1427_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1428 label "n1428_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1429 label "n1429_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1430 label "n1430_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1431 label "n1431_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1432 label "n1432_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1433 label "n1433_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1434 label "n1434_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1435 label "n1435_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1436 label "n1436_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1437 label "n1437_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1438 label "n1438_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1439 label "n1439_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1440 label "n1440_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1441 label "n1441_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1442 label "n1442_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1443 label "n1443_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1444 label "n1444_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1445 label "n1445_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1446 label "n1446_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1447 label "n1447_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1448 label "n1448_Node"
-        invert 00 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1449 label "n1449_Node"
-        invert 01 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1450 label "n1450_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1451 label "n1451_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1452 label "n1452_Node"
-        invert 11 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1453 label "n1453_Node"
-        invert 01 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1454 label "n1454_Node"
-        invert 00 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1455 label "n1455_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1456 label "n1456_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1457 label "n1457_Node"
-        invert 11 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1458 label "n1458_Node"
-        invert 11 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1459 label "n1459_Node"
-        invert 00 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1460 label "n1460_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1461 label "n1461_Node"
-        invert 01 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1462 label "n1462_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1463 label "n1463_Node"
-        invert 11 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1464 label "n1464_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1465 label "n1465_Node"
-        invert 01 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1466 label "n1466_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1467 label "n1467_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1468 label "n1468_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1469 label "n1469_Node"
-        invert 10 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1470 label "n1470_Node"
-        invert 11 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1471 label "n1471_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1472 label "n1472_Node"
-        invert 11 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1473 label "n1473_Node"
-        invert 11 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1474 label "n1474_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1475 label "n1475_Node"
-        invert 00 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1476 label "n1476_Node"
-        invert 00 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1477 label "n1477_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1478 label "n1478_Node"
-        invert 01 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1479 label "n1479_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1480 label "n1480_Node"
-        invert 01 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1481 label "n1481_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1482 label "n1482_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1483 label "n1483_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1484 label "n1484_Node"
-        invert 10 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1485 label "n1485_Node"
-        invert 11 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1486 label "n1486_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1487 label "n1487_Node"
-        invert 11 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1488 label "n1488_Node"
-        invert 11 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1489 label "n1489_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1490 label "n1490_Node"
-        invert 00 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1491 label "n1491_Node"
-        invert 00 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1492 label "n1492_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1493 label "n1493_Node"
-        invert 01 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1494 label "n1494_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1495 label "n1495_Node"
-        invert 10 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1496 label "n1496_Node"
-        invert 11 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1497 label "n1497_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1498 label "n1498_Node"
-        invert 11 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1499 label "n1499_Node"
-        invert 01 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1500 label "n1500_Node"
-        invert 00 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1501 label "n1501_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1502 label "n1502_Node"
-        invert 01 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1503 label "n1503_Node"
-        invert 11 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1504 label "n1504_Node"
-        invert 11 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1505 label "n1505_Node"
-        invert 00 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1506 label "n1506_Node"
-        invert 10 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1507 label "n1507_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1508 label "n1508_Node"
-        invert 01 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1509 label "n1509_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1510 label "n1510_Node"
-        invert 01 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1511 label "n1511_Node"
-        invert 00 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1512 label "n1512_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1513 label "n1513_Node"
-        invert 11 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1514 label "n1514_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1515 label "n1515_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1516 label "n1516_Node"
-        invert 01 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1517 label "n1517_Node"
-        invert 00 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1518 label "n1518_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1519 label "n1519_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1520 label "n1520_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1521 label "n1521_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1522 label "n1522_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1523 label "n1523_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1524 label "n1524_Node"
-        invert 11 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1525 label "n1525_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1526 label "n1526_Node"
-        invert 11 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1527 label "n1527_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1528 label "n1528_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1529 label "n1529_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1530 label "n1530_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1531 label "n1531_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1532 label "n1532_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1533 label "n1533_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1534 label "n1534_Node"
-        invert 01 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1535 label "n1535_Node"
-        invert 00 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1536 label "n1536_Node"
-        invert 11 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1537 label "n1537_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1538 label "n1538_Node"
-        invert 11 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1539 label "n1539_Node"
-        invert 01 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1540 label "n1540_Node"
-        invert 00 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1541 label "n1541_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1542 label "n1542_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1543 label "n1543_Node"
-        invert 01 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1544 label "n1544_Node"
-        invert 11 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1545 label "n1545_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1546 label "n1546_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1547 label "n1547_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1548 label "n1548_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1549 label "n1549_Node"
-        invert 11 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1550 label "n1550_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1551 label "n1551_Node"
-        invert 01 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1552 label "n1552_Node"
-        invert 00 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1553 label "n1553_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1554 label "n1554_Node"
-        invert 11 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1555 label "n1555_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1556 label "n1556_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1557 label "n1557_Node"
-        invert 01 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1558 label "n1558_Node"
-        invert 00 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1559 label "n1559_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1560 label "n1560_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1561 label "n1561_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1562 label "n1562_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1563 label "n1563_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1564 label "n1564_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1565 label "n1565_Node"
-        invert 11 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1566 label "n1566_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1567 label "n1567_Node"
-        invert 11 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1568 label "n1568_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1569 label "n1569_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1570 label "n1570_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1571 label "n1571_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1572 label "n1572_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1573 label "n1573_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1574 label "n1574_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1575 label "n1575_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1576 label "n1576_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1577 label "n1577_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1578 label "n1578_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1579 label "n1579_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1580 label "n1580_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1581 label "n1581_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1582 label "n1582_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1583 label "n1583_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1584 label "n1584_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1585 label "n1585_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1586 label "n1586_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1587 label "n1587_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1588 label "n1588_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1589 label "n1589_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1590 label "n1590_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1591 label "n1591_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1592 label "n1592_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1593 label "n1593_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1594 label "n1594_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1595 label "n1595_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1596 label "n1596_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1597 label "n1597_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1598 label "n1598_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1599 label "n1599_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1600 label "n1600_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1601 label "n1601_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1602 label "n1602_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1603 label "n1603_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1604 label "n1604_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1605 label "n1605_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1606 label "n1606_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1607 label "n1607_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1608 label "n1608_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1609 label "n1609_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1610 label "n1610_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1611 label "n1611_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1612 label "n1612_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1613 label "n1613_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1614 label "n1614_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1615 label "n1615_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1616 label "n1616_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1617 label "n1617_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1618 label "n1618_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1619 label "n1619_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1620 label "n1620_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1621 label "n1621_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1622 label "n1622_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     node [ id  1623 label "n1623_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1624 label "n1624_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1625 label "n1625_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1626 label "n1626_Node"
-        invert 01 
+        invert0 0 
+        invert1 1 
     ]
     node [ id  1627 label "n1627_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1628 label "n1628_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1629 label "n1629_Node"
-        invert 11 
+        invert0 1 
+        invert1 1 
     ]
     node [ id  1630 label "n1630_Node"
-        invert 10 
+        invert0 1 
+        invert1 0 
     ]
     node [ id  1631 label "n1631_Node"
-        invert 00 
+        invert0 0 
+        invert1 0 
     ]
     edge [ source   148   target   109
     ]
@@ -8968,11 +10601,11 @@ graph [
     ]
     edge [ source  1235   target   123
     ]
-    edge [ source  1236   target   124
+    edge [ source  1236   target    61
     ]
     edge [ source  1236   target  1235
     ]
-    edge [ source  1237   target    61
+    edge [ source  1237   target   124
     ]
     edge [ source  1237   target  1235
     ]
@@ -9404,11 +11037,11 @@ graph [
     ]
     edge [ source  1344   target  1343
     ]
-    edge [ source  1345   target   116
+    edge [ source  1345   target    90
     ]
     edge [ source  1345   target   139
     ]
-    edge [ source  1346   target    88
+    edge [ source  1346   target    63
     ]
     edge [ source  1346   target   139
     ]
@@ -9420,55 +11053,55 @@ graph [
     ]
     edge [ source  1348   target  1347
     ]
-    edge [ source  1349   target   137
+    edge [ source  1349   target   120
     ]
     edge [ source  1349   target   139
     ]
-    edge [ source  1350   target    32
+    edge [ source  1350   target    73
     ]
-    edge [ source  1350   target  1349
+    edge [ source  1350   target   139
     ]
-    edge [ source  1351   target  1348
+    edge [ source  1351   target  1349
     ]
     edge [ source  1351   target  1350
     ]
-    edge [ source  1352   target   138
+    edge [ source  1352   target   137
     ]
     edge [ source  1352   target  1351
     ]
-    edge [ source  1353   target    90
+    edge [ source  1353   target  1348
     ]
-    edge [ source  1353   target   139
+    edge [ source  1353   target  1352
     ]
-    edge [ source  1354   target    63
+    edge [ source  1354   target   138
     ]
-    edge [ source  1354   target   139
+    edge [ source  1354   target  1353
     ]
-    edge [ source  1355   target  1353
+    edge [ source  1355   target   116
     ]
-    edge [ source  1355   target  1354
+    edge [ source  1355   target   139
     ]
-    edge [ source  1356   target   137
+    edge [ source  1356   target    88
     ]
-    edge [ source  1356   target  1355
+    edge [ source  1356   target   139
     ]
-    edge [ source  1357   target   120
+    edge [ source  1357   target  1355
     ]
-    edge [ source  1357   target   139
+    edge [ source  1357   target  1356
     ]
-    edge [ source  1358   target    73
+    edge [ source  1358   target   137
     ]
-    edge [ source  1358   target   139
+    edge [ source  1358   target  1357
     ]
-    edge [ source  1359   target  1357
+    edge [ source  1359   target   137
     ]
-    edge [ source  1359   target  1358
+    edge [ source  1359   target   139
     ]
-    edge [ source  1360   target   137
+    edge [ source  1360   target    32
     ]
     edge [ source  1360   target  1359
     ]
-    edge [ source  1361   target  1356
+    edge [ source  1361   target  1358
     ]
     edge [ source  1361   target  1360
     ]
@@ -9476,7 +11109,7 @@ graph [
     ]
     edge [ source  1362   target  1361
     ]
-    edge [ source  1363   target  1352
+    edge [ source  1363   target  1354
     ]
     edge [ source  1363   target  1362
     ]
@@ -9812,55 +11445,55 @@ graph [
     ]
     edge [ source  1446   target  1445
     ]
-    edge [ source  1447   target    38
+    edge [ source  1447   target   125
     ]
-    edge [ source  1447   target  1349
+    edge [ source  1447   target   139
     ]
-    edge [ source  1448   target    97
+    edge [ source  1448   target    78
     ]
     edge [ source  1448   target   139
     ]
-    edge [ source  1449   target    83
+    edge [ source  1449   target  1447
     ]
-    edge [ source  1449   target   139
+    edge [ source  1449   target  1448
     ]
-    edge [ source  1450   target  1448
+    edge [ source  1450   target   137
     ]
     edge [ source  1450   target  1449
     ]
-    edge [ source  1451   target   137
+    edge [ source  1451   target    66
     ]
-    edge [ source  1451   target  1450
+    edge [ source  1451   target   139
     ]
-    edge [ source  1452   target  1447
+    edge [ source  1452   target    94
     ]
-    edge [ source  1452   target  1451
+    edge [ source  1452   target   139
     ]
-    edge [ source  1453   target   138
+    edge [ source  1453   target  1451
     ]
     edge [ source  1453   target  1452
     ]
-    edge [ source  1454   target   125
+    edge [ source  1454   target   137
     ]
-    edge [ source  1454   target   139
+    edge [ source  1454   target  1453
     ]
-    edge [ source  1455   target    78
+    edge [ source  1455   target  1450
     ]
-    edge [ source  1455   target   139
+    edge [ source  1455   target  1454
     ]
-    edge [ source  1456   target  1454
+    edge [ source  1456   target   138
     ]
     edge [ source  1456   target  1455
     ]
-    edge [ source  1457   target   137
+    edge [ source  1457   target    38
     ]
-    edge [ source  1457   target  1456
+    edge [ source  1457   target  1359
     ]
-    edge [ source  1458   target    66
+    edge [ source  1458   target    97
     ]
     edge [ source  1458   target   139
     ]
-    edge [ source  1459   target    94
+    edge [ source  1459   target    83
     ]
     edge [ source  1459   target   139
     ]
@@ -9880,31 +11513,31 @@ graph [
     ]
     edge [ source  1463   target  1462
     ]
-    edge [ source  1464   target  1453
+    edge [ source  1464   target  1456
     ]
     edge [ source  1464   target  1463
     ]
-    edge [ source  1465   target    80
+    edge [ source  1465   target    92
     ]
-    edge [ source  1465   target   137
+    edge [ source  1465   target  1248
     ]
-    edge [ source  1466   target    35
+    edge [ source  1466   target    96
     ]
-    edge [ source  1466   target   137
+    edge [ source  1466   target  1323
     ]
     edge [ source  1467   target  1465
     ]
     edge [ source  1467   target  1466
     ]
-    edge [ source  1468   target   138
+    edge [ source  1468   target   139
     ]
     edge [ source  1468   target  1467
     ]
-    edge [ source  1469   target    70
+    edge [ source  1469   target    80
     ]
     edge [ source  1469   target   137
     ]
-    edge [ source  1470   target    67
+    edge [ source  1470   target    35
     ]
     edge [ source  1470   target   137
     ]
@@ -9916,23 +11549,23 @@ graph [
     ]
     edge [ source  1472   target  1471
     ]
-    edge [ source  1473   target  1468
+    edge [ source  1473   target    70
     ]
-    edge [ source  1473   target  1472
+    edge [ source  1473   target   137
     ]
-    edge [ source  1474   target   139
+    edge [ source  1474   target    67
     ]
-    edge [ source  1474   target  1473
+    edge [ source  1474   target   137
     ]
-    edge [ source  1475   target    92
+    edge [ source  1475   target  1473
     ]
-    edge [ source  1475   target  1248
+    edge [ source  1475   target  1474
     ]
-    edge [ source  1476   target    96
+    edge [ source  1476   target   138
     ]
-    edge [ source  1476   target  1323
+    edge [ source  1476   target  1475
     ]
-    edge [ source  1477   target  1475
+    edge [ source  1477   target  1472
     ]
     edge [ source  1477   target  1476
     ]
@@ -9940,31 +11573,31 @@ graph [
     ]
     edge [ source  1478   target  1477
     ]
-    edge [ source  1479   target  1474
+    edge [ source  1479   target  1468
     ]
     edge [ source  1479   target  1478
     ]
-    edge [ source  1480   target    79
+    edge [ source  1480   target    91
     ]
-    edge [ source  1480   target   137
+    edge [ source  1480   target  1248
     ]
-    edge [ source  1481   target    34
+    edge [ source  1481   target    95
     ]
-    edge [ source  1481   target   137
+    edge [ source  1481   target  1323
     ]
     edge [ source  1482   target  1480
     ]
     edge [ source  1482   target  1481
     ]
-    edge [ source  1483   target   138
+    edge [ source  1483   target   139
     ]
     edge [ source  1483   target  1482
     ]
-    edge [ source  1484   target    64
+    edge [ source  1484   target    79
     ]
     edge [ source  1484   target   137
     ]
-    edge [ source  1485   target    75
+    edge [ source  1485   target    34
     ]
     edge [ source  1485   target   137
     ]
@@ -9976,23 +11609,23 @@ graph [
     ]
     edge [ source  1487   target  1486
     ]
-    edge [ source  1488   target  1483
+    edge [ source  1488   target    64
     ]
-    edge [ source  1488   target  1487
+    edge [ source  1488   target   137
     ]
-    edge [ source  1489   target   139
+    edge [ source  1489   target    75
     ]
-    edge [ source  1489   target  1488
+    edge [ source  1489   target   137
     ]
-    edge [ source  1490   target    91
+    edge [ source  1490   target  1488
     ]
-    edge [ source  1490   target  1248
+    edge [ source  1490   target  1489
     ]
-    edge [ source  1491   target    95
+    edge [ source  1491   target   138
     ]
-    edge [ source  1491   target  1323
+    edge [ source  1491   target  1490
     ]
-    edge [ source  1492   target  1490
+    edge [ source  1492   target  1487
     ]
     edge [ source  1492   target  1491
     ]
@@ -10000,31 +11633,31 @@ graph [
     ]
     edge [ source  1493   target  1492
     ]
-    edge [ source  1494   target  1489
+    edge [ source  1494   target  1483
     ]
     edge [ source  1494   target  1493
     ]
-    edge [ source  1495   target    69
+    edge [ source  1495   target   100
     ]
-    edge [ source  1495   target   137
+    edge [ source  1495   target  1248
     ]
-    edge [ source  1496   target    74
+    edge [ source  1496   target   113
     ]
-    edge [ source  1496   target   137
+    edge [ source  1496   target  1323
     ]
     edge [ source  1497   target  1495
     ]
     edge [ source  1497   target  1496
     ]
-    edge [ source  1498   target   138
+    edge [ source  1498   target   139
     ]
     edge [ source  1498   target  1497
     ]
-    edge [ source  1499   target    85
+    edge [ source  1499   target    69
     ]
     edge [ source  1499   target   137
     ]
-    edge [ source  1500   target    33
+    edge [ source  1500   target    74
     ]
     edge [ source  1500   target   137
     ]
@@ -10036,23 +11669,23 @@ graph [
     ]
     edge [ source  1502   target  1501
     ]
-    edge [ source  1503   target  1498
+    edge [ source  1503   target    85
     ]
-    edge [ source  1503   target  1502
+    edge [ source  1503   target   137
     ]
-    edge [ source  1504   target   139
+    edge [ source  1504   target    33
     ]
-    edge [ source  1504   target  1503
+    edge [ source  1504   target   137
     ]
-    edge [ source  1505   target   100
+    edge [ source  1505   target  1503
     ]
-    edge [ source  1505   target  1248
+    edge [ source  1505   target  1504
     ]
-    edge [ source  1506   target   113
+    edge [ source  1506   target   138
     ]
-    edge [ source  1506   target  1323
+    edge [ source  1506   target  1505
     ]
-    edge [ source  1507   target  1505
+    edge [ source  1507   target  1502
     ]
     edge [ source  1507   target  1506
     ]
@@ -10060,15 +11693,15 @@ graph [
     ]
     edge [ source  1508   target  1507
     ]
-    edge [ source  1509   target  1504
+    edge [ source  1509   target  1498
     ]
     edge [ source  1509   target  1508
     ]
-    edge [ source  1510   target    81
+    edge [ source  1510   target    93
     ]
     edge [ source  1510   target   139
     ]
-    edge [ source  1511   target   101
+    edge [ source  1511   target    71
     ]
     edge [ source  1511   target   139
     ]
@@ -10080,51 +11713,51 @@ graph [
     ]
     edge [ source  1513   target  1512
     ]
-    edge [ source  1514   target    36
+    edge [ source  1514   target   126
     ]
-    edge [ source  1514   target  1349
+    edge [ source  1514   target   139
     ]
-    edge [ source  1515   target  1513
+    edge [ source  1515   target    76
     ]
-    edge [ source  1515   target  1514
+    edge [ source  1515   target   139
     ]
-    edge [ source  1516   target   138
+    edge [ source  1516   target  1514
     ]
     edge [ source  1516   target  1515
     ]
-    edge [ source  1517   target    93
+    edge [ source  1517   target   137
     ]
-    edge [ source  1517   target   139
+    edge [ source  1517   target  1516
     ]
-    edge [ source  1518   target    71
+    edge [ source  1518   target  1513
     ]
-    edge [ source  1518   target   139
+    edge [ source  1518   target  1517
     ]
-    edge [ source  1519   target  1517
+    edge [ source  1519   target   138
     ]
     edge [ source  1519   target  1518
     ]
-    edge [ source  1520   target   137
+    edge [ source  1520   target    81
     ]
-    edge [ source  1520   target  1519
+    edge [ source  1520   target   139
     ]
-    edge [ source  1521   target   126
+    edge [ source  1521   target   101
     ]
     edge [ source  1521   target   139
     ]
-    edge [ source  1522   target    76
+    edge [ source  1522   target  1520
     ]
-    edge [ source  1522   target   139
+    edge [ source  1522   target  1521
     ]
-    edge [ source  1523   target  1521
+    edge [ source  1523   target   137
     ]
     edge [ source  1523   target  1522
     ]
-    edge [ source  1524   target   137
+    edge [ source  1524   target    36
     ]
-    edge [ source  1524   target  1523
+    edge [ source  1524   target  1359
     ]
-    edge [ source  1525   target  1520
+    edge [ source  1525   target  1523
     ]
     edge [ source  1525   target  1524
     ]
@@ -10132,7 +11765,7 @@ graph [
     ]
     edge [ source  1526   target  1525
     ]
-    edge [ source  1527   target  1516
+    edge [ source  1527   target  1519
     ]
     edge [ source  1527   target  1526
     ]
@@ -10156,55 +11789,55 @@ graph [
     ]
     edge [ source  1532   target  1531
     ]
-    edge [ source  1533   target    37
+    edge [ source  1533   target    99
     ]
-    edge [ source  1533   target  1349
+    edge [ source  1533   target   139
     ]
-    edge [ source  1534   target    82
+    edge [ source  1534   target    72
     ]
     edge [ source  1534   target   139
     ]
-    edge [ source  1535   target    98
+    edge [ source  1535   target  1533
     ]
-    edge [ source  1535   target   139
+    edge [ source  1535   target  1534
     ]
-    edge [ source  1536   target  1534
+    edge [ source  1536   target   137
     ]
     edge [ source  1536   target  1535
     ]
-    edge [ source  1537   target   137
+    edge [ source  1537   target    77
     ]
-    edge [ source  1537   target  1536
+    edge [ source  1537   target   139
     ]
-    edge [ source  1538   target  1533
+    edge [ source  1538   target    24
     ]
-    edge [ source  1538   target  1537
+    edge [ source  1538   target   139
     ]
-    edge [ source  1539   target   138
+    edge [ source  1539   target  1537
     ]
     edge [ source  1539   target  1538
     ]
-    edge [ source  1540   target    99
+    edge [ source  1540   target   137
     ]
-    edge [ source  1540   target   139
+    edge [ source  1540   target  1539
     ]
-    edge [ source  1541   target    72
+    edge [ source  1541   target  1536
     ]
-    edge [ source  1541   target   139
+    edge [ source  1541   target  1540
     ]
-    edge [ source  1542   target  1540
+    edge [ source  1542   target   138
     ]
     edge [ source  1542   target  1541
     ]
-    edge [ source  1543   target   137
+    edge [ source  1543   target    37
     ]
-    edge [ source  1543   target  1542
+    edge [ source  1543   target  1359
     ]
-    edge [ source  1544   target    77
+    edge [ source  1544   target    82
     ]
     edge [ source  1544   target   139
     ]
-    edge [ source  1545   target    24
+    edge [ source  1545   target    98
     ]
     edge [ source  1545   target   139
     ]
@@ -10224,15 +11857,15 @@ graph [
     ]
     edge [ source  1549   target  1548
     ]
-    edge [ source  1550   target  1539
+    edge [ source  1550   target  1542
     ]
     edge [ source  1550   target  1549
     ]
-    edge [ source  1551   target    87
+    edge [ source  1551   target    89
     ]
     edge [ source  1551   target   139
     ]
-    edge [ source  1552   target   112
+    edge [ source  1552   target    65
     ]
     edge [ source  1552   target   139
     ]
@@ -10244,51 +11877,51 @@ graph [
     ]
     edge [ source  1554   target  1553
     ]
-    edge [ source  1555   target    31
+    edge [ source  1555   target   121
     ]
-    edge [ source  1555   target  1349
+    edge [ source  1555   target   139
     ]
-    edge [ source  1556   target  1554
+    edge [ source  1556   target    68
     ]
-    edge [ source  1556   target  1555
+    edge [ source  1556   target   139
     ]
-    edge [ source  1557   target   138
+    edge [ source  1557   target  1555
     ]
     edge [ source  1557   target  1556
     ]
-    edge [ source  1558   target    89
+    edge [ source  1558   target   137
     ]
-    edge [ source  1558   target   139
+    edge [ source  1558   target  1557
     ]
-    edge [ source  1559   target    65
+    edge [ source  1559   target  1554
     ]
-    edge [ source  1559   target   139
+    edge [ source  1559   target  1558
     ]
-    edge [ source  1560   target  1558
+    edge [ source  1560   target   138
     ]
     edge [ source  1560   target  1559
     ]
-    edge [ source  1561   target   137
+    edge [ source  1561   target    87
     ]
-    edge [ source  1561   target  1560
+    edge [ source  1561   target   139
     ]
-    edge [ source  1562   target   121
+    edge [ source  1562   target   112
     ]
     edge [ source  1562   target   139
     ]
-    edge [ source  1563   target    68
+    edge [ source  1563   target  1561
     ]
-    edge [ source  1563   target   139
+    edge [ source  1563   target  1562
     ]
-    edge [ source  1564   target  1562
+    edge [ source  1564   target   137
     ]
     edge [ source  1564   target  1563
     ]
-    edge [ source  1565   target   137
+    edge [ source  1565   target    31
     ]
-    edge [ source  1565   target  1564
+    edge [ source  1565   target  1359
     ]
-    edge [ source  1566   target  1561
+    edge [ source  1566   target  1564
     ]
     edge [ source  1566   target  1565
     ]
@@ -10296,7 +11929,7 @@ graph [
     ]
     edge [ source  1567   target  1566
     ]
-    edge [ source  1568   target  1557
+    edge [ source  1568   target  1560
     ]
     edge [ source  1568   target  1567
     ]
