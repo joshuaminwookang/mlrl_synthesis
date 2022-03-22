@@ -1,6 +1,6 @@
-[submodule "yosys"]
-	path = yosys
+[submodule "benchmarks/yosys-bench"]
+	path = benchmarks/yosys-bench
 	url = git@github.com:YosysHQ/yosys-bench.git
-[submodule "epfl"]
-	path = epfl
-	url = https://github.com/lsils/benchmarks.git
+[submodule "benchmarks/epfl"]
+	path = benchmarks/epfl
+	url = git@github.com:lsils/benchmarks.git
