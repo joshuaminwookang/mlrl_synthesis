@@ -1,4 +1,5 @@
 import os
+import sys
 import argparse
 from tqdm import tqdm 
 
@@ -7,31 +8,34 @@ from torch import nn
 from torch.utils.data import Dataset, DataLoader
 from scipy import stats
 from models import E2ERegression
-from dataset import pad_collate, generate_datasets
-
-DEFAULT_TRAINING_PATH = ['epfl_arithmetic.pkl', 'epfl_control.pkl', 'vtr_select.pkl']
+from dataset_graph import generate_dataloaders
 
 if __name__ == '__main__': 
     parser = argparse.ArgumentParser(prog="Regression")
+    parser.add_argument("--bs", type=int, default=64, help="Batch size")
     parser.add_argument("--feature_dim", type=int, default=64, help="Feature graph embedding dim")
     parser.add_argument("--fe_hidden_dim", type=int, default=64, help="Feature embedding hidden dim")
     parser.add_argument("--fe_output_dim", type=int, default=256, help="Feature embedding output dim")
     parser.add_argument("--se_input_dim", type=int, default=64, help="Sequence embedding input dim")
     parser.add_argument("--se_num_layers", type=int, default=4, help="Sequence embedding num lstm layers")
     parser.add_argument("--dump_path", type=str, default=None, help="Save path for the best model")
-    parser.add_argument("--dataset_path", type=str, default=None, help="Dataset paths, separated with comma(,)")
+    parser.add_argument("--label_seq_data_path", type=str, default='../epflBmarks.pkl', help="Dataset paths, separated with comma(,)")
+    parser.add_argument("--graph_data_dir", type=str, default='../epfl_gmls', help="graph data dir path")
+    parser.add_argument("--debug", action='store_true', default=False, help="debugging mode")
 
     args = parser.parse_args()
 
-    if args.dataset_path is not None:
-        data_path = args.dataset_path.split(',')
-    else:
-        data_path = DEFAULT_TRAINING_PATH
+    label_seq_data_path = args.label_seq_data_path.split(',')
 
-    train_dataset, valid_dataset = generate_datasets(data_path, feature_dim=args.feature_dim)
-    train_dataloader = DataLoader(train_dataset, batch_size=256, shuffle=True, num_workers=0, collate_fn=pad_collate)
+    train_dataloader, valid_dataloader = generate_dataloaders(
+        graph_data_dir=args.graph_data_dir,
+        label_seq_data_path=args.label_seq_data_path,
+        train_batch_size=args.bs,
+        eval_batch_size=args.bs,
+        debug=args.debug,
+    )
 
-    valid_dataloader = DataLoader(valid_dataset, batch_size=256, num_workers=0, collate_fn=pad_collate)
+    sys.exit() # TODO fill out the remaining training pipeline below
 
     input_dim = train_dataset.input_dim
     model = E2ERegression(

@@ -89,99 +89,90 @@ def normalize(data):
 
 # Preprocess data (merge GML files and label/sequence data)
 # Store processed PyTorch Geoemtric Data in individual pkl files for each graph
-def preprocess_data(graph_data_dir, label_seq_data_path, output_dir):
+def preprocess_data(graph_data_dir, label_seq_data_path, output_dir, debug=False):
+    '''
+    graph_data_dir: a str of the directory path that contains graph data in gml or pkl
+    label_seq_data_path: a str or a list of pkl files that contain labels and sequences
+    '''
     if not isinstance(label_seq_data_path, list):
         label_seq_data_path = [label_seq_data_path]
 
     # find all GMLs in graph data dir
     gmls = glob.glob(os.path.normpath(graph_data_dir+"/*.gml"))
 
+    graphs_all = []
     # loop over each graph GML inidividually
-    for gml_file in gmls:
+    for i, gml_file in enumerate(gmls):
         filename = os.path.basename(gml_file)
         name = filename[filename.find('_') + 1 :filename.find('.gml')]
-        print(name)
-
-        # read graph from GML and convert to PyG Data object
-        G = nx.read_gml(gml_file)
-        data = convert.from_networkx(G)
-        graph_dict = {}
-        graph_dict[name] = data  
-        graphs = []
-
-        # itreate over all label/sequence data to produce dataset
-        for _data_path in label_seq_data_path:
-            with open(_data_path, 'rb') as f:
-                data = pickle.load(f)
-                for _data in data:
-                    _graphs = prepare_dataset(_data, graph_dict)
-                    graphs += _graphs
-        print(f'length of graphs: {len(graphs)}')
-        
-        # Store current graphs' data as pkl
         pkl_file = os.path.normpath(os.path.join(output_dir, name + ".pkl"))
-        with open(pkl_file, "wb") as handle:
-            pickle.dump(graphs, handle, protocol=pickle.HIGHEST_PROTOCOL)
-
-    # features_normalized = np.array(features)
-    # Uncomment the following for testing/ablation
-    #features_normalized = np.zeros_like(features_normalized)
-    #features_normalized = np.random.rand(*features_normalized.shape)
-
-class CustomDataset(Dataset):
-    def __init__(self, graphs=None, data_path=None):
-        if data_path is not None:
-            self.graphs = preprocess_data(data_path)
+        if os.path.exists(pkl_file):
+            print(f'{name}.pkl exists, loading from pickle file')
+            with open(pkl_file, "rb") as handle:
+                graphs = pickle.load(handle)
         else:
-            assert graphs is not None 
-            self.graphs = graphs
-        self.input_dim = self.graphs.shape[-1]
+            print(f'{name}.pkl does not exist, generating from gml file')
 
-    def __len__(self):
-        return len(self.graphs)
+            # read graph from GML and convert to PyG Data object
+            G = nx.read_gml(gml_file)
+            data = convert.from_networkx(G)
+            graph_dict = {}
+            graph_dict[name] = data  
+            graphs = []
 
-    def __getitem__(self, idx):
-        graph_tensor = torch.tensor(self.graphs[idx]).to(torch.float)
-        # sequence = torch.tensor(self.sequences[idx]).to(torch.long)
-        # label = torch.tensor(self.labels[idx]).to(torch.float)
-        #return {'feature': feature, 'sequence': sequence, 'label': label}
-        return graph_tensor
+            # itreate over all label/sequence data to produce dataset
+            for _data_path in label_seq_data_path:
+                with open(_data_path, 'rb') as f:
+                    data = pickle.load(f)
+                    for _data in data:
+                        _graphs = prepare_dataset(_data, graph_dict)
+                        graphs += _graphs
+            # Store current graphs' data as pkl
+            with open(pkl_file, "wb") as handle:
+                print(f'dumping {name}.pkl')
+                pickle.dump(graphs, handle, protocol=pickle.HIGHEST_PROTOCOL)
+        
+        if debug:
+            break # for fast testing purpose
+
+        print(f'length of graphs: {len(graphs)}')
+        graphs_all += graphs
+
+    print(f'length of all graphs: {len(graphs_all)}')
+    return graphs
 
 # top level caller 
-def generate_datasets(graph_data_dir, label_seq_data_path, p_val=0.2):
+def generate_dataloaders(
+    graph_data_dir, 
+    label_seq_data_path, 
+    train_batch_size=256, 
+    eval_batch_size=256,
+    p_val=0.2, 
+    seed=100,
+    debug=False,
+):
     # features, sequences, labels = preprocess_data(data_path, feature_dim=feature_dim)
-    graphs = preprocess_data(graph_data_dir, label_seq_data_path)
+    graphs = preprocess_data(graph_data_dir, label_seq_data_path, output_dir=graph_data_dir, debug=debug)
+    random.seed(seed)
+    random.shuffle(graphs)
 
     num_training_sets = int((1 - p_val) * len(graphs))
-    indices_all = np.array(list(range(len(graphs))))
-    random.seed(100)
-    random.shuffle(indices_all)
-    print(indices_all)
-    train_indices = indices_all[:num_training_sets]
-    val_indices = indices_all[num_training_sets:]
+    training_dataset = graphs[:num_training_sets]
+    valid_dataset = graphs[num_training_sets:]
 
-    train_dataset = CustomDataset(
-        graphs[train_indices]
-        # features[train_indices], 
-        # sequences[train_indices],
-        # labels[train_indices],
-    )
-    valid_dataset = CustomDataset(
-        graphs[train_indices]
-        # features[val_indices], 
-        # sequences[val_indices],
-        # labels[val_indices],
+    train_dataloader = DataLoader(
+        training_dataset,
+        batch_size=train_batch_size,
+        shuffle=True,
+    ) 
+
+    valid_datalader = DataLoader(
+        valid_dataset,
+        batch_size=eval_batch_size,
+        shuffle=False,
     )
 
-    return train_dataset, valid_dataset
-
-def pad_collate(batch):
-    features, sequences, labels, = zip(*batch)
-    sequences_len = [len(s) for s in sequences]
-    features_pad = pad_sequence(features, batch_first=True, padding_value=0)
-    sequences_pad = pad_sequence(sequences, batch_first=True, padding_value=0)
-    labels_pad = pad_sequence(labels, batch_first=True, padding_value=0) 
-    return features_pad, sequences_pad, sequences_len, labels_pad
+    return train_dataloader, valid_datalader
 
 
 if __name__ == '__main__':
