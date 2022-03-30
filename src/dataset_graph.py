@@ -39,7 +39,8 @@ for x, y in SEQ_TO_TOKEN.items():
 
 def prepare_dataset(data, graphs_dict):
     features = []
-    print('preparing dataset')
+    #print('preparing dataset')
+    #print(data)
     for _, d in tqdm(data.items()):
         label = {}
         label['Path_Delay'] = d['Path_Delay'] / 1e2
@@ -115,34 +116,12 @@ def preprocess_data(graph_data_dir, label_seq_data_path, output_dir):
                 for _data in data:
                     _graphs = prepare_dataset(_data, graph_dict)
                     graphs += _graphs
-        graphs = np.array(graphs, dtype=object)
+        print(f'length of graphs: {len(graphs)}')
         
         # Store current graphs' data as pkl
-        print(graphs[0])
-        print(graphs[-1])
         pkl_file = os.path.normpath(os.path.join(output_dir, name + ".pkl"))
         with open(pkl_file, "wb") as handle:
             pickle.dump(graphs, handle, protocol=pickle.HIGHEST_PROTOCOL)
-        # json_file = os.path.normpath(os.path.join(output_dir, name + ".json"))
-        # with open(json_file, 'w') as outfile:
-        #     json.dump(graphs, outfile)
-
-
-    # print(graphs[0])
-    # print(graphs[0].sequence)
-    # print(graphs[-1])
-    # print(graphs[-1].sequence)
-    # print(len(graphs))
-    # data_list = [graphs[0], graphs[1]]
-    # loader = DataLoader(data_list, batch_size=2)
-    # batch = next(iter(loader))
-    # print(batch.sequence)
-    # print(batch.labels)
-    # print(batch)
-
-    # assert(1==0)
-    # sequences_list = preprocess_sequence(sequences)
-    # labels_flattened = flatten_all(labels)
 
     # features_normalized = np.array(features)
     # Uncomment the following for testing/ablation
@@ -206,7 +185,7 @@ def pad_collate(batch):
 
 
 if __name__ == '__main__':
-    output_dir = "../graph_dataset"
+    output_dir = "../epfl_gmls"
     if not os.path.exists(output_dir):
         os.mkdir(output_dir)
     graphs = preprocess_data('../epfl_gmls', '../epflBmarks.pkl', output_dir)
