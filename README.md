@@ -1,3 +1,20 @@
+## Generate Graph Data
+Requires `epflBmarks.pkl` and `epfl_gmls/*.gml` under the root (`mlrl_synthesis`) folder.
+Run the following command under `src`:
+```
+python dataset_graph.py
+```
+This will parse the gml files and dump them into pickle files `epfl_gmls/*.pkl`.
+
+## Training
+Run the following command under `src`:
+```
+python train.py
+```
+
+
+**(below is outdated)**
+
 ## Training
 
 Get prepared for the training datasets in the shared drive.
