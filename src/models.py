@@ -4,8 +4,10 @@ from torch import nn
 from torch.nn.utils.rnn import pack_padded_sequence, pad_packed_sequence
 import numpy as np
 
-from torch_geometric.nn import GCNConv,global_mean_pool 
-# from torch_geometric.utils import add_self_loops, degree
+from torch_geometric.nn import GCNConv, global_mean_pool 
+import torch.nn.functional as F
+from torch_geometric.nn import GCNConv
+
 
 from dataset import SEQ_TO_TOKEN, TOKEN_TO_SEQ
 
@@ -78,25 +80,45 @@ class SequenceEmbedding(nn.Module):
         x, x_len = pad_packed_sequence(x, batch_first=True)
         return x, x_len
     
+class GCN(nn.Module):
+    def __init__(self, hidden_dim, output_dim):
+        super().__init__()
+        input_dim = 2 # TODO: adjust this accordingly
+        self.conv1 = GCNConv(input_dim, hidden_dim)
+        self.conv2 = GCNConv(hidden_dim, output_dim)
+
+    def forward(self, data):
+        x0, x1, edge_index = data.invert0, data.invert1, data.edge_index
+        batch = data.batch
+
+        x = torch.stack([x0, x1])
+        x = x.T.type(torch.float)
+        x = self.conv1(x, edge_index)
+        x = F.relu(x)
+        x = F.dropout(x, training=self.training)
+        x = self.conv2(x, edge_index)
+        x = global_mean_pool(x, batch)
+
+        return x
+
 class E2ERegression(nn.Module):
     def __init__(
         self, 
-        fe_input_dim, 
-        fe_hidden_dim, 
-        fe_output_dim,
+        gcn_hidden_dim, 
+        gcn_output_dim,
         se_input_dim,
         se_num_lstm_layers,
         output_dim=2,
     ):
         super().__init__()
-        self.fe = FeatureEmbedding(fe_input_dim, fe_hidden_dim, fe_output_dim)
-        self.se = SequenceEmbedding(se_input_dim, fe_output_dim, se_num_lstm_layers)
-        self.dense = nn.Linear(fe_output_dim, output_dim)
+        self.gcn = GCN(gcn_hidden_dim, gcn_output_dim)
+        self.se = SequenceEmbedding(se_input_dim, gcn_output_dim, se_num_lstm_layers)
+        self.dense = nn.Linear(gcn_output_dim, output_dim)
         self.num_lstm_layers = se_num_lstm_layers
         #self.dropout = nn.Dropout(p=0.1)
     
-    def forward(self, feature, sequence, sequence_len):
-        x = self.fe(feature)
+    def forward(self, graph_input, sequence, sequence_len):
+        x = self.gcn(graph_input)
         x = torch.stack([x] * self.num_lstm_layers)
         x, x_len = self.se(sequence, sequence_len, x)
         x = torch.stack([x[i, l - 1, :] for i, l in enumerate(x_len)])

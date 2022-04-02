@@ -132,14 +132,14 @@ def preprocess_data(graph_data_dir, label_seq_data_path, output_dir, debug=False
                 print(f'dumping {name}.pkl')
                 pickle.dump(graphs, handle, protocol=pickle.HIGHEST_PROTOCOL)
         
-        if debug:
-            break # for fast testing purpose
-
         print(f'length of graphs: {len(graphs)}')
         graphs_all += graphs
 
+        if debug:
+            break # for fast testing purpose
+
     print(f'length of all graphs: {len(graphs_all)}')
-    return graphs
+    return graphs_all
 
 # top level caller 
 def generate_dataloaders(
@@ -169,7 +169,7 @@ def generate_dataloaders(
     valid_datalader = DataLoader(
         valid_dataset,
         batch_size=eval_batch_size,
-        shuffle=False,
+        shuffle=True,
     )
 
     return train_dataloader, valid_datalader
