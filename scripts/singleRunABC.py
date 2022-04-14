@@ -2,23 +2,6 @@
 
 import argparse
 import os,random
-# from datetime import datetime
-    
-aig_sweep = "&scorr;&sweep;"
-#aig_permute_in = ["", "&dfs", "&dfs -n", "&dfs -r", "&dfs -n -r"]
-aig_permute_in = [""]
-# aig_zero_cost_replace_ops = ["",
-#                "&put;resub -K 8 -N 2 -z;&get -n;", "&put;resub -K 8 -N 3 -z;&get -n;",
-#                "&put;resub -K 12 -N 2 -z;&get -n;", "&put;resub -K 12 -N 3 -z;&get -n;",
-#                "&put;resub -K 16 -N 2 -z;&get -n;", "&put;resub -K 16 -N 3 -z;&get -n;"]
-
-aig_zero_cost_replace_ops = ["", ""]
-# aig_ind_ops = ["&dc2", "&syn2", "&b", "&b -d",
-#                "&put;resub -K 8 -N 2;&get", "&put;resub -K 8 -N 3;&get",
-#                "&put;resub -K 12 -N 2;&get", "&put;resub -K 12 -N 3;&get",
-#                "&put;resub -K 16 -N 2;&get", "&put;resub -K 8; &get",
-#                "&if -W 300 -x", "&if -W 300 -g"]
-
 
 aig_ind_ops = ["&dc2", "&syn2", "&syn3", "&syn4", "&b", "&b -d",
                "&if -W 300 -x -K 6", "&if -W 300 -g -K 6", "&if -W 300 -y -K 6"]
@@ -34,131 +17,35 @@ opener = "strash;ifraig;scorr;"
 closure_whitebox_delay = "strash;ifraig;scorr;strash;dch -f;if -v;mfs2;print_stats -l"
 closure = "dretime; strash; dch -f; if -v; mfs2" # LUTPACK or not; dretime or not with -
 
-def parse_index_single_list(idx):
-    i = idx
-    ind_idx = []
-    while i >= 0 :
-        num_options = len(abc9_ops)
-        remainder = i % num_options
-        divisor = i // num_options
-        ind_idx.append(remainder)
-        if divisor <= 0 : 
-            break;
-        else : 
-            i = divisor-1
-    return ind_idx
-
-def parse_index(idx):
-    i = idx
-    perm_idx = 0
-    # Structural choice AIG optimization options
-    ch_idx = i % len(aig_ch_ops)
-    i = i // len(aig_ch_ops)
-
-    # Tech Indepdent AIG rewriting optimization options
-    ind_idx = []
-    while i >= 0 :
-        num_options = len(aig_ind_ops)
-        remainder = i % num_options
-        divisor = i // num_options
-        ind_idx.append(remainder)
-        if divisor <= 0 : 
-            break;
-        else : 
-            i = divisor-1
-    return ind_idx, ch_idx, perm_idx
-
-def get_seq_abc9_single_list(idx, lib_num):
-    seq = aig_sweep
-    i = idx
-    ind_idx = parse_index_single_list(idx)
-    if lib_num > 0:
-        for op in ind_idx:
-            seq += abc9_ops_lib[op]  + ";"
-        seq +="&if -W 300 -v;&mfs;"
-    else:
-        for op in ind_idx:
-            seq += abc9_ops[op] + ";"
-        seq += "&if -W 300 -K 6 -v;&mfs;"
-    return seq
-
-def get_abc9_stochastic(idx, lib_num):
-    seq = aig_sweep
-    i = idx
-    ind_idx = parse_index_single_list(idx)
-    if lib_num > 0:
-        seq += "&if -W 300 -v;&stochsyn -v -I 10 -N 1000 \"&st;"
-        for op in ind_idx:
-            seq += abc9_ops_lib[op]  + ";"
-        seq +="&if -W 300 -v;&mfs\";"
-    else:
-        seq += "&if -W 300 -K 6 -v;&stochsyn -v -I 10 -N 1000 \"&st;"
-        for op in ind_idx:
-            seq += abc9_ops[op] + ";"
-        seq += "&if -W 300 -K 6 -v;&mfs\";"
-    seq += "&ps -l"
-    return seq
-
-def get_seq_abc9(idx, lib_num):
-    seq = aig_sweep
-    i = idx
-    ind_idx, ch_idx, perm_idx = parse_index(idx)
-    
-    # Step 1 and 1.5: Tech Ind AIG rewriting
-    seq += aig_permute_in[perm_idx] + ";"
-    for op in ind_idx:
-        seq += aig_ind_ops[op] + ";"
-        
-    # Step 2. Structural choice based rewriting
-    seq += aig_ch_ops[ch_idx] + ";"
-    if lib_num > 0:
-        seq +="&if -W 300 -v;&mfs;"
-    else:
-        seq +="&if -W 300 -K 6 -v;&mfs;"
-
-    return seq
-
-def get_seq(idx): 
-    num_options = len(options) 
-    seq = opener
-    i = idx
-    while idx >= 0:
-        remainder = i % num_options
-        divisor = i // num_options
-        seq += options[remainder] + ";"
-        if divisor <= 0 : 
-            break;
-        else : 
-            i = divisor
-    seq += closure_whitebox_delay
-    return seq
-
-def get_rand_seq_abc9(seq_len, lib_num, idx):
-    aig_all_ops = aig_ch_ops + aig_ind_ops
-    num_options = len(aig_all_ops) 
-    seq = aig_sweep
-
-    random.seed(idx)
-    n_iter = 1
-    while True:
-        for i in range(seq_len) :
-            r = random.randint(0, 12)
-            if r < num_options :
-                seq += aig_all_ops[r] + ";"
-        if lib_num > 0:
-            seq +="&if -W 300 -v;&mfs;"
-        else:
-            seq +="&if -W 300 -K 6 -v;&mfs;"
-        s = random.randint(0, 2**n_iter)
-        if s == 0:
-            seq +="&st;"
-            continue
-        else: 
-            break
-            # iterate again!
-            seq +="&ps -l -D abc.txt"
-    return seq
-
+def synthesize(output_dir, index):
+    run_name = "test_{}".format(index)
+    run_output_file = os.path.join(output_dir, run_name+".txt")
+    xdc_file = os.path.join(output_dir, run_name+".xdc")
+    if os.path.exists(run_output_file):
+        print("reusing cached test" + run_name)
+        return
+    tcl_script = ''' 
+    set_param generalmaxThreads 1 
+    set_property IS_ENABLED 0 [get_drc_checks {PDRC-43}]
+    if {[file exists "$(dirname ${path})/${ip}_vivado.tcl"] == 1} {
+        source ${ip}_vivado.tcl
+    } else {
+        read_verilog $(basename ${path%.gz})
+        #read_verilog ${path}
+    }
+    if {[file exists "$(dirname ${path})/${ip}.top"] == 1} {
+    set fp [open $(dirname ${path})/${ip}.top]
+    set_property TOP [string trim [read \$fp]] [current_fileset]
+    } else {
+    set_property TOP [lindex [find_top] 0] [current_fileset]
+    }
+    cd ${pwd}
+    read_xdc -unmanaged ${xdc_file}
+    synth_design -part ${xl_device} -mode out_of_context ${SYNTH_DESIGN_OPTS}
+    opt_design -directive Explore 
+    '''
+    with open(xdc_file, 'w') open as f:
+        f.write(tcl_script)
 def main():
     parser = argparse.ArgumentParser(
             description='Single run of Yosys-ABC + Vivado')
@@ -175,11 +62,20 @@ def main():
     parser.add_argument('--stochastic', type=int, help='Whether to use stochastic synthesis', default=0)
     args = parser.parse_args()
 
-    do_abc9 = args.abc9 > 0
-    do_random = args.random_seq_len > 0
-    do_stochastic = args.stochastic > 0
-    lut_lib_num = args.lut_library
-    
+    synth="yosys-abc9"
+    doABC9 = args.abc9 > 0
+    doRandom = args.random_seq_len > 0
+    doStochastic = args.stochastic > 0
+    lutLib = args.lut_library
+    xilinxDevice = "xc7a200tffv1156-1"
+
+    output_dir="tab_{1}_{2}_{3}_{4}".format(synth, ip, dev, idx)
+    if doRandom:
+        output_dir="tab_{1}_{2}_{3}_random_{4}".format(synth, ip, dev, idx)
+    if not os.path.exists(output_dir):
+        os.mkdir(output_dir)
+
+
     print("rec_start3 " + os.path.dirname(os.path.abspath(__file__)) + "/include/rec6Lib_final_filtered3_recanon.aig")
     if args.in_idx == -2:
         print("&scorr;&sweep;&dc2;&dch -f;&if -W 300 -K 6 -v;&mfs;")
