@@ -1,6 +1,5 @@
   # GML created by: "Yosys 0.15+84 (git sha1 f04d12c92, clang 13.0.1 -fPIC -Os)",
 graph [
-    multigraph 1
           node [  id  2    label  "dest_x[0]" 
               type	"input"
           ]
