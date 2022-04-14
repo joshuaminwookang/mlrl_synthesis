@@ -18,14 +18,17 @@ if __name__ == '__main__':
     #parser.add_argument("--feature_dim", type=int, default=64, help="Feature graph embedding dim")
     #parser.add_argument("--fe_hidden_dim", type=int, default=64, help="Feature embedding hidden dim")
     #parser.add_argument("--fe_output_dim", type=int, default=256, help="Feature embedding output dim")
-    parser.add_argument("--gcn_hidden_dim", type=int, default=256, help="GCN hidden dim")
-    parser.add_argument("--gcn_output_dim", type=int, default=256, help="GCN output dim")
+    parser.add_argument("--gcn_hidden_dim", type=int, default=64, help="GCN hidden dim")
+    parser.add_argument("--gcn_output_dim", type=int, default=64, help="GCN output dim")
     parser.add_argument("--se_input_dim", type=int, default=64, help="Sequence embedding input dim")
     parser.add_argument("--se_num_layers", type=int, default=4, help="Sequence embedding num lstm layers")
     parser.add_argument("--dump_path", type=str, default=None, help="Save path for the best model")
     parser.add_argument("--label_seq_data_path", type=str, default='../epflBmarks.pkl', help="Dataset paths, separated with comma(,)")
     parser.add_argument("--graph_data_dir", type=str, default='../epfl_gmls', help="graph data dir path")
     parser.add_argument("--debug", action='store_true', default=False, help="debugging mode")
+    parser.add_argument("--wandb_entity", type=str, default=None, help="wandb entity (id) name")
+    parser.add_argument("--wandb_project", type=str, default=None, help="wandb project name")
+    parser.add_argument("--wandb_name", type=str, default=None, help="wandb project name")
 
     args = parser.parse_args()
 
@@ -60,9 +63,13 @@ if __name__ == '__main__':
     loss_fn = nn.MSELoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
 
+    if args.wandb_entity is not None:
+        import wandb
+        assert args.wandb_project is not None
+        wandb.init(project=args.wandb_project, entity=args.wandb_entity, name=args.wandb_name)
+        wandb.config.update(args)
+
     #name = f"fh{args.fe_hidden_dim}_fo{args.fe_output_dim}_si{args.se_input_dim}_sl{args.se_num_layers}" #TODO
-    #import wandb
-    #wandb.init(project="synthesis", entity="sehoonkim", name=name)
 
     best_metric = 0
 
@@ -130,8 +137,10 @@ if __name__ == '__main__':
         corr_area = stats.spearmanr(x_area_all, labels_area_all).correlation
 
 
-        #wandb.log({"loss": loss_all / cnt, "val_loss": valid_loss_all / valid_cnt,
-        #    "corr_delay": corr_delay, "corr_area": corr_area})
+        if args.wandb_entity is not None:
+            wandb.log({"loss": loss_all / cnt, "val_loss": valid_loss_all / valid_cnt,
+                "corr_delay": corr_delay, "corr_area": corr_area})
+
         print(f"epoch {epoch}, loss {loss_all / cnt}, val_loss {valid_loss_all / valid_cnt}")
         print(f"    corr_delay {corr_delay}, corr_area {corr_area}")
 
