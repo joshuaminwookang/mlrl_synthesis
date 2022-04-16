@@ -25,6 +25,7 @@ if __name__ == '__main__':
     parser.add_argument("--dump_path", type=str, default=None, help="Save path for the best model")
     parser.add_argument("--label_seq_data_path", type=str, default='../epflBmarks.pkl', help="Dataset paths, separated with comma(,)")
     parser.add_argument("--graph_data_dir", type=str, default='../epfl_gmls', help="graph data dir path")
+    parser.add_argument("--raw_graph", action='store_true', default=False, help="whether to use raw graph data")
     parser.add_argument("--debug", action='store_true', default=False, help="debugging mode")
     parser.add_argument("--wandb_entity", type=str, default=None, help="wandb entity (id) name")
     parser.add_argument("--wandb_project", type=str, default=None, help="wandb project name")
@@ -42,12 +43,13 @@ if __name__ == '__main__':
         debug=args.debug,
     )
 
-    #model = GCN(args.gcn_hidden_dim, args.gcn_output_dim)
     model = E2ERegression(
         args.gcn_hidden_dim,
         args.gcn_output_dim,
         args.se_input_dim,
-        args.se_num_layers
+        args.se_num_layers,
+        raw_graph=args.raw_graph,
+        #embedding_dim #TODO: add this later
     )
 
     if torch.cuda.is_available():
@@ -63,7 +65,9 @@ if __name__ == '__main__':
     loss_fn = nn.MSELoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
 
-    if args.wandb_entity is not None:
+    do_wandb = args.wandb_entity is not None and not args.debug
+
+    if do_wandb:
         import wandb
         assert args.wandb_project is not None
         wandb.init(project=args.wandb_project, entity=args.wandb_entity, name=args.wandb_name)
@@ -137,7 +141,7 @@ if __name__ == '__main__':
         corr_area = stats.spearmanr(x_area_all, labels_area_all).correlation
 
 
-        if args.wandb_entity is not None:
+        if do_wandb:
             wandb.log({"loss": loss_all / cnt, "val_loss": valid_loss_all / valid_cnt,
                 "corr_delay": corr_delay, "corr_area": corr_area})
 

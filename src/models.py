@@ -11,6 +11,29 @@ from torch_geometric.nn import GCNConv
 
 from dataset import SEQ_TO_TOKEN, TOKEN_TO_SEQ
 
+TYPES = [
+    '$_NOT_',
+    '$_AND_',
+    '$_OR_',
+    '$_XOR_',
+    '$_MUX_',
+    '$_DFF_N_',
+    '$_DFF_P_',
+    '$_DFF_NN0_',
+    '$_DFF_NN1_',
+    '$_DFF_NP0_',
+    '$_DFF_NP1_',
+    '$_DFF_PN0_',
+    '$_DFF_PN1_',
+    '$_DFF_PP0_',
+    '$_DFF_PP1_',
+    'input',
+    'output',
+]
+TYPES_TO_IDS = {x: i for i, x in enumerate(TYPES)}
+
+LEN_TYPES = len(TYPES)
+
 class FeatureEmbedding(nn.Module):
     def __init__(self, input_dim, hidden_dim, output_dim):
         super().__init__()
@@ -81,18 +104,34 @@ class SequenceEmbedding(nn.Module):
         return x, x_len
     
 class GCN(nn.Module):
-    def __init__(self, hidden_dim, output_dim):
+    def __init__(self, hidden_dim, output_dim, embedding_dim=None, raw_graph=False):
         super().__init__()
-        input_dim = 2 # TODO: adjust this accordingly
+        self.raw_graph = raw_graph
+        if raw_graph:
+            print('using raw graph')
+            input_dim = 2 # TODO: adjust this accordingly
+        else:
+            if embedding_dim is None:
+                embedding_dim = hidden_dim
+            print('using preprocessed graph')
+            self.embedding_table = torch.nn.Embedding(LEN_TYPES, embedding_dim)
+            input_dim = embedding_dim
         self.conv1 = GCNConv(input_dim, hidden_dim)
         self.conv2 = GCNConv(hidden_dim, output_dim)
 
     def forward(self, data):
-        x0, x1, edge_index = data.invert0, data.invert1, data.edge_index
         batch = data.batch
-
-        x = torch.stack([x0, x1])
-        x = x.T.type(torch.float)
+        edge_index = data.edge_index
+        if self.raw_graph:
+            x0, x1, edge_index = data.invert0, data.invert1, data.edge_index
+            x = torch.stack([x0, x1])
+            x = x.T.type(torch.float)
+        else:
+            ids = []
+            for dt in data.type:
+                ids += [TYPES_TO_IDS[x] for x in dt]
+            ids = torch.tensor(ids).cuda()
+            x = self.embedding_table(ids)
         x = self.conv1(x, edge_index)
         x = F.relu(x)
         x = F.dropout(x, training=self.training)
@@ -109,9 +148,16 @@ class E2ERegression(nn.Module):
         se_input_dim,
         se_num_lstm_layers,
         output_dim=2,
+        raw_graph=False,
+        embedding_dim=None,
     ):
         super().__init__()
-        self.gcn = GCN(gcn_hidden_dim, gcn_output_dim)
+        self.gcn = GCN(
+            gcn_hidden_dim, 
+            gcn_output_dim, 
+            embedding_dim=embedding_dim,
+            raw_graph=raw_graph,
+        )
         self.se = SequenceEmbedding(se_input_dim, gcn_output_dim, se_num_lstm_layers)
         self.dense = nn.Linear(gcn_output_dim, output_dim)
         self.num_lstm_layers = se_num_lstm_layers
