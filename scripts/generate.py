@@ -18,6 +18,9 @@ def run_yosys_from_dir(load_dir_path,output_path):
     for verilog_file in verilogs:
         ip = verilog_file[verilog_file.rindex('/')+1:verilog_file.find('.v')]
         run_yosys(verilog_file, output_path, ip)
+        M = nx.read_gml("{}/{}.gml".format(output_path,ip))
+        G = nx.Graph(M)
+        nx.write_gml(G, "{}/{}.gml".format(output_path,ip))
         # json_file = os.path.normpath(os.path.join(output_dir, tag + ".json"))
         # with open(json_file, 'w') as outfile:
         #     json.dump(data, outfile)
