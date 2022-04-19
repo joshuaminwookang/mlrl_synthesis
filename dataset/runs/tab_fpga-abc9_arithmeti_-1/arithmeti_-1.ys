@@ -1,0 +1,2 @@
+read_verilog /home/eecs/mkang/mlrl_synthesis/benchmarks/epfl/arithmetic
+synth_xilinx -dff -flatten -noiopad -abc9 -edif arithmeti_-1.edif -script arithmeti_-1.abc
