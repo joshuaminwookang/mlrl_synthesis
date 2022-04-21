@@ -1,6 +1,3 @@
-rl_src/rl_synth/envs/synthesis/temp/
-rl_src/rl_synth/data/
-rl_src/runs/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

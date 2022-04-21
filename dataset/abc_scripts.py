@@ -1,4 +1,3 @@
-
 #!/usr/bin/python3
 
 import argparse
@@ -25,13 +24,23 @@ abc9_ch_ops = ["&synch2", "&dch", "&dch -f"]
 abc9_ops = abc9_ind_ops + abc9_ch_ops + ["&if -W 300 -K 6 -v;&mfs;&st", "&if -W 300 -K 6 -v;&st"]
 
 # ABC optimization passes
-abc_ind_ops = ["rewrite", "rewrite -z", "refactor", "refactor -z",
-               "balance",  "balance -d", "dc2",
+# abc_ind_ops = ["rewrite", "rewrite -z", "refactor", "refactor -z",
+#                "balance",  "balance -d", "dc2",
+#                "if -K 6; strash", "if -K 6 -g", "if -K 6 -x","if -K 6 -y",
+#                "resub -K 8 -N 1",  "resub -K 8 -N 3",
+#                "resub -K 16 -N 1",  "resub -K 16 -N 3",
+#                "resub -K 8 -N 1 -z", "resub -K 8 -N 3 -z",
+#                "resub -K 16 -N 1 -z",  "resub -K 16 -N 3 -z"]
+abc_ind_ops = ["rewrite", "rewrite -z", "rewrite -l",
+               "refactor", "refactor -z", "refactor -l",
+               "balance",  "balance -d", "balance -l", "dc2",
                "if -W 300 -K 6; strash", "if -W 300 -K 6 -g", "if -W 300 -K 6 -x","if -W 300 -K 6 -y",
-               "resub -K 8 -N 1",  "resub -K 8 -N 3",
-               "resub -K 16 -N 1",  "resub -K 16 -N 3",
-               "resub -K 8 -N 1 -z", "resub -K 8 -N 3 -z",
-               "resub -K 16 -N 1 -z",  "resub -K 16 -N 3 -z"]
+               "resub -K 8 -N 1",  "resub -K 8 -N 2","resub -K 8 -N 3",
+               "resub -K 8 -N 1 -z",  "resub -K 8 -N 2 -z","resub -K 8 -N 3 -z",
+               "resub -K 10 -N 1",  "resub -K 10 -N 2","resub -K 10 -N 3",
+               "resub -K 10 -N 1 -z",  "resub -K 10 -N 2 -z","resub -K 10 -N 3 -z",
+               "resub -K 12 -N 1",  "resub -K 12 -N 2","resub -K 12 -N 3",
+               "resub -K 12 -N 1 -z",  "resub -K 12 -N 2 -z","resub -K 12 -N 3 -z"]
 abc_ch_ops = ["dch", "dch -f"]
 abc_ops = abc_ind_ops + abc_ch_ops
 
@@ -123,7 +132,7 @@ def get_abc_sequence(idx, random_seq_len):
     else:
         custom_seq = parse_index_abc(idx-1)
     seq += custom_seq + "\n"
-    seq += "if -W 300 -K 6 -v;mfs2\n"
+    seq += "if -K 6 -v;mfs2\n"
     return seq
 
 # def get_abc9_stochastic(idx, lib_num):
