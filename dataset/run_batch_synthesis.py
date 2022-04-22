@@ -31,7 +31,7 @@ def gen_sbatch_scripts(**kwargs):
 #SBATCH --cpus-per-task=1
 #
 # Wall clock limit:
-#SBATCH --time=01:00:00
+#SBATCH --time=10:00:00
 #
 ## Command(s) to run:
 echo {this_file} --input_file {kwargs['input_file']} -o {kwargs['output_dir']} --synth_method {kwargs['synth_method']} -r {kwargs['random_seq_len']} --batch {kwargs['batch']} 
@@ -54,7 +54,7 @@ def prepare_batch_synthesis(**kwargs):
     exp_sizes = define_experiment()
     # create sbatch scripts for each Verilog input, for each random sequence length target
     for v in verilogs:
-        params["input_file"] = v
+        params["input_file"] = os.path.abspath(v)
         for r in exp_sizes.keys():
             params["random_seq_len"] = r
             gen_sbatch_scripts(**params)
@@ -92,8 +92,6 @@ def run_batch_synthesis(**kwargs):
     sequence_matrix = gen_sequence_matrix(random_seq_len, exp_sizes[random_seq_len])
     index = 0
     end_idx = sequence_matrix.shape[0]
-    print(end_idx)
-    print(sequence_matrix)
 
     batch_size = params['batch']
     del params['input_dir']
