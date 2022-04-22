@@ -13,7 +13,7 @@ def run_yosys(input_file, run_name, index, synth_method, random_seq_len, index_l
     yosys_file, abc_script_file = gen_yosys_script(cwd, input_file, run_name, synth_method, index, random_seq_len, index_list)
     try:
         log_file_path = os.path.join(cwd, 'yosys.log')
-        print("Running Yosys: {}".format(run_name))
+        #print("Running Yosys: {}".format(run_name))
         p = subprocess.check_call(['yosys', yosys_file, '-l', log_file_path], \
                                   cwd=cwd, stdout=subprocess.DEVNULL, stderr=stderr)
 
@@ -52,7 +52,7 @@ def run_vivado_da(run_name, clock_period, cwd=os.getcwd(), stdout=None, stderr=N
     xdc_file = gen_vivado_xdc(cwd, run_name, clock_period)
     try:
         log_file_path = os.path.join(cwd, 'analysis.log')
-        print("Running Vivado: {}".format(run_name))
+        #print("Running Vivado: {}".format(run_name))
         #print("vivado -nojournal -log {} -mode batch -source {}".format(log_file_path, tcl_file))
         p = subprocess.check_call(['vivado', '-nojournal','-log', log_file_path, '-mode', 'batch', '-source', tcl_file], \
                                   cwd=cwd, stdout=subprocess.DEVNULL, stderr=stderr)
@@ -99,7 +99,6 @@ def gen_vivado_yosys_summary(summary_file, ip, index, abc_script, vivado_log):
         with open(abc_script, "r") as fp:
             scripts = fp.readlines()
             data['Sequence'] = scripts[1][:-2]
-            print(data['Sequence'])
     except OSError:
         print("Could not open/read file:", abc_script)
     try:
@@ -178,7 +177,6 @@ def main():
     parser.add_argument('--grade', type=int, help='Target Xilinx FPGA device grade', default=1)
     parser.add_argument('--device', type=str, help='Target Xilinx FPGA device', default="xc7a200tffv1156-1")
     parser.add_argument('--run_analysis', type=bool, help='Run Vivado or Synopsis post-Synthesis analysis backend', default=True)
-    #parser.add_argument('--do_random', action='store_true', help='Test random synthesis recipes')
     parser.add_argument('-r','--random_seq_len', type=int, help='Length of random sequence to generate; 0 implies do not do random', default=0)
 
     args = parser.parse_args()

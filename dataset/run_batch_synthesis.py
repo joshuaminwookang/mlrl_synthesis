@@ -17,7 +17,7 @@ def gen_sbatch_scripts(**kwargs):
     script = f'''#!/bin/bash
 # generated at by synthesis.py on batch mode
 # Job name:
-#SBATCH --job-name={ip}_{kwargs['synth_method']}_{kwargs['random_seq_len']}
+#SBATCH --job-name={ip}_{kwargs['random_seq_len']}
 #
 # Account:
 #SBATCH --account=fc_bdmesh
@@ -28,7 +28,7 @@ def gen_sbatch_scripts(**kwargs):
 # Quality of Service:
 #SBATCH --qos=savio_normal
 # Num Cores per Task
-#SBATCH --cpus-per-task=1
+#SBATCH --cpus-per-task=32
 #
 # Wall clock limit:
 #SBATCH --time=10:00:00
@@ -78,7 +78,6 @@ def gen_sequence_matrix(random_seq_len, samples_per_first_op):
     num_ops = abc_scripts.get_num_abc_ops()   
     np.random.seed(1)
     rands = np.random.randint(num_ops, size=(samples_per_first_op, random_seq_len-1))
-    print(np.unique(rands, axis=0).shape[0])
     assert(np.unique(rands, axis=0).shape[0] == samples_per_first_op)
 
     headers = np.tile(np.repeat(np.arange(num_ops), samples_per_first_op), (1,1)).T

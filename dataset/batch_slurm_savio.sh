@@ -68,11 +68,12 @@ if [ -z "${RUN_DIR}" ]; then
   exit 2
 fi
 
+pushd ${RUN_DIR}
+
 # Setup run output directory
 if ! [ -d "${RUN_DIR}" ]; then
   mkdir -p "${RUN_DIR}"
 fi
-pushd ${RUN_DIR}
 
 if [ -d "${INPUT_DIR}" ]; then
     shopt -s nullglob
