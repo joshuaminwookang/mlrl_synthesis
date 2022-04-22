@@ -8,31 +8,9 @@ from torch_geometric.nn import GCNConv, global_mean_pool
 import torch.nn.functional as F
 from torch_geometric.nn import GCNConv
 
+from dataset_graph import SEQ_TO_TOKEN, TOKEN_TO_SEQ, NODE_TYPES, TYPES_TO_IDS
 
-from dataset import SEQ_TO_TOKEN, TOKEN_TO_SEQ
-
-TYPES = [
-    '$_NOT_',
-    '$_AND_',
-    '$_OR_',
-    '$_XOR_',
-    '$_MUX_',
-    '$_DFF_N_',
-    '$_DFF_P_',
-    '$_DFF_NN0_',
-    '$_DFF_NN1_',
-    '$_DFF_NP0_',
-    '$_DFF_NP1_',
-    '$_DFF_PN0_',
-    '$_DFF_PN1_',
-    '$_DFF_PP0_',
-    '$_DFF_PP1_',
-    'input',
-    'output',
-]
-TYPES_TO_IDS = {x: i for i, x in enumerate(TYPES)}
-
-LEN_TYPES = len(TYPES)
+LEN_TYPES = len(NODE_TYPES)
 
 class FeatureEmbedding(nn.Module):
     def __init__(self, input_dim, hidden_dim, output_dim):
@@ -127,10 +105,7 @@ class GCN(nn.Module):
             x = torch.stack([x0, x1])
             x = x.T.type(torch.float)
         else:
-            ids = []
-            for dt in data.type:
-                ids += [TYPES_TO_IDS[x] for x in dt]
-            ids = torch.tensor(ids).cuda()
+            ids = data.type
             x = self.embedding_table(ids)
         x = self.conv1(x, edge_index)
         x = F.relu(x)

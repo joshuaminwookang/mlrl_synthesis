@@ -13,6 +13,28 @@ from torch_geometric.loader import DataLoader
 import torch_geometric.utils.convert as convert
 import networkx as nx
 
+NODE_TYPES = [
+    '$_NOT_',
+    '$_AND_',
+    '$_OR_',
+    '$_XOR_',
+    '$_MUX_',
+    '$_DFF_N_',
+    '$_DFF_P_',
+    '$_DFF_NN0_',
+    '$_DFF_NN1_',
+    '$_DFF_NP0_',
+    '$_DFF_NP1_',
+    '$_DFF_PN0_',
+    '$_DFF_PN1_',
+    '$_DFF_PP0_',
+    '$_DFF_PP1_',
+    'input',
+    'output',
+]
+
+TYPES_TO_IDS = {x: i for i, x in enumerate(NODE_TYPES)}
+
 SEQ_TO_TOKEN = {
     '&if -W 300 -K 6 -v': 0, 
     '&st': 1, 
@@ -116,6 +138,8 @@ def preprocess_data(graph_data_dir, label_seq_data_path, output_dir, debug=False
             # read graph from GML and convert to PyG Data object
             G = nx.read_gml(gml_file)
             data = convert.from_networkx(G)
+            ids = torch.tensor([TYPES_TO_IDS[x] for x in data.type])
+            data.type = ids
             graph_dict = {}
             graph_dict[name] = data  
             graphs = []
