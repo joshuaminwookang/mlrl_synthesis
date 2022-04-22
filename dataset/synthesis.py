@@ -187,7 +187,7 @@ def run_sbatch(input_file=None, output_dir=None, index=0, synth_method='fpga-abc
 #SBATCH --account=fc_bdmesh
 #
 # Partition:
-#SBATCH --partition=savio
+#SBATCH --partition=savio3
 #
 # Quality of Service:
 #SBATCH --qos=savio_normal
@@ -203,15 +203,15 @@ python {this_file} -i {input_file} -o {output_dir}  --synth_method {synth_method
 '''
     with open(sbatch_script, "w") as f:
         f.write(script)
-    try:
-        print("Running sbatch: {}".format(sbatch_script))
-        #p = subprocess.check_call(['echo', sbatch_script], cwd=output_dir, stdout=subprocess.DEVNULL, stderr=stderr)
-        p = subprocess.check_call(['sbatch', sbatch_script], cwd=output_dir, stdout=subprocess.STDOUT, stderr=subprocess.STDOUT)
-        #p = subprocess.call(['sbatch', sbatch_script], cwd=output_dur, shell=True)
-        return True
-    except:
-        print("Error in sbatch")
-        return False
+    # try:
+    #     print("Running sbatch: {}".format(sbatch_script))
+    #     #p = subprocess.check_call(['echo', sbatch_script], cwd=output_dir, stdout=subprocess.DEVNULL, stderr=stderr)
+    #     p = subprocess.check_call(['sbatch', sbatch_script], cwd=output_dir, stdout=subprocess.STDOUT, stderr=subprocess.STDOUT)
+    #     #p = subprocess.call(['sbatch', sbatch_script], cwd=output_dur, shell=True)
+    #     return True
+    # except:
+    #     print("Error in sbatch")
+    #     return False
 
 
 def run_batch_synthesis(**kwargs):
