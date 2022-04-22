@@ -42,30 +42,20 @@ def get_num_abc_ops():
 def get_index_bounds_abc(max_len):
     max_idx = 1
     for l in range(max_len):
-        max_idx += (len(abc_ind_ops) ** (l+1)) * len(abc_ch_ops) 
+        max_idx += len(abc_ind_ops) ** (l+1)
     return max_idx
 
-def get_index_bounds_abc9(max_len):
-    max_idx = 1
-    for l in range(max_len):
-        max_idx = len(abc9_ops) ** (l+1)
-    return max_idx
-
-def gen_random_samples(results_file_path, random_seq_len, samples_per_first_op):
-    np.random.seed(1)
-    M = np.random.randint(len(abc_ops), size=(samples_per_first_op, random_seq_len-1))
-    assert(np.unique(M, axis=0).shape[0] == samples_per_first_op)
-    return M
     
 # list of integers (0~N) -> sinlge string of synthesis sequence
-def get_sequence_abc(idx_list):
-    seq = ""
+def get_abc_sequence_from_list (idx_list):
+    seq = abc_opener + "\n"
     for idx in idx_list:
         seq += abc_ind_ops[idx] + ";"
+    seq += "dch -f;if -K 6 -v;mfs2\n"
     return seq
 
-def parse_index_abc(idx):
-    i = idx
+def parse_index(idx):
+    i = idx-1
     num_options = len(abc_ind_ops)
     ind_idx = []
     while i >= 0 :
@@ -78,22 +68,21 @@ def parse_index_abc(idx):
             i = divisor-1
     seq = ""
     ind_idx.reverse()
-    for op in ind_idx:
-        seq += abc_ind_ops[op] + ";"
-    return seq
+    print(ind_idx)
+    return ind_idx
 
-def sample_abc_indices(random_seq_len):
-    indices = []
-        
 def get_abc_sequence(idx):
     if idx < -1:
         return "strash; ifraig; scorr; dc2; dretime; strash; dch -f; if; mfs2\n"
     #seq = "rec_start3 " + os.path.dirname(os.path.abspath(__file__)) + "/include/rec6Lib_final_filtered3_recanon.aig\n"
-    seq += abc_opener + "\n"
-    custom_seq = parse_index_abc(idx-1)
-    seq += custom_seq + "\n"
+    seq = abc_opener + "\n"
+    idx_list = parse_index(idx)
+    for op in idx_list:
+        seq += abc_ind_ops[op] + ";"
+    seq += "\n"
     seq += "dch -f;if -K 6 -v;mfs2\n"
     return seq
+
 # Helper function: index (integer) -> list of synth ops/passes
 def parse_index_abc9(idx):
     i = idx
