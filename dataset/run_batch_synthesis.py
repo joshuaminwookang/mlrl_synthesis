@@ -63,9 +63,9 @@ def define_experiment():
     num_ops  = abc_scripts.get_num_abc_ops()
     exp_sizes = {}
     exp_sizes[3] = abc_scripts.get_index_bounds_abc(3)
-    exp_sizes[5] = num_ops * 30 # ~5K
-    exp_sizes[10] = num_ops * 60 # ~10K
-    exp_sizes[15] = num_ops * 60 # ~10K
+    exp_sizes[5] = 300 # ~5K
+    exp_sizes[10] = 600 # ~10K
+    exp_sizes[15] = 600  # ~10K
     return exp_sizes
 
 def gen_sequence_matrix(random_seq_len, samples_per_first_op):
@@ -78,9 +78,12 @@ def gen_sequence_matrix(random_seq_len, samples_per_first_op):
     num_ops = abc_scripts.get_num_abc_ops()   
     np.random.seed(1)
     rands = np.random.randint(num_ops, size=(samples_per_first_op, random_seq_len-1))
+    print(np.unique(rands, axis=0).shape[0])
     assert(np.unique(rands, axis=0).shape[0] == samples_per_first_op)
+
     headers = np.tile(np.repeat(np.arange(num_ops), samples_per_first_op), (1,1)).T
     M = np.concatenate((headers, np.tile(rands, (num_ops,1))), axis=1)
+    
     assert(M.shape == (num_ops*samples_per_first_op, random_seq_len))
     return M
 
