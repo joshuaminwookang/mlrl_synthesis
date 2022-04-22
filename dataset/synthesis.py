@@ -205,10 +205,12 @@ python {this_file} -i {input_file} -o {output_dir}  --synth_method {synth_method
         f.write(script)
     try:
         print("Running sbatch: {}".format(sbatch_script))
-        #p = subprocess.check_call(['sbatch', sbatch_script], cwd=kwargs['output_dir'], stdout=subprocess.DEVNULL, stderr=stderr)
-        p = subprocess.check_call(['echo', sbatch_script], cwd=output_dir, stdout=subprocess.DEVNULL, stderr=stderr)
+        #p = subprocess.check_call(['echo', sbatch_script], cwd=output_dir, stdout=subprocess.DEVNULL, stderr=stderr)
+        p = subprocess.check_call(['sbatch', sbatch_script], cwd=output_dir, stdout=subprocess.STDOUT, stderr=subprocess.STDOUT)
+        #p = subprocess.call(['sbatch', sbatch_script], cwd=output_dur, shell=True)
         return True
     except:
+        print("Error in sbatch")
         return False
 
 

@@ -1,4 +1,0 @@
-rec_start3 /home/eecs/mkang/mlrl_synthesis/dataset/include/rec6Lib_final_filtered3_recanon.aig
-&scorr;&sweep;
-
-&if -W 300 -K 6 -v;&mfs;
