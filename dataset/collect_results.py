@@ -25,7 +25,7 @@ def merge_results_from_dir(dirname):
         except OSError:
             print("Could not open/read file:", json_file[0])
             sys.exit()
-        this_data["Benchmark"] = this_data.pop("Becnhmark")
+#        this_data["Benchmark"] = this_data.pop("Becnhmark")
         data[i] = this_data
         i += 1
     return data
