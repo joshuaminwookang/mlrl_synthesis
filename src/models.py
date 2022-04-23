@@ -112,7 +112,6 @@ class GCN(nn.Module):
         x = F.dropout(x, training=self.training)
         x = self.conv2(x, edge_index)
         x = global_mean_pool(x, batch)
-
         return x
 
 class E2ERegression(nn.Module):

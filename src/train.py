@@ -7,14 +7,20 @@ import torch
 from torch import nn
 from torch.utils.data import Dataset, DataLoader
 from torch.nn.utils.rnn import pad_sequence
+import numpy as np
 
 from scipy import stats
 from models import E2ERegression, GCN
 from dataset_graph import generate_dataloaders
 
+def mean_absolute_percentage_error(y_true, y_pred): 
+    y_true, y_pred = np.array(y_true), np.array(y_pred)
+    return np.mean(np.abs((y_true - y_pred) / y_true)) * 100
+
 if __name__ == '__main__': 
     parser = argparse.ArgumentParser(prog="Regression")
     parser.add_argument("--bs", type=int, default=64, help="Batch size")
+    parser.add_argument("--epoch", type=int, default=50, help="Num training epochs")
     #parser.add_argument("--feature_dim", type=int, default=64, help="Feature graph embedding dim")
     #parser.add_argument("--fe_hidden_dim", type=int, default=64, help="Feature embedding hidden dim")
     #parser.add_argument("--fe_output_dim", type=int, default=256, help="Feature embedding output dim")
@@ -64,6 +70,10 @@ if __name__ == '__main__':
 
     loss_fn = nn.MSELoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
+    scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
+        optimizer, 
+        T_max=args.epoch
+    )
 
     do_wandb = args.wandb_entity is not None and not args.debug
 
@@ -77,7 +87,7 @@ if __name__ == '__main__':
 
     best_metric = 0
 
-    for epoch in range(50):
+    for epoch in range(args.epoch):
         loss_all = 0
         cnt = 0
 
@@ -95,7 +105,10 @@ if __name__ == '__main__':
             labels = labels.to(device=device)
             outputs = model(inputs, sequence, sequence_len)
 
-            loss = loss_fn(outputs, labels)
+            #loss = loss_fn(outputs, labels)
+            loss = ((outputs - labels) / labels) ** 2
+            loss = loss.mean()
+
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
@@ -103,6 +116,7 @@ if __name__ == '__main__':
             cnt += 1
             loss_all += loss
 
+        scheduler.step()
         model.eval()
 
         x_delay_all = []
@@ -140,13 +154,18 @@ if __name__ == '__main__':
         corr_delay = stats.spearmanr(x_delay_all, labels_delay_all).correlation
         corr_area = stats.spearmanr(x_area_all, labels_area_all).correlation
 
+        mape_delay = mean_absolute_percentage_error(labels_delay_all, x_delay_all)
+        mape_area = mean_absolute_percentage_error(labels_area_all, x_area_all)
 
         if do_wandb:
             wandb.log({"loss": loss_all / cnt, "val_loss": valid_loss_all / valid_cnt,
-                "corr_delay": corr_delay, "corr_area": corr_area})
+                "corr_delay": corr_delay, "corr_area": corr_area,
+                "mape_delay": mape_delay, "mape_area": mape_area,
+            })
 
         print(f"epoch {epoch}, loss {loss_all / cnt}, val_loss {valid_loss_all / valid_cnt}")
         print(f"    corr_delay {corr_delay}, corr_area {corr_area}")
+        print(f"    mape_delay {mape_delay}, mape_area {mape_area}")
 
         if args.dump_path is not None and corr_delay > best_metric:
             print('Best Model, saving the model checkpoint')
