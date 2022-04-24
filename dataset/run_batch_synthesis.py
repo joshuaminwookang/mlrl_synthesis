@@ -31,7 +31,7 @@ def gen_sbatch_scripts(**kwargs):
 #SBATCH --cpus-per-task=32
 #
 # Wall clock limit:
-#SBATCH --time=10:00:00
+#SBATCH --time=30:00:00
 #
 ## Command(s) to run:
 echo {this_file} --input_file {kwargs['input_file']} -o {kwargs['output_dir']} --synth_method {kwargs['synth_method']} -r {kwargs['random_seq_len']} --batch {kwargs['batch']} 
@@ -63,9 +63,14 @@ def define_experiment():
     num_ops  = abc_scripts.get_num_abc_ops()
     exp_sizes = {}
     exp_sizes[3] = abc_scripts.get_index_bounds_abc(3)
+    exp_sizes[4] = 60 # ~1K
     exp_sizes[5] = 300 # ~5K
+    exp_sizes[8] = 60 # ~1K
     exp_sizes[10] = 600 # ~10K
+    exp_sizes[12] = 60 # ~1K
     exp_sizes[15] = 600  # ~10K
+    exp_sizes[16] = 60 # ~1K
+    exp_sizes[20] = 60 # ~1K
     return exp_sizes
 
 def gen_sequence_matrix(random_seq_len, samples_per_first_op):

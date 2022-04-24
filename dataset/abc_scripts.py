@@ -15,7 +15,7 @@ abc9_ops = abc9_ind_ops + abc9_ch_ops + ["&if -W 300 -K 6 -v;&mfs;&st", "&if -W 
 # ABC optimization passes
 abc_ind_ops = ["rewrite", "rewrite -z", "refactor", "refactor -z",
                "balance",  "dc2",
-               "if -K 6; strash", "if -K 6 -g",
+               "if -K 6 -x", "if -K 6 -g",
                "resub -K 8 -N 1",  "resub -K 8 -N 2",
                "resub -K 12 -N 1",  "resub -K 12 -N 2",
                "resub -K 8 -N 1 -z", "resub -K 8 -N 2 -z",
