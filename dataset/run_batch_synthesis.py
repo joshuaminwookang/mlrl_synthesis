@@ -83,7 +83,11 @@ def gen_sequence_matrix(random_seq_len, samples_per_first_op):
     num_ops = abc_scripts.get_num_abc_ops()   
     np.random.seed(1)
     rands = np.random.randint(num_ops, size=(samples_per_first_op, random_seq_len-1))
-    assert(np.unique(rands, axis=0).shape[0] == samples_per_first_op)
+    samples = samples_per_first_op
+    while np.unique(rands, axis=0).shape[0] != samples_per_first_op:
+        samples = samples*2
+        rands = np.random.randint(num_ops, size=(samples, random_seq_len-1))
+        rands = np.unique(rands, axis=0)[0:samples_per_first_op]
 
     headers = np.tile(np.repeat(np.arange(num_ops), samples_per_first_op), (1,1)).T
     M = np.concatenate((headers, np.tile(rands, (num_ops,1))), axis=1)
