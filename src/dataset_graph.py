@@ -34,30 +34,37 @@ NODE_TYPES = [
 ]
 
 TYPES_TO_IDS = {x: i for i, x in enumerate(NODE_TYPES)}
+SEQ_TO_TOKEN = ["rewrite", "rewrite -z", "refactor", "refactor -z",
+               "balance",  "dc2",
+               "if -K 6 -x", "if -K 6 -g",
+               "resub -K 8 -N 1",  "resub -K 8 -N 2",
+               "resub -K 12 -N 1",  "resub -K 12 -N 2",
+               "resub -K 8 -N 1 -z", "resub -K 8 -N 2 -z",
+               "resub -K 12 -N 1 -z",  "resub -K 12 -N 2 -z"]
+SEQ_TO_TOKEN = {x: i for i,x in enumerate(SEQ_TO_TOKEN)}
 
-SEQ_TO_TOKEN = {
-    '&if -W 300 -K 6 -v': 0, 
-    '&st': 1, 
-    '&synch2': 2, 
-    '&dc2': 3, 
-    '&if -W 300 -y -K 6': 4, 
-    '&syn2': 5, 
-    '&sweep': 6, 
-    '&mfs': 7, 
-    '&scorr': 8, 
-    '&if -W 300 -g -K 6': 9, 
-    '&b -d': 10, 
-    '&if -W 300 -x -K 6': 11, 
-    '&dch': 12, 
-    '&b': 13, 
-    '&syn4': 14, 
-    '&dch -f': 15, 
-    '&syn3': 16
-}
+# SEQ_TO_TOKEN = {
+#     '&if -W 300 -K 6 -v': 0, 
+#     '&st': 1, 
+#     '&synch2': 2, 
+#     '&dc2': 3, 
+#     '&if -W 300 -y -K 6': 4, 
+#     '&syn2': 5, 
+#     '&sweep': 6, 
+#     '&mfs': 7, 
+#     '&scorr': 8, 
+#     '&if -W 300 -g -K 6': 9, 
+#     '&b -d': 10, 
+#     '&if -W 300 -x -K 6': 11, 
+#     '&dch': 12, 
+#     '&b': 13, 
+#     '&syn4': 14, 
+#     '&dch -f': 15, 
+#     '&syn3': 16
+# }
 
-TOKEN_TO_SEQ = {}
-for x, y in SEQ_TO_TOKEN.items():
-    TOKEN_TO_SEQ[y] = x
+# for x, y in SEQ_TO_TOKEN.items():
+#     TOKEN_TO_SEQ[y] = x
 
 def prepare_dataset(data, graphs_dict):
     features = []
@@ -84,11 +91,12 @@ def preprocess_sequence(sequences):
 #    print('preprocessing sequences')
     seq_list = []
     for seq in sequences:
-        seq = seq.split(';')[2: -3] # remove the redundant parts
+#        seq = seq.split(';')[2: -3] # remove the redundant parts
+        seq = seq.split(';')[0: -2] # remove the redundant parts
         sl = []
         for s in seq:
-            if s.startswith('&'):
-                sl.append(SEQ_TO_TOKEN[s])
+#            if s.startswith('&'):
+            sl.append(SEQ_TO_TOKEN[s])
         seq_list.append(np.array(sl))
     return seq_list
 
