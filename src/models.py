@@ -28,32 +28,6 @@ class FeatureEmbedding(nn.Module):
         #x = self.dropout(x)
         return x
     
-# class GCNConv(MessagePassing):
-#     def __init__(self, in_channels, out_channels):
-#         super(GCNConv, self).__init__(aggr='add')
-#         self.lin = torch.nn.Linear(in_channels, out_channels)
-
-#     def forward(self, x, edge_index):
-#         # Step 1: Add self-loops
-#         edge_index, _ = add_self_loops(edge_index, num_nodes=x.size(0))
-
-#         # Step 2: Multiply with weights
-#         x = self.lin(x)
-
-#         # Step 3: Calculate the normalization
-#         row, col = edge_index
-#         deg = degree(row, x.size(0), dtype=x.dtype)
-#         deg_inv_sqrt = deg.pow(-0.5)
-#         norm = deg_inv_sqrt[row] * deg_inv_sqrt[col]
-
-#         # Step 4: Propagate the embeddings to the next layer
-#         return self.propagate(edge_index, size=(x.size(0), x.size(0)), x=x,
-#                               norm=norm)
-
-#     def message(self, x_j, norm):
-#         # Normalize node features.
-#         return norm.view(-1, 1) * x_j
-    
 class GraphEmbedding(nn.Module):
     def __init__(self, input_dim, hidden_dim, output_dim):
         super().__init__()
@@ -77,7 +51,10 @@ class SequenceEmbedding(nn.Module):
     def forward(self, x, x_len, h):
         x = self.embedding(x)
         x = pack_padded_sequence(x, x_len, batch_first=True, enforce_sorted=False)
-        x, (h, c) = self.lstm(x, (h, h))
+        if h is not None:
+            x, (h, c) = self.lstm(x, (h, h))
+        else:
+            x, (h, c) = self.lstm(x)
         x, x_len = pad_packed_sequence(x, batch_first=True)
         return x, x_len
     
@@ -124,8 +101,12 @@ class E2ERegression(nn.Module):
         output_dim=2,
         raw_graph=False,
         embedding_dim=None,
+        mode='sequential',
     ):
         super().__init__()
+        assert mode in ['sequential', 'parallel']
+        print(f'Run as the {mode} mode')
+        self.mode = mode
         self.gcn = GCN(
             gcn_hidden_dim, 
             gcn_output_dim, 
@@ -133,15 +114,21 @@ class E2ERegression(nn.Module):
             raw_graph=raw_graph,
         )
         self.se = SequenceEmbedding(se_input_dim, gcn_output_dim, se_num_lstm_layers)
-        self.dense = nn.Linear(gcn_output_dim, output_dim)
+        dense_dim = gcn_output_dim + se_input_dim if mode == 'parallel' else se_input_dim
+        self.dense = nn.Linear(dense_dim, output_dim)
         self.num_lstm_layers = se_num_lstm_layers
         #self.dropout = nn.Dropout(p=0.1)
     
     def forward(self, graph_input, sequence, sequence_len):
-        x = self.gcn(graph_input)
-        x = torch.stack([x] * self.num_lstm_layers)
-        x, x_len = self.se(sequence, sequence_len, x)
+        graph_embedding = self.gcn(graph_input)
+        if self.mode == 'parallel':
+            h = None
+        else:
+            h = torch.stack([graph_embedding] * self.num_lstm_layers)
+        x, x_len = self.se(sequence, sequence_len, h)
         x = torch.stack([x[i, l - 1, :] for i, l in enumerate(x_len)])
+        if self.mode == 'parallel':
+            x = torch.cat([graph_embedding, x], dim=-1)
         #x = self.dropout(x)
         x = self.dense(x)
         return x
