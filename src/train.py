@@ -28,8 +28,9 @@ if __name__ == '__main__':
     parser.add_argument("--gcn_output_dim", type=int, default=64, help="GCN output dim")
     parser.add_argument("--se_input_dim", type=int, default=64, help="Sequence embedding input dim")
     parser.add_argument("--se_num_layers", type=int, default=4, help="Sequence embedding num lstm layers")
+    parser.add_argument("--parallel", action='store_true', default=False, help="run GCN and RNN in parallel")
     parser.add_argument("--dump_path", type=str, default=None, help="Save path for the best model")
-    parser.add_argument("--label_seq_data_path", type=str, default='../epflBmarks.pkl', help="Dataset paths, separated with comma(,)")
+    parser.add_argument("--label_seq_data_path", type=str, default='../datasets/run_epfl_arith.pkl', help="Dataset paths, separated with comma(,)")
     parser.add_argument("--graph_data_dir", type=str, default='../epfl_gmls', help="graph data dir path")
     parser.add_argument("--raw_graph", action='store_true', default=False, help="whether to use raw graph data")
     parser.add_argument("--debug", action='store_true', default=False, help="debugging mode")
@@ -55,6 +56,7 @@ if __name__ == '__main__':
         args.se_input_dim,
         args.se_num_layers,
         raw_graph=args.raw_graph,
+        mode='parallel' if args.parallel else 'sequential',
         #embedding_dim #TODO: add this later
     )
 
