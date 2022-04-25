@@ -18,13 +18,11 @@ def merge_results_from_dir(dirname):
         this_data = {}
         json_file = glob.glob(os.path.normpath(subdir + "/*.json"))    
         try:
-            print(json_file[0])
             with open(json_file[0], "r") as fp:
                 this_data = json.load(fp)
-            print(this_data)
-        except OSError:
-            print("Could not open/read file:", json_file[0])
-            sys.exit()
+        except :
+            print("Could not open/read file:", subdir)
+            continue
 #        this_data["Benchmark"] = this_data.pop("Becnhmark")
         data[i] = this_data
         i += 1

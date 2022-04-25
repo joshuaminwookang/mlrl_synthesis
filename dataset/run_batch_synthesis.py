@@ -10,10 +10,9 @@ import numpy as np
 # run a single synth run through sbatch on slurm
 def gen_sbatch_scripts(**kwargs):
     filename = os.path.basename(kwargs['input_file'])
-    ip = filename[filename.find('_') + 1 :filename.find('.v')]
+    ip = filename[filename.find('/') + 1 :filename.find('.v')]
     sbatch_script=os.path.join(kwargs['output_dir'], "{}_{}_{}.sh".format(ip, kwargs['synth_method'], kwargs['random_seq_len']))
     this_file = os.path.abspath( __file__ )
-
     script = f'''#!/bin/bash
 # generated at by synthesis.py on batch mode
 # Job name:
@@ -48,7 +47,6 @@ def prepare_batch_synthesis(**kwargs):
         os.mkdir(output_dir)
 
     verilogs = glob.glob(os.path.normpath(kwargs['input_dir']+"/*.v"))
-    print(verilogs)
     
     do_slurm = params['slurm']
     exp_sizes = define_experiment()
