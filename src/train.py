@@ -5,7 +5,6 @@ from tqdm import tqdm
 
 import torch
 from torch import nn
-from torch.utils.data import Dataset, DataLoader
 from torch.nn.utils.rnn import pad_sequence
 import numpy as np
 
@@ -29,7 +28,7 @@ if __name__ == '__main__':
     parser.add_argument("--se_num_layers", type=int, default=4, help="Sequence embedding num lstm layers")
     parser.add_argument("--parallel", action='store_true', default=False, help="run GCN and RNN in parallel")
     parser.add_argument("--dump_path", type=str, default=None, help="Save path for the best model")
-    parser.add_argument("--label_seq_data_path", type=str, default='../datasets/run_epfl_arith.pkl', help="Dataset paths, separated with comma(,)")
+    parser.add_argument("--label_seq_data_path", type=str, default='../datasets/run_epfl_arith.pkl,../datasets/run_epfl_control.pkl', help="Dataset paths, comma separated")
     parser.add_argument("--graph_data_dir", type=str, default='../epfl_gmls', help="graph data dir path")
     parser.add_argument("--raw_graph", action='store_true', default=False, help="whether to use raw graph data")
     parser.add_argument("--debug", action='store_true', default=False, help="debugging mode")
@@ -50,7 +49,7 @@ if __name__ == '__main__':
 
     train_dataloader, valid_dataloader = generate_dataloaders(
         graph_data_dir=args.graph_data_dir,
-        label_seq_data_path=args.label_seq_data_path,
+        label_seq_data_path=label_seq_data_path,
         train_batch_size=args.bs,
         eval_batch_size=args.bs,
         train_dataset_names=train_dataset_names,
@@ -104,19 +103,22 @@ if __name__ == '__main__':
         valid_loss_all = 0
         valid_cnt = 0
 
-        for i, inputs in tqdm(enumerate(train_dataloader)):
+        for i, data in tqdm(enumerate(train_dataloader)):
+            inputs = data['graph']
+            sequence = data['sequence']
+            label = data['label']
+
             inputs = inputs.to(device=device)
-            sequence = inputs.sequence
             sequence_len = [len(s) for s in sequence]
             sequence = pad_sequence([torch.tensor(s) for s in sequence], batch_first=True, padding_value=0)
             sequence = sequence.to(device=device)
 
-            labels = torch.tensor(inputs.labels)
-            labels = labels.to(device=device)
+            label = torch.tensor(label)
+            label = label.to(device=device)
             outputs = model(inputs, sequence, sequence_len)
 
-            #loss = loss_fn(outputs, labels)
-            loss = ((outputs - labels) / labels) ** 2
+            #loss = loss_fn(outputs, label)
+            loss = ((outputs - label) / label) ** 2
             loss = loss.mean()
 
             optimizer.zero_grad()
@@ -131,41 +133,44 @@ if __name__ == '__main__':
 
         x_delay_all = []
         x_area_all = []
-        labels_delay_all = []
-        labels_area_all = []
+        label_delay_all = []
+        label_area_all = []
 
         with torch.no_grad():
-            for i, inputs in tqdm(enumerate(valid_dataloader)):
+            for i, data in tqdm(enumerate(valid_dataloader)):
+                inputs = data['graph']
+                sequence = data['sequence']
+                label = data['label']
+
                 inputs = inputs.to(device=device)
-                sequence = inputs.sequence
                 sequence_len = [len(s) for s in sequence]
                 sequence = pad_sequence([torch.tensor(s) for s in sequence], batch_first=True, padding_value=0)
                 sequence = sequence.to(device=device)
 
-                labels = torch.tensor(inputs.labels)
-                labels = labels.to(device=device)
+                label = torch.tensor(label)
+                label = label.to(device=device)
                 outputs = model(inputs, sequence, sequence_len)
 
-                loss = loss_fn(outputs, labels)
+                loss = loss_fn(outputs, label)
 
                 x_delay = outputs[:, 0].cpu().tolist()
                 x_area = outputs[:, 1].cpu().tolist()
-                labels_delay = labels[:, 0].cpu().tolist()
-                labels_area = labels[:, 1].cpu().tolist()
+                label_delay = label[:, 0].cpu().tolist()
+                label_area = label[:, 1].cpu().tolist()
                 x_delay_all += x_delay
                 x_area_all += x_area
-                labels_delay_all += labels_delay
-                labels_area_all += labels_area
+                label_delay_all += label_delay
+                label_area_all += label_area
 
                 valid_cnt += 1
                 valid_loss_all += loss
 
         model.train()
-        corr_delay = stats.spearmanr(x_delay_all, labels_delay_all).correlation
-        corr_area = stats.spearmanr(x_area_all, labels_area_all).correlation
+        corr_delay = stats.spearmanr(x_delay_all, label_delay_all).correlation
+        corr_area = stats.spearmanr(x_area_all, label_area_all).correlation
 
-        mape_delay = mean_absolute_percentage_error(labels_delay_all, x_delay_all)
-        mape_area = mean_absolute_percentage_error(labels_area_all, x_area_all)
+        mape_delay = mean_absolute_percentage_error(label_delay_all, x_delay_all)
+        mape_area = mean_absolute_percentage_error(label_area_all, x_area_all)
 
         if do_wandb:
             wandb.log({"loss": loss_all / cnt, "val_loss": valid_loss_all / valid_cnt,

@@ -6,10 +6,8 @@ import torch
 import copy
 import os, glob
 from torch.nn.utils.rnn import pad_sequence
-from torch.utils.data import Dataset
 
-from torch_geometric.data import Data
-from torch_geometric.loader import DataLoader
+from torch_geometric.data import Data, Batch
 import torch_geometric.utils.convert as convert
 import networkx as nx
 
@@ -43,28 +41,59 @@ SEQ_TO_TOKEN = ["rewrite", "rewrite -z", "refactor", "refactor -z",
                "resub -K 12 -N 1 -z",  "resub -K 12 -N 2 -z"]
 SEQ_TO_TOKEN = {x: i for i,x in enumerate(SEQ_TO_TOKEN)}
 
-# SEQ_TO_TOKEN = {
-#     '&if -W 300 -K 6 -v': 0, 
-#     '&st': 1, 
-#     '&synch2': 2, 
-#     '&dc2': 3, 
-#     '&if -W 300 -y -K 6': 4, 
-#     '&syn2': 5, 
-#     '&sweep': 6, 
-#     '&mfs': 7, 
-#     '&scorr': 8, 
-#     '&if -W 300 -g -K 6': 9, 
-#     '&b -d': 10, 
-#     '&if -W 300 -x -K 6': 11, 
-#     '&dch': 12, 
-#     '&b': 13, 
-#     '&syn4': 14, 
-#     '&dch -f': 15, 
-#     '&syn3': 16
-# }
 
-# for x, y in SEQ_TO_TOKEN.items():
-#     TOKEN_TO_SEQ[y] = x
+class GraphDataset(torch.utils.data.Dataset):
+    def __init__(self, data, graph_dict):
+        super().__init__()
+        self.data = data
+        self.graph_dict = graph_dict
+
+    def __len__(self):
+        return len(self.data)
+
+    def __getitem__(self, idx):
+        name, label, sequence = self.data[idx]
+        graph = self.graph_dict[name]
+        return {'graph': graph, 'sequence': sequence, 'label': label}
+
+
+def graph_dataset_collate_fn(data_list):
+    graphs = [data['graph'] for data in data_list]
+    labels = [data['label'] for data in data_list]
+    sequences = [data['sequence'] for data in data_list]
+    graph_collate =  Batch.from_data_list(graphs, [])
+
+    return {'graph': graph_collate, 'label': labels, 'sequence': sequences}
+    
+
+class DataLoader(torch.utils.data.DataLoader):
+    def __init__(self,
+                 dataset,
+                 batch_size=1,
+                 shuffle=False,
+                 follow_batch=[],
+                 **kwargs):
+        super(DataLoader, self).__init__(
+            dataset,
+            batch_size,
+            shuffle,
+            #collate_fn=lambda data_list: Batch.from_data_list(
+            #    data_list, follow_batch),
+            collate_fn=graph_dataset_collate_fn,
+            **kwargs)
+
+
+def get_label_seq(data, target_names=None):
+    label_seq = []
+    for d in tqdm(data):
+        name = d['Benchmark']
+        if target_names is not None and name not in target_names:
+            continue
+        label = [d['Path_Delay'] / 1e2, d['Slice_LUTs'] / 1e3] # delay, area
+        sequence = preprocess_sequence([d['Sequence']])[0]
+        label_seq.append([name, label, sequence])
+    return label_seq
+
 
 def prepare_dataset(data, graphs_dict):
     features = []
@@ -98,12 +127,6 @@ def preprocess_sequence(sequences):
         seq_list.append(np.array(sl))
     return seq_list
 
-def flatten_all(data):
-    flattened_data = []
-    for d in data:
-        fd = list(d.values())
-        flattened_data.append(fd)
-    return np.array(flattened_data)
 
 def normalize(data):
     eps = 1e-5
@@ -122,59 +145,54 @@ def preprocess_data(graph_data_dir, label_seq_data_path, output_dir, dataset_nam
     graph_data_dir: a str of the directory path that contains graph data in gml or pkl
     label_seq_data_path: a str or a list of pkl files that contain labels and sequences
     '''
+
+    # parse labels and synthesis sequences
     if not isinstance(label_seq_data_path, list):
         label_seq_data_path = [label_seq_data_path]
+
+    data_list = []
+    for data_path in label_seq_data_path:
+        with open(data_path, 'rb') as f:
+            data = pickle.load(f) # dict or a list of dict
+            if not isinstance(data, list):
+                data = list(data.values())
+            if not isinstance(data, list):
+                data = [list(d.values()) for d in data]
+                data = [x for d in data for x in d]
+            data_list += data
+
+    label_seq = get_label_seq(data_list, target_names=dataset_names)
 
     # find all GMLs in graph data dir
     gmls = glob.glob(os.path.normpath(graph_data_dir+"/*.gml"))
 
-    graphs_all = {}
-    # loop over each graph GML inidividually
+    graph_dict = {} # graph name to graph data
     for i, gml_file in enumerate(gmls):
         filename = os.path.basename(gml_file)
         name = filename[filename.find('_') + 1 :filename.find('.gml')]
         pkl_file = os.path.normpath(os.path.join(output_dir, name + ".pkl"))
         if dataset_names is not None and name not in dataset_names:
             continue
+
         if os.path.exists(pkl_file):
             print(f'{name}.pkl exists, loading from pickle file')
             with open(pkl_file, "rb") as handle:
-                graphs = pickle.load(handle)
+                data = pickle.load(handle)
         else:
             print(f'{name}.pkl does not exist, generating from gml file')
-
-            # read graph from GML and convert to PyG Data object
             G = nx.read_gml(gml_file)
             data = convert.from_networkx(G)
+
+            # convert str type into integer ids
             ids = torch.tensor([TYPES_TO_IDS[x] for x in data.type])
             data.type = ids
-            graph_dict = {}
-            graph_dict[name] = data  
-            graphs = []
-
-            # itreate over all label/sequence data to produce dataset
-            for _data_path in label_seq_data_path:
-                with open(_data_path, 'rb') as f:
-                    data = pickle.load(f)
-                    if not isinstance(data, list):
-                        data = [data] # TODO: adhoc solution
-                    for _data in data:
-                        _graphs = prepare_dataset(_data, graph_dict)
-                        graphs += _graphs
-            # Store current graphs' data as pkl
             with open(pkl_file, "wb") as handle:
                 print(f'dumping {name}.pkl')
-                pickle.dump(graphs, handle, protocol=pickle.HIGHEST_PROTOCOL)
-        
-        print(f'length of graphs: {len(graphs)}')
-        graphs_all[name] = graphs
+                pickle.dump(data, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
-        if debug:
-            break # for fast testing purpose
+        graph_dict[name] = data  
 
-    len_all = sum([len(x) for _, x in graphs_all.items()])
-    print(f'length of all graphs: {len_all}')
-    return graphs_all
+    return label_seq, graph_dict
 
 # top level caller 
 def generate_dataloaders(
@@ -193,43 +211,47 @@ def generate_dataloaders(
     if dataset_assigned:
         assert test_dataset_names is not None
         dataset_names = train_dataset_names + test_dataset_names
-    graphs_dict = preprocess_data(
+    data, graph_dict = preprocess_data(
         graph_data_dir, 
         label_seq_data_path, 
         output_dir=graph_data_dir, 
         dataset_names=dataset_names if dataset_assigned else None,
         debug=debug,
-    )
+    ) # data is a list of name, label and sequence tuples
 
     random.seed(seed)
 
     if not dataset_assigned:
         print('running as non-dataset-assigned mode')
         print('randomly splitting the dataset into train/test sets')
-        graphs = []
-        for graph in graphs_dict.values():
-            graphs += graph
-        random.shuffle(graphs)
+        random.shuffle(data)
 
-        num_training_sets = int((1 - p_val) * len(graphs))
-        training_dataset = graphs[:num_training_sets]
-        valid_dataset = graphs[num_training_sets:]
+        num_train_sets = int((1 - p_val) * len(graphs))
+        train_dataset = data[:num_train_sets]
+        valid_dataset = data[num_train_sets:]
 
     else:
         print('running as dataset-assigned mode')
-        training_dataset = []
+        train_dataset = []
         valid_dataset = []
-        for name, graph in graphs_dict.items():
+        for d in data:
+            name = d[0]
             if name in train_dataset_names:
-                training_dataset += graph
+                train_dataset.append(d)
             elif name in test_dataset_names:
-                valid_dataset += graph
+                valid_dataset.append(d)
             else:
                 raise ValueError
-        random.shuffle(training_dataset)
+        random.shuffle(train_dataset)
+
+    train_dataset = GraphDataset(train_dataset, graph_dict)
+    valid_dataset = GraphDataset(valid_dataset, graph_dict)
+
+    print(f'length train set: len(train_dataset)')
+    print(f'length valid set: len(valid_dataset)')
 
     train_dataloader = DataLoader(
-        training_dataset,
+        train_dataset,
         batch_size=train_batch_size,
         shuffle=True,
     ) 
