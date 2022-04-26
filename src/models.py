@@ -12,36 +12,6 @@ from dataset_graph import SEQ_TO_TOKEN, NODE_TYPES, TYPES_TO_IDS
 
 LEN_TYPES = len(NODE_TYPES)
 
-class FeatureEmbedding(nn.Module):
-    def __init__(self, input_dim, hidden_dim, output_dim):
-        super().__init__()
-        self.dense1 = nn.Linear(input_dim, hidden_dim)
-        self.bn1 = nn.BatchNorm1d(hidden_dim)
-        self.relu = nn.ReLU()
-        self.dense2 = nn.Linear(hidden_dim, output_dim)
-        #self.dropout = nn.Dropout(p=0.1)
-    def forward(self, x):
-        x = self.dense1(x)
-        #x = self.bn1(x)
-        x = self.relu(x)
-        x = self.dense2(x)
-        #x = self.dropout(x)
-        return x
-    
-class GraphEmbedding(nn.Module):
-    def __init__(self, input_dim, hidden_dim, output_dim):
-        super().__init__()
-        self.conv1 = GCNConv(input_dim, hidden_dim)
-        self.relu = nn.ReLU()
-        self.conv2 = GCNConv(hidden_dim, output_dim)
-    def forward(self, x):
-        x = self.conv1(x)
-        x = self.relu(x)
-#        x = F.dropout(x, training=self.training)
-        x = self.conv2(x)
-        x = global_mean_pool(x)
-        return x
-    
 class SequenceEmbedding(nn.Module):
     def __init__(self, input_dim, hidden_dim, num_lstm_layers):
         super().__init__()

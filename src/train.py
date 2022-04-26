@@ -21,9 +21,8 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(prog="Regression")
     parser.add_argument("--bs", type=int, default=64, help="Batch size")
     parser.add_argument("--epoch", type=int, default=50, help="Num training epochs")
-    #parser.add_argument("--feature_dim", type=int, default=64, help="Feature graph embedding dim")
-    #parser.add_argument("--fe_hidden_dim", type=int, default=64, help="Feature embedding hidden dim")
-    #parser.add_argument("--fe_output_dim", type=int, default=256, help="Feature embedding output dim")
+    parser.add_argument("--train_dataset", type=str, default=None, help="Training circuit names, comma separated")
+    parser.add_argument("--test_dataset", type=str, default=None, help="Testing circuit names, comma separated")
     parser.add_argument("--gcn_hidden_dim", type=int, default=64, help="GCN hidden dim")
     parser.add_argument("--gcn_output_dim", type=int, default=64, help="GCN output dim")
     parser.add_argument("--se_input_dim", type=int, default=64, help="Sequence embedding input dim")
@@ -42,11 +41,20 @@ if __name__ == '__main__':
 
     label_seq_data_path = args.label_seq_data_path.split(',')
 
+    if args.train_dataset is not None:
+        assert args.test_dataset is not None
+        train_dataset_names = args.train_dataset.split(',')
+        test_dataset_names = args.test_dataset.split(',')
+    else:
+        train_dataset_names, test_dataset_names = None, None
+
     train_dataloader, valid_dataloader = generate_dataloaders(
         graph_data_dir=args.graph_data_dir,
         label_seq_data_path=args.label_seq_data_path,
         train_batch_size=args.bs,
         eval_batch_size=args.bs,
+        train_dataset_names=train_dataset_names,
+        test_dataset_names=test_dataset_names,
         debug=args.debug,
     )
 

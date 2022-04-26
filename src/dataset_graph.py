@@ -117,7 +117,7 @@ def normalize(data):
 
 # Preprocess data (merge GML files and label/sequence data)
 # Store processed PyTorch Geoemtric Data in individual pkl files for each graph
-def preprocess_data(graph_data_dir, label_seq_data_path, output_dir, debug=False):
+def preprocess_data(graph_data_dir, label_seq_data_path, output_dir, dataset_names=None, debug=False):
     '''
     graph_data_dir: a str of the directory path that contains graph data in gml or pkl
     label_seq_data_path: a str or a list of pkl files that contain labels and sequences
@@ -128,12 +128,14 @@ def preprocess_data(graph_data_dir, label_seq_data_path, output_dir, debug=False
     # find all GMLs in graph data dir
     gmls = glob.glob(os.path.normpath(graph_data_dir+"/*.gml"))
 
-    graphs_all = []
+    graphs_all = {}
     # loop over each graph GML inidividually
     for i, gml_file in enumerate(gmls):
         filename = os.path.basename(gml_file)
         name = filename[filename.find('_') + 1 :filename.find('.gml')]
         pkl_file = os.path.normpath(os.path.join(output_dir, name + ".pkl"))
+        if dataset_names is not None and name not in dataset_names:
+            continue
         if os.path.exists(pkl_file):
             print(f'{name}.pkl exists, loading from pickle file')
             with open(pkl_file, "rb") as handle:
@@ -165,12 +167,13 @@ def preprocess_data(graph_data_dir, label_seq_data_path, output_dir, debug=False
                 pickle.dump(graphs, handle, protocol=pickle.HIGHEST_PROTOCOL)
         
         print(f'length of graphs: {len(graphs)}')
-        graphs_all += graphs
+        graphs_all[name] = graphs
 
         if debug:
             break # for fast testing purpose
 
-    print(f'length of all graphs: {len(graphs_all)}')
+    len_all = sum([len(x) for _, x in graphs_all.items()])
+    print(f'length of all graphs: {len_all}')
     return graphs_all
 
 # top level caller 
@@ -179,18 +182,51 @@ def generate_dataloaders(
     label_seq_data_path, 
     train_batch_size=256, 
     eval_batch_size=256,
+    train_dataset_names=None,
+    test_dataset_names=None,
     p_val=0.2, 
     seed=100,
     debug=False,
 ):
     # features, sequences, labels = preprocess_data(data_path, feature_dim=feature_dim)
-    graphs = preprocess_data(graph_data_dir, label_seq_data_path, output_dir=graph_data_dir, debug=debug)
-    random.seed(seed)
-    random.shuffle(graphs)
+    dataset_assigned = train_dataset_names is not None
+    if dataset_assigned:
+        assert test_dataset_names is not None
+        dataset_names = train_dataset_names + test_dataset_names
+    graphs_dict = preprocess_data(
+        graph_data_dir, 
+        label_seq_data_path, 
+        output_dir=graph_data_dir, 
+        dataset_names=dataset_names if dataset_assigned else None,
+        debug=debug,
+    )
 
-    num_training_sets = int((1 - p_val) * len(graphs))
-    training_dataset = graphs[:num_training_sets]
-    valid_dataset = graphs[num_training_sets:]
+    random.seed(seed)
+
+    if not dataset_assigned:
+        print('running as non-dataset-assigned mode')
+        print('randomly splitting the dataset into train/test sets')
+        graphs = []
+        for graph in graphs_dict.values():
+            graphs += graph
+        random.shuffle(graphs)
+
+        num_training_sets = int((1 - p_val) * len(graphs))
+        training_dataset = graphs[:num_training_sets]
+        valid_dataset = graphs[num_training_sets:]
+
+    else:
+        print('running as dataset-assigned mode')
+        training_dataset = []
+        valid_dataset = []
+        for name, graph in graphs_dict.items():
+            if name in train_dataset_names:
+                training_dataset += graph
+            elif name in test_dataset_names:
+                valid_dataset += graph
+            else:
+                raise ValueError
+        random.shuffle(training_dataset)
 
     train_dataloader = DataLoader(
         training_dataset,
