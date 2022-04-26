@@ -35,7 +35,7 @@ NODE_TYPES = [
 
 TYPES_TO_IDS = {x: i for i, x in enumerate(NODE_TYPES)}
 SEQ_TO_TOKEN = ["rewrite", "rewrite -z", "refactor", "refactor -z",
-               "balance",  "dc2",
+               "balance",  "dc2", "dch -f",
                "if -K 6 -x", "if -K 6 -g",
                "resub -K 8 -N 1",  "resub -K 8 -N 2",
                "resub -K 12 -N 1",  "resub -K 12 -N 2",
@@ -91,11 +91,9 @@ def preprocess_sequence(sequences):
 #    print('preprocessing sequences')
     seq_list = []
     for seq in sequences:
-#        seq = seq.split(';')[2: -3] # remove the redundant parts
         seq = seq.split(';')[0: -2] # remove the redundant parts
         sl = []
         for s in seq:
-#            if s.startswith('&'):
             sl.append(SEQ_TO_TOKEN[s])
         seq_list.append(np.array(sl))
     return seq_list
@@ -156,6 +154,8 @@ def preprocess_data(graph_data_dir, label_seq_data_path, output_dir, debug=False
             for _data_path in label_seq_data_path:
                 with open(_data_path, 'rb') as f:
                     data = pickle.load(f)
+                    if not isinstance(data, list):
+                        data = [data] # TODO: adhoc solution
                     for _data in data:
                         _graphs = prepare_dataset(_data, graph_dict)
                         graphs += _graphs

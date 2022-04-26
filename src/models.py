@@ -8,7 +8,7 @@ from torch_geometric.nn import GCNConv, global_mean_pool
 import torch.nn.functional as F
 from torch_geometric.nn import GCNConv
 
-from dataset_graph import SEQ_TO_TOKEN, TOKEN_TO_SEQ, NODE_TYPES, TYPES_TO_IDS
+from dataset_graph import SEQ_TO_TOKEN, NODE_TYPES, TYPES_TO_IDS
 
 LEN_TYPES = len(NODE_TYPES)
 
