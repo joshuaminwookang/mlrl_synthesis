@@ -42,7 +42,8 @@ class GCN(nn.Module):
             self.embedding_table = torch.nn.Embedding(LEN_TYPES, embedding_dim)
             input_dim = embedding_dim
         self.conv1 = GCNConv(input_dim, hidden_dim)
-        self.conv2 = GCNConv(hidden_dim, output_dim)
+        self.conv2 = GCNConv(hidden_dim, hidden_dim)
+        self.conv3 = GCNConv(hidden_dim, output_dim)
 
     def forward(self, data):
         batch = data.batch
@@ -58,6 +59,8 @@ class GCN(nn.Module):
         x = F.relu(x)
         x = F.dropout(x, training=self.training)
         x = self.conv2(x, edge_index)
+        x = F.dropout(x, training=self.training)
+        x = self.conv3(x, edge_index)
         x = global_mean_pool(x, batch)
         return x
 
