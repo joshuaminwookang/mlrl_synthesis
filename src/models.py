@@ -29,7 +29,7 @@ class SequenceEmbedding(nn.Module):
         return x, x_len
     
 class GCN(nn.Module):
-    def __init__(self, hidden_dim, output_dim, embedding_dim=None, raw_graph=False):
+    def __init__(self, hidden_dim, output_dim, num_layers=2, embedding_dim=None, raw_graph=False):
         super().__init__()
         self.raw_graph = raw_graph
         if raw_graph:
@@ -41,9 +41,11 @@ class GCN(nn.Module):
             print('using preprocessed graph')
             self.embedding_table = torch.nn.Embedding(LEN_TYPES, embedding_dim)
             input_dim = embedding_dim
-        self.conv1 = GCNConv(input_dim, hidden_dim)
-        self.conv2 = GCNConv(hidden_dim, hidden_dim)
-        self.conv3 = GCNConv(hidden_dim, output_dim)
+        assert num_layers >= 2
+        self.first_conv = GCNConv(input_dim, hidden_dim)
+        self.convs = nn.ModuleList([GCNConv(hidden_dim, hidden_dim) for _ in range(num_layers - 2)])
+        self.last_conv = GCNConv(hidden_dim, output_dim)
+        print(f'Num GCN layers : {2 + len(self.convs)}')
 
     def forward(self, data):
         batch = data.batch
@@ -55,12 +57,12 @@ class GCN(nn.Module):
         else:
             ids = data.type
             x = self.embedding_table(ids)
-        x = self.conv1(x, edge_index)
-        x = F.relu(x)
-        x = F.dropout(x, training=self.training)
-        x = self.conv2(x, edge_index)
-        x = F.dropout(x, training=self.training)
-        x = self.conv3(x, edge_index)
+        x = self.first_conv(x, edge_index)
+        for conv in self.convs:
+            x = F.relu(x)
+            x = F.dropout(x, training=self.training)
+            x = conv(x, edge_index)
+        x = self.last_conv(x, edge_index)
         x = global_mean_pool(x, batch)
         return x
 
@@ -69,6 +71,7 @@ class E2ERegression(nn.Module):
         self, 
         gcn_hidden_dim, 
         gcn_output_dim,
+        gcn_num_layers,
         se_input_dim,
         se_num_lstm_layers,
         output_dim=2,
@@ -83,6 +86,7 @@ class E2ERegression(nn.Module):
         self.gcn = GCN(
             gcn_hidden_dim, 
             gcn_output_dim, 
+            num_layers=gcn_num_layers,
             embedding_dim=embedding_dim,
             raw_graph=raw_graph,
         )

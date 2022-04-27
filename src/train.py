@@ -19,6 +19,8 @@ FULL_DATASET = [
 ]
 FULL_DATASET_STR = ",".join(FULL_DATASET)
 
+SAVE_PATH_DEFAULT = 'checkpoints'
+
 def mean_absolute_percentage_error(y_true, y_pred): 
     y_true, y_pred = np.array(y_true), np.array(y_pred)
     return np.mean(np.abs((y_true - y_pred) / y_true)) * 100
@@ -52,6 +54,7 @@ if __name__ == '__main__':
         default=False, help="Split train dataset to generate validation dataset")
     parser.add_argument("--gcn_hidden_dim", type=int, default=64, help="GCN hidden dim")
     parser.add_argument("--gcn_output_dim", type=int, default=64, help="GCN output dim")
+    parser.add_argument("--gcn_num_layers", type=int, default=2, help="GCN num_layers")
     parser.add_argument("--se_input_dim", type=int, default=64, help="Sequence embedding input dim")
     parser.add_argument("--se_num_layers", type=int, default=4, help="Sequence embedding num lstm layers")
     parser.add_argument("--parallel", action='store_true', default=False, help="run GCN and RNN in parallel")
@@ -65,8 +68,16 @@ if __name__ == '__main__':
     parser.add_argument("--wandb_entity", type=str, default=None, help="wandb entity (id) name")
     parser.add_argument("--wandb_project", type=str, default=None, help="wandb project name")
     parser.add_argument("--wandb_name", type=str, default=None, help="wandb project name")
+    parser.add_argument("--save_path", type=str, default=None, help="model checkpoint path")
 
     args = parser.parse_args()
+
+    if args.save_path is not None:
+        save_path = args.save_path
+    else:
+        save_path = os.path.join(SAVE_PATH_DEFAULT, args.wandb_name)
+        if not os.path.exists(save_path):
+            os.makedirs(save_path) 
 
     train_data_path = args.train_data_path.split(',')
     if args.test_data_path is not None:
@@ -93,13 +104,13 @@ if __name__ == '__main__':
     )
 
     model = E2ERegression(
-        args.gcn_hidden_dim,
-        args.gcn_output_dim,
-        args.se_input_dim,
-        args.se_num_layers,
+        gcn_hidden_dim=args.gcn_hidden_dim,
+        gcn_output_dim=args.gcn_output_dim,
+        gcn_num_layers=args.gcn_num_layers,
+        se_input_dim=args.se_input_dim,
+        se_num_lstm_layers=args.se_num_layers,
         raw_graph=args.raw_graph,
         mode='parallel' if args.parallel else 'sequential',
-        #embedding_dim #TODO: add this later
     )
 
     if torch.cuda.is_available():
@@ -124,12 +135,16 @@ if __name__ == '__main__':
     if do_wandb:
         import wandb
         assert args.wandb_project is not None
-        wandb.init(project=args.wandb_project, entity=args.wandb_entity, name=args.wandb_name)
+        wandb.init(
+            project=args.wandb_project, 
+            entity=args.wandb_entity, 
+            name=args.wandb_name,
+            id=args.wandb_name,
+            resume='allow',
+        )
         wandb.config.update(args)
 
-    #name = f"fh{args.fe_hidden_dim}_fo{args.fe_output_dim}_si{args.se_input_dim}_sl{args.se_num_layers}" #TODO
-
-    best_metric = 0
+    best_metric = 1e4
 
     for epoch in range(args.epoch):
         loss_all = 0
@@ -195,8 +210,7 @@ if __name__ == '__main__':
         print(f"    corr_delay {corr_delay}, corr_area {corr_area}")
         print(f"    mape_delay {mape_delay}, mape_area {mape_area}")
 
-        if args.dump_path is not None and corr_delay > best_metric:
+        if mape_delay < best_metric:
             print('Best Model, saving the model checkpoint')
-            torch.save(model.state_dict(), os.path.join(args.dump_path, f"{name}.ckpt"))
-            best_metric = corr_delay
-
+            torch.save(model.state_dict(), os.path.join(save_path, f"best.ckpt"))
+            best_metric = mape_delay
