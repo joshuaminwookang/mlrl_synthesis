@@ -22,12 +22,12 @@ def gen_sbatch_scripts(**kwargs):
 #SBATCH --account=fc_bdmesh
 #
 # Partition:
-#SBATCH --partition=savio3
+#SBATCH --partition=savio2
 #
 # Quality of Service:
 #SBATCH --qos=savio_normal
 # Num Cores per Task
-#SBATCH --cpus-per-task=32
+#SBATCH --cpus-per-task=24
 #
 # Wall clock limit:
 #SBATCH --time=30:00:00

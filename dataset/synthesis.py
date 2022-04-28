@@ -123,8 +123,8 @@ def run_synthesis(input_file=None, output_dir=None, index=0, synth_method='fpga-
     
     # parse input file name 
     filename = os.path.basename(input_file)
-    ip = filename[filename.find('_') + 1 :filename.find('.v')] #TODO: add for VHDL or other file formats (if needed)
-
+    ip = filename[filename.find('/') + 1 :filename.find('.v')]
+    
     # create output directory as needed
     output_sub_dir=os.path.join(output_dir, "tab_{0}_{1}_{2}".format(ip, synth_method, index))
     if random_seq_len > 0: # means we are doing batch run

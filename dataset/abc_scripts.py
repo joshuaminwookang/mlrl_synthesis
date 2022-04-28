@@ -51,7 +51,7 @@ def get_abc_sequence_from_list (idx_list):
     seq = abc_opener + "\n"
     for idx in idx_list:
         seq += abc_ind_ops[idx] + ";"
-    seq += "dch -f;if -K 6 -v;mfs2\n"
+    seq += "\ndch -f;if -K 6 -v;mfs2\n"
     return seq
 
 def parse_index(idx):
