@@ -12,24 +12,54 @@ from scipy import stats
 from models import E2ERegression, GCN
 from dataset_graph import generate_dataloaders
 
+FULL_DATASET = [
+    'square', 'log2', 'max', 'sin', 'sqrt', 'voter', 'ctrl', 
+    'cavlc', 'priority', 'adder', 'div', 'bar', 'multiplier', 
+    'i2c', 'arbiter', 'dec', 'int2float', 'ctrl', 'router',
+]
+FULL_DATASET_STR = ",".join(FULL_DATASET)
+
 def mean_absolute_percentage_error(y_true, y_pred): 
     y_true, y_pred = np.array(y_true), np.array(y_pred)
     return np.mean(np.abs((y_true - y_pred) / y_true)) * 100
+
+def parse_batch(data, device):
+    inputs = data['graph']
+    sequence = data['sequence']
+    label = data['label']
+
+    inputs = inputs.to(device=device)
+    sequence_len = [len(s) for s in sequence]
+    sequence = pad_sequence([torch.tensor(s) for s in sequence], batch_first=True, padding_value=0)
+    sequence = sequence.to(device=device)
+
+    label = torch.tensor(label)
+    label = label.to(device=device)
+    return inputs, sequence, sequence_len, label
+
+def loss_fn(outputs, label):
+    loss = ((outputs - label) / label) ** 2
+    return loss.mean()
 
 if __name__ == '__main__': 
     parser = argparse.ArgumentParser(prog="Regression")
     parser.add_argument("--bs", type=int, default=64, help="Batch size")
     parser.add_argument("--epoch", type=int, default=50, help="Num training epochs")
-    parser.add_argument("--train_dataset", type=str, default=None, help="Training circuit names, comma separated")
-    parser.add_argument("--test_dataset", type=str, default=None, help="Testing circuit names, comma separated")
+    parser.add_argument("--train_circuits", type=str, 
+        default=FULL_DATASET_STR, help="Training circuit names, comma separated")
+    parser.add_argument("--test_circuits", type=str, default=None, help="Testing circuit names, comma separated")
+    parser.add_argument("--split_trainset", action='store_true', 
+        default=False, help="Split train dataset to generate validation dataset")
     parser.add_argument("--gcn_hidden_dim", type=int, default=64, help="GCN hidden dim")
     parser.add_argument("--gcn_output_dim", type=int, default=64, help="GCN output dim")
     parser.add_argument("--se_input_dim", type=int, default=64, help="Sequence embedding input dim")
     parser.add_argument("--se_num_layers", type=int, default=4, help="Sequence embedding num lstm layers")
     parser.add_argument("--parallel", action='store_true', default=False, help="run GCN and RNN in parallel")
     parser.add_argument("--dump_path", type=str, default=None, help="Save path for the best model")
-    parser.add_argument("--label_seq_data_path", type=str, default='../datasets/run_epfl_arith.pkl,../datasets/run_epfl_control.pkl', help="Dataset paths, comma separated")
-    parser.add_argument("--graph_data_dir", type=str, default='../epfl_gmls', help="graph data dir path")
+    parser.add_argument("--train_data_path", type=str, 
+        default='../datasets/run_epfl_arith.pkl,../datasets/run_epfl_control.pkl', help="Dataset paths, comma separated")
+    parser.add_argument("--test_data_path", type=str, default=None, help="Dataset paths, comma separated")
+    parser.add_argument("--graph_data_dir", type=str, default='../epfl_gatelevel_gmls', help="graph data dir path")
     parser.add_argument("--raw_graph", action='store_true', default=False, help="whether to use raw graph data")
     parser.add_argument("--debug", action='store_true', default=False, help="debugging mode")
     parser.add_argument("--wandb_entity", type=str, default=None, help="wandb entity (id) name")
@@ -38,22 +68,27 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    label_seq_data_path = args.label_seq_data_path.split(',')
-
-    if args.train_dataset is not None:
-        assert args.test_dataset is not None
-        train_dataset_names = args.train_dataset.split(',')
-        test_dataset_names = args.test_dataset.split(',')
+    train_data_path = args.train_data_path.split(',')
+    if args.test_data_path is not None:
+        test_data_path = args.test_data_path.split(',')
     else:
-        train_dataset_names, test_dataset_names = None, None
+        test_data_path = None
+
+    train_circuits_names = args.train_circuits.split(',')
+    if args.test_circuits is not None:
+        test_circuits_names = args.test_circuits.split(',')
+    else:
+        test_circuits_names = train_circuits_names
 
     train_dataloader, valid_dataloader = generate_dataloaders(
         graph_data_dir=args.graph_data_dir,
-        label_seq_data_path=label_seq_data_path,
+        train_data_path=train_data_path,
+        test_data_path=test_data_path,
         train_batch_size=args.bs,
         eval_batch_size=args.bs,
-        train_dataset_names=train_dataset_names,
-        test_dataset_names=test_dataset_names,
+        train_circuits=train_circuits_names,
+        test_circuits=test_circuits_names,
+        split_trainset=args.split_trainset,
         debug=args.debug,
     )
 
@@ -104,22 +139,10 @@ if __name__ == '__main__':
         valid_cnt = 0
 
         for i, data in tqdm(enumerate(train_dataloader)):
-            inputs = data['graph']
-            sequence = data['sequence']
-            label = data['label']
-
-            inputs = inputs.to(device=device)
-            sequence_len = [len(s) for s in sequence]
-            sequence = pad_sequence([torch.tensor(s) for s in sequence], batch_first=True, padding_value=0)
-            sequence = sequence.to(device=device)
-
-            label = torch.tensor(label)
-            label = label.to(device=device)
+            inputs, sequence, sequence_len, label = parse_batch(data, device)
             outputs = model(inputs, sequence, sequence_len)
 
-            #loss = loss_fn(outputs, label)
-            loss = ((outputs - label) / label) ** 2
-            loss = loss.mean()
+            loss = loss_fn(outputs, label)
 
             optimizer.zero_grad()
             loss.backward()
@@ -138,17 +161,7 @@ if __name__ == '__main__':
 
         with torch.no_grad():
             for i, data in tqdm(enumerate(valid_dataloader)):
-                inputs = data['graph']
-                sequence = data['sequence']
-                label = data['label']
-
-                inputs = inputs.to(device=device)
-                sequence_len = [len(s) for s in sequence]
-                sequence = pad_sequence([torch.tensor(s) for s in sequence], batch_first=True, padding_value=0)
-                sequence = sequence.to(device=device)
-
-                label = torch.tensor(label)
-                label = label.to(device=device)
+                inputs, sequence, sequence_len, label = parse_batch(data, device)
                 outputs = model(inputs, sequence, sequence_len)
 
                 loss = loss_fn(outputs, label)
