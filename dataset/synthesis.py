@@ -33,7 +33,9 @@ def gen_yosys_script(output_sub_dir, verilog_path, run_name, synth_method, index
         # abc_script_string = abc_scripts.get_abc9_sequence(index, random_seq_len)
     synth_script =  "synth_xilinx -dff -flatten -noiopad -edif {0}.edif -script {0}.abc".format(run_name)
     if random_seq_len > 0:
-        abc_script_string = abc_scripts.get_abc_sequence_from_list(index_list)
+        #abc_script_string = abc_scripts.get_abc_sequence_from_list(index_list) # RESTRICTED
+        abc_script_string = abc_scripts.get_abc_sequence_from_list_restricted(index_list)
+        print(abc_script_string)
     else :
         abc_script_string = abc_scripts.get_abc_sequence(index)
     script = '''read_verilog {0}\n{1}\n'''.format(verilog_path, synth_script)
@@ -123,8 +125,8 @@ def run_synthesis(input_file=None, output_dir=None, index=0, synth_method='fpga-
     
     # parse input file name 
     filename = os.path.basename(input_file)
-    ip = filename[filename.find('_') + 1 :filename.find('.v')] #TODO: add for VHDL or other file formats (if needed)
-
+    ip = filename[filename.find('/') + 1 :filename.find('.v')]
+    
     # create output directory as needed
     output_sub_dir=os.path.join(output_dir, "tab_{0}_{1}_{2}".format(ip, synth_method, index))
     if random_seq_len > 0: # means we are doing batch run
