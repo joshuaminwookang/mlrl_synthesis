@@ -24,11 +24,11 @@ NODE_TYPES = [
 TYPES_TO_IDS = {x: i for i, x in enumerate(NODE_TYPES)}
 
 def types_to_ids(type_str):
-    if type_str not in TYPES_TO_IDS[type_str]:
+    if type_str not in NODE_TYPES:
         return len(NODE_TYPES)
     return TYPES_TO_IDS[type_str]
     
-Seq_TO_TOKEN = ["rewrite", "rewrite -z", "refactor", "refactor -z",
+SEQ_TO_TOKEN = ["rewrite", "rewrite -z", "refactor", "refactor -z",
                "balance",  "dc2", "dch -f",
                "if -K 6 -x", "if -K 6 -g",
                "resub -K 8 -N 1",  "resub -K 8 -N 2",
