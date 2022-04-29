@@ -17,22 +17,18 @@ NODE_TYPES = [
     '$_OR_',
     '$_XOR_',
     '$_MUX_',
-    '$_DFF_N_',
-    '$_DFF_P_',
-    '$_DFF_NN0_',
-    '$_DFF_NN1_',
-    '$_DFF_NP0_',
-    '$_DFF_NP1_',
-    '$_DFF_PN0_',
-    '$_DFF_PN1_',
-    '$_DFF_PP0_',
-    '$_DFF_PP1_',
     'input',
-    'output',
+    'output'
 ]
 
 TYPES_TO_IDS = {x: i for i, x in enumerate(NODE_TYPES)}
-SEQ_TO_TOKEN = ["rewrite", "rewrite -z", "refactor", "refactor -z",
+
+def types_to_ids(type_str):
+    if type_str not in TYPES_TO_IDS[type_str]:
+        return len(NODE_TYPES)
+    return TYPES_TO_IDS[type_str]
+    
+Seq_TO_TOKEN = ["rewrite", "rewrite -z", "refactor", "refactor -z",
                "balance",  "dc2", "dch -f",
                "if -K 6 -x", "if -K 6 -g",
                "resub -K 8 -N 1",  "resub -K 8 -N 2",
@@ -40,7 +36,6 @@ SEQ_TO_TOKEN = ["rewrite", "rewrite -z", "refactor", "refactor -z",
                "resub -K 8 -N 1 -z", "resub -K 8 -N 2 -z",
                "resub -K 12 -N 1 -z",  "resub -K 12 -N 2 -z"]
 SEQ_TO_TOKEN = {x: i for i,x in enumerate(SEQ_TO_TOKEN)}
-
 
 class GraphDataset(torch.utils.data.Dataset):
     def __init__(self, data, graph_dict):
