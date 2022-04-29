@@ -49,7 +49,8 @@ def prepare_batch_synthesis(**kwargs):
     verilogs = glob.glob(os.path.normpath(kwargs['input_dir']+"/*.v"))
     
     do_slurm = params['slurm']
-    exp_sizes = define_experiment()
+    #exp_sizes = define_experiment() # RESTRICTED
+    exp_sizes = define_experiment_restricted() 
     # create sbatch scripts for each Verilog input, for each random sequence length target
     for v in verilogs:
         params["input_file"] = os.path.abspath(v)
@@ -71,14 +72,26 @@ def define_experiment():
     exp_sizes[20] = 60 # ~1K
     return exp_sizes
 
+def define_experiment_restricted():
+    num_ops  = abc_scripts.get_num_abc_ops_restricted()
+    exp_sizes = {}
+    exp_sizes[3] = 1 + num_ops + num_ops**2 + num_ops**3 + num_ops**4 # ~2800
+    exp_sizes[5] = 400 # ~3K
+    exp_sizes[10] = 700 # ~5K
+    exp_sizes[15] = 1400  # ~10K
+    exp_sizes[20] = 1400 # ~10K
+    return exp_sizes
+
 def gen_sequence_matrix(random_seq_len, samples_per_first_op):
     if random_seq_len <= 3:
         seq_list = []
         for idx in range(samples_per_first_op):
-            seq_list.append(abc_scripts.parse_index(idx))
+            #seq_list.append(abc_scripts.parse_index(idx)) # RESTRICTED
+            seq_list.append(abc_scripts.parse_index_restricted(idx))
         M = np.array(seq_list, dtype = object)
         return M
-    num_ops = abc_scripts.get_num_abc_ops()   
+    #num_ops = abc_scripts.get_num_abc_ops()   # RESTRICTED
+    num_ops = abc_scripts.get_num_abc_ops_restricted()
     np.random.seed(1)
     rands = np.random.randint(num_ops, size=(samples_per_first_op, random_seq_len-1))
     samples = samples_per_first_op
@@ -96,7 +109,8 @@ def gen_sequence_matrix(random_seq_len, samples_per_first_op):
 # run batch synthesis 
 def run_batch_synthesis(**kwargs):
     params = kwargs
-    exp_sizes = define_experiment()
+    #exp_sizes = define_experiment() # RESTRICTED
+    exp_sizes = define_experiment_restricted()
     random_seq_len = kwargs['random_seq_len']
     sequence_matrix = gen_sequence_matrix(random_seq_len, exp_sizes[random_seq_len])
     index = 0

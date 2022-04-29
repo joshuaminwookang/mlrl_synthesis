@@ -20,6 +20,8 @@ abc_ind_ops = ["rewrite", "rewrite -z", "refactor", "refactor -z",
                "resub -K 12 -N 1",  "resub -K 12 -N 2",
                "resub -K 8 -N 1 -z", "resub -K 8 -N 2 -z",
                "resub -K 12 -N 1 -z",  "resub -K 12 -N 2 -z"]
+abc_restricted_ops = ["rewrite", "rewrite -z", "refactor", "refactor -z",
+                       "resub", "resub -z", "balance"]
 # abc_ind_ops = ["rewrite", "rewrite -z", "rewrite -l",
 #                "refactor", "refactor -z", "refactor -l",
 #                "balance",  "balance -d", "balance -l", "dc2",
@@ -38,6 +40,8 @@ def get_num_abc9_ops():
     return len(abc9_ops)
 def get_num_abc_ops():
     return len(abc_ops)
+def get_num_abc_ops_restricted():
+    return len(abc_restricted_ops)
 
 def get_index_bounds_abc(max_len):
     max_idx = 1
@@ -54,9 +58,33 @@ def get_abc_sequence_from_list (idx_list):
     seq += "\ndch -f;if -K 6 -v;mfs2\n"
     return seq
 
+def get_abc_sequence_from_list_restricted (idx_list):
+    seq = abc_opener + "\n"
+    for idx in idx_list:
+        seq += abc_restricted_ops[idx] + ";"
+    seq += "\ndch -f;if -K 6 -v;mfs2\n"
+    return seq
+
 def parse_index(idx):
     i = idx-1
     num_options = len(abc_ind_ops)
+    ind_idx = []
+    while i >= 0 :
+        remainder = i % num_options
+        divisor = i // num_options
+        ind_idx.append(remainder)
+        if divisor <= 0 : 
+            break;
+        else : 
+            i = divisor-1
+    seq = ""
+    ind_idx.reverse()
+    print(ind_idx)
+    return ind_idx
+
+def parse_index_restricted(idx):
+    i = idx-1
+    num_options = len(abc_restricted_ops)
     ind_idx = []
     while i >= 0 :
         remainder = i % num_options

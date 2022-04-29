@@ -23,6 +23,9 @@ def merge_results_from_dir(dirname):
         except :
             print("Could not open/read file:", subdir)
             continue
+        seq = this_data["Sequence"]
+        if seq.find('dch') >= 0:
+            this_data["Sequence"] = seq[:seq.find('dch')-1]
 #        this_data["Benchmark"] = this_data.pop("Becnhmark")
         data[i] = this_data
         i += 1
