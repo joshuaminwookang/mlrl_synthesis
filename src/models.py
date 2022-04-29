@@ -92,7 +92,16 @@ class E2ERegression(nn.Module):
         )
         self.se = SequenceEmbedding(se_input_dim, gcn_output_dim, se_num_lstm_layers)
         dense_dim = gcn_output_dim + se_input_dim if mode == 'parallel' else se_input_dim
-        self.dense = nn.Linear(dense_dim, output_dim)
+        if mode == 'parallel':
+            self.dense = nn.ModuleList([
+                nn.Linear(dense_dim, 64),
+                nn.ReLU(),
+                nn.Linear(64, 64),
+                nn.ReLU(),
+                nn.Linear(64, output_dim),
+            ])
+        else:
+            self.dense = nn.Linear(dense_dim, output_dim)
         self.num_lstm_layers = se_num_lstm_layers
         #self.dropout = nn.Dropout(p=0.1)
     
@@ -106,7 +115,9 @@ class E2ERegression(nn.Module):
         x = torch.stack([x[i, l - 1, :] for i, l in enumerate(x_len)])
         if self.mode == 'parallel':
             x = torch.cat([graph_embedding, x], dim=-1)
-        #x = self.dropout(x)
-        x = self.dense(x)
+            for layer in self.dense:
+                x = layer(x)
+        else:
+            x = self.dense(x)
         return x
 

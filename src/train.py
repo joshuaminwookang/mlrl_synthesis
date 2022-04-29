@@ -124,7 +124,7 @@ if __name__ == '__main__':
     model = model.to(device=device)
 
     loss_fn = nn.MSELoss()
-    optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
+    optimizer = torch.optim.AdamW(model.parameters(), lr=1e-3, weight_decay=2e-6)
     scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
         optimizer, 
         T_max=args.epoch
