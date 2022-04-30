@@ -1,46 +1,43 @@
-## Generate Graph Data
-Requires `epflBmarks.pkl` and `epfl_gmls/*.gml` under the root (`mlrl_synthesis`) folder.
-Run the following command under `src`:
-```
-python dataset_graph.py
-```
-This will parse the gml files and dump them into pickle files `epfl_gmls/*.pkl`.
+## Prerequisite
+Make sure that your gml files are in `epfl_gatelevel_gmls` and data files including sequences and labels (`run_epfl_arith.pkl`, `run_epfl_control.pkl`, and `run_epfl_extralegnths.pkl`) are in `datasets` under the root folder.
 
 ## Training
-Run the following command under `src`:
+Below is the default run script:
 ```
-python train.py
+python train.py --wandb_entity [wandb id] --wandb_project [wandb project name] --wandb_name [wandb name] \
+  --epoch 50 --bs 32 --gcn_num_layers 2 --se_num_layers 4 --lr 1e-4 
 ```
+You can drop `--wandb_entity` (and other wandb flags) if you don't want to log.
+By default, the best model (one with the smallest delay MAPE) is saved under `checkpoints/{wandb_name}`; however, you can change the default checkpoint path by manually assigning `--save_path` flag. 
+Later you can reload the checkpoint using `--load_path` flag, e.g., `--load checkpoints/log_folder/best_model.pt`.
+`--gcn_num_layers` and `se_num_layers` assigns the number of GCN layers and LSTM layers each.
+Please use `-h` to check more model/training hyperparameter flags.
 
+The following running script will train and evaluate on all type of circuits, i.e., train data = test data = all circuits, which is not a desired behavior.
+You can assign train/test datasets and circuit types following the examples below.
 
-**(below is outdated)**
-
-## Training
-
-Get prepared for the training datasets in the shared drive.
-`epfl_arithmetic.pkl`, `epfl_control.pkl` and `vtr_select.pkl` are currently available datasets.
-
-Run the following command:
+**1. Split train set into train and test dataset**
 ```
-python train.py --dataset_path {DATASET_PATHS} --dump_path {DUMP_PATH}
+python train.py --wandb_entity [wandb id] --wandb_project [wandb project name] --wandb_name [wandb name] \
+  --epoch 50 --bs 32 --gcn_num_layers 2 --se_num_layers 4 --lr 1e-4 --split
 ```
+`--split` flag will split the train dataset into 8:2 randomly into a new train dataset and a test set.
 
-* `DATASET_PATHS` is the dataset paths separeted with commas(,), i.e., `epfl_arithmetic.pkl,epfl_control.pkl,vtr_select.pkl`.
-* `DUMP_PATH` is the directory path to dump checkpoints. The model checkpoint with the highest `corr_delay` will be stored in the path.
-* You can also specify the model hyperparameters (i.e., dimensions). Otherwise, the model is initialized with the default values. Please use `-h` argument for detail. 
-
-
-## Evaluation
-
-Get prepared for the validation dataset and model checkpoint.
-You can either train the model and use your own checkpoint, or you can download `fh64_fo256_si64_sl4.ckpt` from the shared drive.
-This is the checkpoint file with the default model hyperparameter (i.e., dimension) setting.
-
-Run the following command:
+**2. Train and test on only specific circuit types**
 ```
-python eval.py --dataset_path {DATASET_PATHS} --load_path {LOAD_PATH}
+python train.py --wandb_entity [wandb id] --wandb_project [wandb project name] --wandb_name [wandb name] \
+  --epoch 50 --bs 32 --gcn_num_layers 2 --se_num_layers 4 --lr 1e-4 \
+  --train_circuits "multiplier,sin,sqrt,square" --test_circuits "adder,voter"
 ```
+Use `--train_circuits` and `--test_circuits` flags to constraints circuit types for the train and test datasets respectively. If you don't assign `--test_circuits`, it will be initialized the same as `--test_circuits`. If you don't assign `--test_circuits`, it will be assigned all possible circuits.
 
-* `DATASET_PATHS` is same as above. 
-* `LOAD_PATH` is the path to the checkpoint, e.g., `fh64_fo256_si64_sl4.ckpt`. 
-* Make sure that all the dimensions of the model match with the checkpoint file. You can set the dimension of the model with additional arguments. Please use `-h` argument for detail. 
+**3. Manually assign train and test dataset paths**
+```
+python train.py --wandb_entity [wandb id] --wandb_project [wandb project name] --wandb_name [wandb name] \
+  --epoch 50 --bs 32 --gcn_num_layers 2 --se_num_layers 4 --lr 1e-4 \
+  --train_data_path '../datasets/run_epfl_arith.pkl' --test_data_path 'run_epfl_extralegnths.pkl'
+```
+This will use data from `run_epfl_arith.pkl` for training and `run_epfl_extralegnths.pkl` for testing. 
+If you don't assign `--test_data_path`, it will be assigned same as `--train_data_path`.
+If you don't assign `--train_data_path`, it will use `run_epfl_arith.pkl` and `run_epfl_control.pkl` together.
+You can combine these flags with the ones in the step 1 and step 2 as well.
