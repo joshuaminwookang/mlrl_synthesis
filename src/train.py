@@ -13,10 +13,12 @@ from models import E2ERegression, GCN
 from dataset_graph import generate_dataloaders
 
 FULL_DATASET = [
-    'square', 'log2', 'max', 'sin', 'sqrt', 'voter', 'ctrl', 
-    'cavlc', 'priority', 'adder', 'div', 'bar', 'multiplier', 
-    'i2c', 'arbiter', 'dec', 'int2float', 'ctrl', 'router',
+    'adder', 'arbiter', 'bar', 'cavlc', 'ctrl', 'dec', 
+    'div', 'i2c', 'int2float', 'log2', 'max', 'mem_ctrl',
+    'multiplier', 'priority', 'router', 'sin', 'sqrt', 
+    'square', 'voter',
 ]
+
 FULL_DATASET_STR = ",".join(FULL_DATASET)
 
 SAVE_PATH_DEFAULT = 'checkpoints'
@@ -46,6 +48,7 @@ def loss_fn(outputs, label):
 if __name__ == '__main__': 
     parser = argparse.ArgumentParser(prog="Regression")
     parser.add_argument("--bs", type=int, default=64, help="Batch size")
+    parser.add_argument("--lr", type=float, default=1e-3, help="Learning rate")
     parser.add_argument("--epoch", type=int, default=50, help="Num training epochs")
     parser.add_argument("--train_circuits", type=str, 
         default=FULL_DATASET_STR, help="Training circuit names, comma separated")
@@ -69,6 +72,7 @@ if __name__ == '__main__':
     parser.add_argument("--wandb_project", type=str, default=None, help="wandb project name")
     parser.add_argument("--wandb_name", type=str, default=None, help="wandb project name")
     parser.add_argument("--save_path", type=str, default=None, help="model checkpoint path")
+    parser.add_argument("--load_path", type=str, default=None, help="model checkpoint load path")
 
     args = parser.parse_args()
 
@@ -113,6 +117,10 @@ if __name__ == '__main__':
         mode='parallel' if args.parallel else 'sequential',
     )
 
+    if args.load_path is not None:
+        print('loading model...')
+        model.load_state_dict(torch.load(args.load_path))
+
     if torch.cuda.is_available():
         device = torch.device("cuda:" + str(0))
         print("Using GPU id {}".format(0))
@@ -124,7 +132,7 @@ if __name__ == '__main__':
     model = model.to(device=device)
 
     loss_fn = nn.MSELoss()
-    optimizer = torch.optim.AdamW(model.parameters(), lr=1e-3, weight_decay=2e-6)
+    optimizer = torch.optim.AdamW(model.parameters(), lr=args.lr, weight_decay=2e-6)
     scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
         optimizer, 
         T_max=args.epoch

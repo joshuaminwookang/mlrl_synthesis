@@ -82,6 +82,7 @@ class DataLoader(torch.utils.data.DataLoader):
 
 
 def get_label_seq(data, target_names=None):
+    print(target_names)
     label_seq = []
     for d in tqdm(data):
         name = d['Benchmark']
@@ -154,6 +155,7 @@ def get_graph(
                 print(f'dumping {name}.pkl')
                 pickle.dump(data, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
+        if name == 'mctrl': name = 'mem_ctrl'
         graph_dict[name] = data  
 
     train_graph = {}
@@ -234,9 +236,15 @@ def generate_dataloaders(
     if split_trainset:
         print('running as non-dataset-assigned mode')
         print('randomly splitting the dataset into train/test sets')
+        _train_data = []
+        for d in train_data:
+            name = d[0]
+            if name in train_circuits:
+                _train_data.append(d)
+        train_data = _train_data
         random.shuffle(train_data)
 
-        num_train_sets = int((1 - p_val) * len(data))
+        num_train_sets = int((1 - p_val) * len(train_data))
         train_dataset = train_data[:num_train_sets]
         test_dataset = train_data[num_train_sets:]
 
