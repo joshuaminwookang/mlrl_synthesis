@@ -7,6 +7,7 @@ import os,random, subprocess, glob, json, re
 import abc_scripts, synthesis
 import numpy as np
 
+restricted=False
 # run a single synth run through sbatch on slurm
 def gen_sbatch_scripts(**kwargs):
     filename = os.path.basename(kwargs['input_file'])
@@ -49,8 +50,9 @@ def prepare_batch_synthesis(**kwargs):
     verilogs = glob.glob(os.path.normpath(kwargs['input_dir']+"/*.v"))
     
     do_slurm = params['slurm']
-    #exp_sizes = define_experiment() # RESTRICTED
-    exp_sizes = define_experiment_restricted() 
+    
+    exp_sizes = define_experiment() if not restricted else define_experiment_restricted() 
+    #exp_sizes = define_experiment_restricted() 
     # create sbatch scripts for each Verilog input, for each random sequence length target
     for v in verilogs:
         params["input_file"] = os.path.abspath(v)
@@ -61,6 +63,7 @@ def prepare_batch_synthesis(**kwargs):
 def define_experiment():
     num_ops  = abc_scripts.get_num_abc_ops()
     exp_sizes = {}
+    exp_sizes[2] = 2
     exp_sizes[3] = abc_scripts.get_index_bounds_abc(3)
     exp_sizes[4] = 60 # ~1K
     exp_sizes[5] = 300 # ~5K
@@ -83,16 +86,20 @@ def define_experiment_restricted():
     return exp_sizes
 
 def gen_sequence_matrix(random_seq_len, samples_per_first_op):
+    num_ops = abc_scripts.get_num_abc_ops() if not restricted else abc_scripts.get_num_abc_ops_restricted()
+    np.random.seed(1)
+    if random_seq_len == 2:
+        M = np.random.randint(num_ops, size=(samples_per_first_op, 10))
+        return M
     if random_seq_len <= 3:
         seq_list = []
         for idx in range(samples_per_first_op):
-            #seq_list.append(abc_scripts.parse_index(idx)) # RESTRICTED
-            seq_list.append(abc_scripts.parse_index_restricted(idx))
+            if not restricted:
+                seq_list.append(abc_scripts.parse_index(idx)) # RESTRICTED
+            else :
+                seq_list.append(abc_scripts.parse_index_restricted(idx))
         M = np.array(seq_list, dtype = object)
         return M
-    #num_ops = abc_scripts.get_num_abc_ops()   # RESTRICTED
-    num_ops = abc_scripts.get_num_abc_ops_restricted()
-    np.random.seed(1)
     rands = np.random.randint(num_ops, size=(samples_per_first_op, random_seq_len-1))
     samples = samples_per_first_op
     while np.unique(rands, axis=0).shape[0] != samples_per_first_op:
@@ -109,8 +116,7 @@ def gen_sequence_matrix(random_seq_len, samples_per_first_op):
 # run batch synthesis 
 def run_batch_synthesis(**kwargs):
     params = kwargs
-    #exp_sizes = define_experiment() # RESTRICTED
-    exp_sizes = define_experiment_restricted()
+    exp_sizes = define_experiment() if not restricted else define_experiment_restricted()
     random_seq_len = kwargs['random_seq_len']
     sequence_matrix = gen_sequence_matrix(random_seq_len, exp_sizes[random_seq_len])
     index = 0

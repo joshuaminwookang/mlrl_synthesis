@@ -5,6 +5,7 @@ import argparse
 import os,random, subprocess, glob, json, re
 import abc_scripts
 
+RESTRICTED=False
 def lines_that_contain(string, fp):
     return [line for line in fp if string in line]
 
@@ -34,7 +35,7 @@ def gen_yosys_script(output_sub_dir, verilog_path, run_name, synth_method, index
     synth_script =  "synth_xilinx -dff -flatten -noiopad -edif {0}.edif -script {0}.abc".format(run_name)
     if random_seq_len > 0:
         #abc_script_string = abc_scripts.get_abc_sequence_from_list(index_list) # RESTRICTED
-        abc_script_string = abc_scripts.get_abc_sequence_from_list_restricted(index_list)
+        abc_script_string = abc_scripts.get_abc_sequence_from_list_restricted(index_list) if RESTRICTED else abc_scripts.get_abc_sequence_from_list(index_list)
         print(abc_script_string)
     else :
         abc_script_string = abc_scripts.get_abc_sequence(index)

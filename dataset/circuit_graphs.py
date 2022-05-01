@@ -33,15 +33,16 @@ def run_yosys_from_dir(load_dir_path,output_path,graph_type):
             nx.write_gml(G, "{}/{}.rtl.gml".format(output_path,ip))
 
 def summary(result_dir):
+    filename = os.path.basename(os.path.dirname(result_dir))
     gmls = glob.glob(os.path.normpath(os.path.join(result_dir,"*.gml")))
+    gmls.sort()
     print(gmls)
     results = {}
     for gml_file in gmls:
         ip = gml_file[gml_file.rindex('/')+1:gml_file.find('.gml')]
         G = nx.read_gml(gml_file)
         results[ip] = (len(G.nodes), len(G.edges))
-        print(len(G.nodes), len(G.edges))
-    json_file = 'summary.json'
+    json_file = filename+'_summary.json'
     with open(json_file, 'w') as outfile:
         json.dump(results, outfile)
 
@@ -59,6 +60,7 @@ def main():
         summary(input_dir)
     else:
         run_yosys_from_dir(input_dir,output_dir,graph_type)
+        summary(output_dir)
     
 
 
