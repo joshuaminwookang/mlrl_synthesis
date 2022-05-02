@@ -10,8 +10,8 @@ def lines_that_contain(string, fp):
     return [line for line in fp if string in line]
 
 # run Yosys with specified synthesis method (ASIC/FPGA mapping + custom ABC/ABC9 sequence)
-def run_yosys(input_file, run_name, index, synth_method, random_seq_len, index_list, cwd=os.getcwd(), stdout=None, stderr=None):
-    yosys_file, abc_script_file = gen_yosys_script(cwd, input_file, run_name, synth_method, index, random_seq_len, index_list)
+def run_yosys(input_file, run_name, index, synth_method, random_seq_len, index_list, restricted, cwd=os.getcwd(), stdout=None, stderr=None):
+    yosys_file, abc_script_file = gen_yosys_script(cwd, input_file, run_name, synth_method, index, random_seq_len, index_list, restricted)
     try:
         log_file_path = os.path.join(cwd, 'yosys.log')
         #print("Running Yosys: {}".format(run_name))
@@ -23,7 +23,7 @@ def run_yosys(input_file, run_name, index, synth_method, random_seq_len, index_l
         return False, None
     
 # helper: write Yosys script based on synth method
-def gen_yosys_script(output_sub_dir, verilog_path, run_name, synth_method, index,random_seq_len, index_list):
+def gen_yosys_script(output_sub_dir, verilog_path, run_name, synth_method, index,random_seq_len, index_list, restricted):
     yosys_file = os.path.join(output_sub_dir, "{}.ys".format(run_name))
     abc_script_file = os.path.join(output_sub_dir, "{}.abc".format(run_name))
     synth_script = ""
@@ -33,9 +33,9 @@ def gen_yosys_script(output_sub_dir, verilog_path, run_name, synth_method, index
     # generate sequence of ABC transformations
     synth_script = "read_verilog {0}\n".format(verilog_path)
     if random_seq_len > 0:
-        abc_script_string = abc_scripts.get_abc_sequence_from_list_restricted(index_list) if RESTRICTED else abc_scripts.get_abc_sequence_from_list(index_list)
+        abc_script_string = abc_scripts.get_abc_sequence_from_list(index_list, restricted)
     else :
-        abc_script_string = abc_scripts.get_abc_sequence(index)
+        abc_script_string = abc_scripts.get_abc_sequence(index, restricted)
 
     # generate Yosys script depending on tech mapping
     if synth_method == "fpga-abc":
@@ -126,7 +126,7 @@ def gen_vivado_yosys_summary(summary_file, ip, index, abc_script, vivado_log):
 # run method to run synthesis + post-synthesis analysis on a single design
 # TODO: add Vivado/Synopsis synthesis for FPGA and ASIC mapping
 def run_synthesis(input_file=None, output_dir=None, index=0, synth_method='fpga-abc', clock_period=5000, grade=1, device="",\
-                  run_analysis=True, random_seq_len=0, index_list=[]):
+                  run_analysis=True, random_seq_len=0, restricted=False, index_list = []):
     # convert file paths to absolute paths
     output_dir = os.path.abspath(output_dir)
     input_file = os.path.abspath(input_file)
@@ -160,7 +160,7 @@ def run_synthesis(input_file=None, output_dir=None, index=0, synth_method='fpga-
         print("reusing cached {}".format(edif_file))
         abc_script_file = os.path.join(output_sub_dir, "{}.abc".format(run_name))
     else:
-        success, abc_script_file = run_yosys(input_file, run_name, index, synth_method, random_seq_len, index_list, cwd=output_sub_dir)
+        success, abc_script_file = run_yosys(input_file, run_name, index, synth_method, random_seq_len, index_list, restricted, cwd=output_sub_dir)
         if not success :
             print("ERROR in Yosys run for {} {}".format(run_name, synth_method))
             return 1

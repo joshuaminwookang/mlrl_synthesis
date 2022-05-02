@@ -7,7 +7,7 @@ import os,random, subprocess, glob, json, re
 import abc_scripts, synthesis
 import numpy as np
 
-restricted=False
+restricted=True
 # run a single synth run through sbatch on slurm
 def gen_sbatch_scripts(**kwargs):
     filename = os.path.basename(kwargs['input_file'])
@@ -51,7 +51,7 @@ def prepare_batch_synthesis(**kwargs):
     
     do_slurm = params['slurm']
     
-    exp_sizes = define_experiment() if not restricted else define_experiment_restricted() 
+    exp_sizes = define_experiment() if not kwargs['restricted'] else define_experiment_restricted() 
     #exp_sizes = define_experiment_restricted() 
     # create sbatch scripts for each Verilog input, for each random sequence length target
     for v in verilogs:
@@ -85,7 +85,7 @@ def define_experiment_restricted():
     exp_sizes[20] = 1400 # ~10K
     return exp_sizes
 
-def gen_sequence_matrix(random_seq_len, samples_per_first_op):
+def gen_sequence_matrix(random_seq_len, samples_per_first_op,restricted):
     num_ops = abc_scripts.get_num_abc_ops() if not restricted else abc_scripts.get_num_abc_ops_restricted()
     np.random.seed(1)
     if random_seq_len == 2:
@@ -94,10 +94,7 @@ def gen_sequence_matrix(random_seq_len, samples_per_first_op):
     if random_seq_len <= 3:
         seq_list = []
         for idx in range(samples_per_first_op):
-            if not restricted:
-                seq_list.append(abc_scripts.parse_index(idx)) # RESTRICTED
-            else :
-                seq_list.append(abc_scripts.parse_index_restricted(idx))
+            seq_list.append(abc_scripts.parse_index(idx, restricted)) # RESTRICTED
         M = np.array(seq_list, dtype = object)
         return M
     rands = np.random.randint(num_ops, size=(samples_per_first_op, random_seq_len-1))
@@ -116,9 +113,9 @@ def gen_sequence_matrix(random_seq_len, samples_per_first_op):
 # run batch synthesis 
 def run_batch_synthesis(**kwargs):
     params = kwargs
-    exp_sizes = define_experiment() if not restricted else define_experiment_restricted()
+    exp_sizes = define_experiment() if not kwargs['restricted'] else define_experiment_restricted()
     random_seq_len = kwargs['random_seq_len']
-    sequence_matrix = gen_sequence_matrix(random_seq_len, exp_sizes[random_seq_len])
+    sequence_matrix = gen_sequence_matrix(random_seq_len, exp_sizes[random_seq_len], kwargs['restricted'])
     index = 0
     end_idx = sequence_matrix.shape[0]
 
@@ -154,6 +151,7 @@ def main():
     parser.add_argument('--device', type=str, help='Target Xilinx FPGA device', default="xc7a200tffv1156-1")
     parser.add_argument('--run_analysis', type=bool, help='Run Vivado or Synopsis post-Synthesis analysis backend', default=True)
     parser.add_argument('-r','--random_seq_len', type=int, help='Length of random sequence to generate; 0 implies do not do random', default=0)
+    parser.add_argument('--restricted', action='store_true', help='Synthesis transformations limited to 7 operations: b, rw, rwz, rs, rsz, rf, rfz')
 
     # Batch run parameters (to be popped before handed over to single synthesis run method 'synthesis.run_synthesis'
     parser.add_argument('-i','--input_dir' , type=str, help='Input directory with Verilog files') # TODO Batch mode
