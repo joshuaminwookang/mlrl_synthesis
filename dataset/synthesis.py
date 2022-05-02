@@ -17,7 +17,6 @@ def run_yosys(input_file, run_name, index, synth_method, random_seq_len, index_l
         #print("Running Yosys: {}".format(run_name))
         p = subprocess.check_call(['yosys', yosys_file, '-l', log_file_path], \
                                   cwd=cwd, stdout=subprocess.DEVNULL, stderr=stderr)
-
         #print("yosys {} -l {}".format(yosys_file, log_file_path))
         return True, abc_script_file
     except:
@@ -29,19 +28,27 @@ def gen_yosys_script(output_sub_dir, verilog_path, run_name, synth_method, index
     abc_script_file = os.path.join(output_sub_dir, "{}.abc".format(run_name))
     synth_script = ""
     abc_script_string = ""
-    # TODO: add for ASIC mapping 
-        # synth_script =  "synth_xilinx -dff -flatten -noiopad -abc9 -edif {0}.edif -script {0}.abc".format(run_name)
-        # abc_script_string = abc_scripts.get_abc9_sequence(index, random_seq_len)
-    synth_script =  "synth_xilinx -dff -flatten -noiopad -edif {0}.edif -script {0}.abc".format(run_name)
+    liberty_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "include/asap7.lib")
+
+    # generate sequence of ABC transformations
+    synth_script = "read_verilog {0}\n".format(verilog_path)
     if random_seq_len > 0:
-        #abc_script_string = abc_scripts.get_abc_sequence_from_list(index_list) # RESTRICTED
         abc_script_string = abc_scripts.get_abc_sequence_from_list_restricted(index_list) if RESTRICTED else abc_scripts.get_abc_sequence_from_list(index_list)
-        print(abc_script_string)
     else :
         abc_script_string = abc_scripts.get_abc_sequence(index)
-    script = '''read_verilog {0}\n{1}\n'''.format(verilog_path, synth_script)
+
+    # generate Yosys script depending on tech mapping
+    if synth_method == "fpga-abc":
+        synth_script +=  "synth_xilinx -dff -flatten -noiopad -edif {0}.edif -script {0}.abc".format(run_name)
+    elif synth_method == "asap7-abc":
+        synth_script +=  '''synth -auto-top
+dfflibmap -liberty {0}
+abc -liberty {0} -script "{1}"
+clean
+'''.format(liberty_file, abc_script_string)
+
     with open(yosys_file, 'w') as f:
-        f.write(script)
+        f.write(synth_script)
         
     with open(abc_script_file, 'w') as f:
         f.write(abc_script_string)
