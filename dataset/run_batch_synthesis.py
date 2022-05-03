@@ -7,7 +7,6 @@ import os,random, subprocess, glob, json, re
 import abc_scripts, synthesis
 import numpy as np
 
-restricted=True
 # run a single synth run through sbatch on slurm
 def gen_sbatch_scripts(**kwargs):
     filename = os.path.basename(kwargs['input_file'])
@@ -48,7 +47,6 @@ def prepare_batch_synthesis(**kwargs):
         os.mkdir(output_dir)
 
     verilogs = glob.glob(os.path.normpath(kwargs['input_dir']+"/*.v"))
-    
     do_slurm = params['slurm']
     
     exp_sizes = define_experiment() if not kwargs['restricted'] else define_experiment_restricted() 
@@ -63,21 +61,21 @@ def prepare_batch_synthesis(**kwargs):
 def define_experiment():
     num_ops  = abc_scripts.get_num_abc_ops()
     exp_sizes = {}
-    exp_sizes[2] = 2
     exp_sizes[3] = abc_scripts.get_index_bounds_abc(3)
-    exp_sizes[4] = 60 # ~1K
+#    exp_sizes[4] = 60 # ~1K
     exp_sizes[5] = 300 # ~5K
-    exp_sizes[8] = 60 # ~1K
+    #exp_sizes[8] = 60 # ~1K
     exp_sizes[10] = 600 # ~10K
-    exp_sizes[12] = 60 # ~1K
+    #exp_sizes[12] = 60 # ~1K
     exp_sizes[15] = 600  # ~10K
-    exp_sizes[16] = 60 # ~1K
-    exp_sizes[20] = 60 # ~1K
+    #exp_sizes[16] = 60 # ~1K
+    #exp_sizes[20] = 60 # ~1K
     return exp_sizes
 
 def define_experiment_restricted():
-    num_ops  = abc_scripts.get_num_abc_ops_restricted()
+    num_ops  = abc_scripts.get_num_abc_ops(restricted=True)
     exp_sizes = {}
+    exp_sizes[2] = 4
     exp_sizes[3] = 1 + num_ops + num_ops**2 + num_ops**3 + num_ops**4 # ~2800
     exp_sizes[5] = 400 # ~3K
     exp_sizes[10] = 700 # ~5K
@@ -85,8 +83,9 @@ def define_experiment_restricted():
     exp_sizes[20] = 1400 # ~10K
     return exp_sizes
 
-def gen_sequence_matrix(random_seq_len, samples_per_first_op,restricted):
-    num_ops = abc_scripts.get_num_abc_ops() if not restricted else abc_scripts.get_num_abc_ops_restricted()
+# generate random matrix with rows as random ABC transformation sequences
+def gen_sequence_matrix(random_seq_len, samples_per_first_op, restricted):
+    num_ops = abc_scripts.get_num_abc_ops(restricted=restricted)
     np.random.seed(1)
     if random_seq_len == 2:
         M = np.random.randint(num_ops, size=(samples_per_first_op, 10))

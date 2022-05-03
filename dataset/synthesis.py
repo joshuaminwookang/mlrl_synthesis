@@ -5,7 +5,6 @@ import argparse
 import os,random, subprocess, glob, json, re
 import abc_scripts
 
-RESTRICTED=False
 def lines_that_contain(string, fp):
     return [line for line in fp if string in line]
 
@@ -36,16 +35,17 @@ def gen_yosys_script(output_sub_dir, verilog_path, run_name, synth_method, index
         abc_script_string = abc_scripts.get_abc_sequence_from_list(index_list, restricted)
     else :
         abc_script_string = abc_scripts.get_abc_sequence(index, restricted)
-
+    print(abc_script_string)
     # generate Yosys script depending on tech mapping
     if synth_method == "fpga-abc":
-        synth_script +=  "synth_xilinx -dff -flatten -noiopad -edif {0}.edif -script {0}.abc".format(run_name)
+        synth_script +=  "synth_xilinx -dff -flatten -noiopad -edif {0}.edif -script {0}.abc\n".format(run_name)
     elif synth_method == "asap7-abc":
         synth_script +=  '''synth -auto-top
 dfflibmap -liberty {0}
-abc -liberty {0} -script "{1}"
+abc -liberty {0} -script {1}
 clean
-'''.format(liberty_file, abc_script_string)
+write_edif -pvector bra {2}.edif
+'''.format(liberty_file, abc_script_file,run_name)
 
     with open(yosys_file, 'w') as f:
         f.write(synth_script)
@@ -130,7 +130,7 @@ def run_synthesis(input_file=None, output_dir=None, index=0, synth_method='fpga-
     # convert file paths to absolute paths
     output_dir = os.path.abspath(output_dir)
     input_file = os.path.abspath(input_file)
-    
+
     # parse input file name 
     filename = os.path.basename(input_file)
     ip = filename[filename.find('/') + 1 :filename.find('.v')]

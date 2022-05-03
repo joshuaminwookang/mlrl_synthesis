@@ -38,10 +38,8 @@ abc_opener = "strash;ifraig;scorr;"
 
 def get_num_abc9_ops():
     return len(abc9_ops)
-def get_num_abc_ops():
-    return len(abc_ops)
-def get_num_abc_ops_restricted():
-    return len(abc_restricted_ops)
+def get_num_abc_ops(restricted=False):
+    return len(abc_ops) if not restricted else len(abc_restricted_ops)
 
 def get_index_bounds_abc(max_len):
     max_idx = 1
@@ -54,7 +52,7 @@ def get_index_bounds_abc(max_len):
 def get_abc_sequence_from_list (idx_list, restricted):
     seq = abc_opener + "\n"
     for idx in idx_list:
-        seq += abc_ind_ops[idx] + ";" if not get_abc_sequence_from_list else abc_restricted_ops[idx] + ";"
+        seq += abc_ind_ops[idx] + ";" if not restricted else abc_restricted_ops[idx] + ";"
     seq += "\ndch -f;if -K 6 -v;mfs2\n"
     return seq
 
