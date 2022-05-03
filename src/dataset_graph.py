@@ -212,6 +212,7 @@ def generate_dataloaders(
     train_circuits=None,
     test_circuits=None,
     split_trainset=False,
+    train_dataset_portion=None,
     p_val=0.2, 
     seed=100,
     debug=False,
@@ -270,6 +271,11 @@ def generate_dataloaders(
                 test_dataset.append(d)
         random.shuffle(train_dataset)
 
+
+    if train_dataset_portion is not None:
+        train_dataset_len = int(len(train_dataset) * train_dataset_portion)
+        print(f'trimming the trainset length: {len(train_dataset)} -> {train_dataset_len}')
+        train_dataset = train_dataset[:train_dataset_len]
     train_dataset = GraphDataset(train_dataset, train_graph)
     test_dataset = GraphDataset(test_dataset, test_graph)
 

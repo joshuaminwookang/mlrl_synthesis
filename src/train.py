@@ -55,6 +55,8 @@ if __name__ == '__main__':
     parser.add_argument("--test_circuits", type=str, default=None, help="Testing circuit names, comma separated")
     parser.add_argument("--split_trainset", action='store_true', 
         default=False, help="Split train dataset to generate validation dataset")
+    parser.add_argument("--train_dataset_portion", type=float, 
+        default=None, help="The portion of dataset to use for training")
     parser.add_argument("--gcn_hidden_dim", type=int, default=64, help="GCN hidden dim")
     parser.add_argument("--gcn_output_dim", type=int, default=64, help="GCN output dim")
     parser.add_argument("--gcn_num_layers", type=int, default=2, help="GCN num_layers")
@@ -105,6 +107,7 @@ if __name__ == '__main__':
         train_circuits=train_circuits_names,
         test_circuits=test_circuits_names,
         split_trainset=args.split_trainset,
+        train_dataset_portion=args.train_dataset_portion,
         debug=args.debug,
     )
 
