@@ -71,6 +71,7 @@ if __name__ == '__main__':
     parser.add_argument("--graph_data_dir", type=str, default='../epfl_gatelevel_gmls', help="graph data dir path")
     parser.add_argument("--raw_graph", action='store_true', default=False, help="whether to use raw graph data")
     parser.add_argument("--debug", action='store_true', default=False, help="debugging mode")
+    parser.add_argument("--eval_only", action='store_true', default=False, help="run eval only")
     parser.add_argument("--wandb_entity", type=str, default=None, help="wandb entity (id) name")
     parser.add_argument("--wandb_project", type=str, default=None, help="wandb project name")
     parser.add_argument("--wandb_name", type=str, default=None, help="wandb project name")
@@ -81,10 +82,14 @@ if __name__ == '__main__':
 
     if args.save_path is not None:
         save_path = args.save_path
-    else:
+    elif args.wandb_name is not None:
         save_path = os.path.join(SAVE_PATH_DEFAULT, args.wandb_name)
+        print(f'checkpointing into {save_path}')
         if not os.path.exists(save_path):
             os.makedirs(save_path) 
+    else:
+        print('No checkpointing')
+        save_path = None
 
     train_data_path = args.train_data_path.split(',')
     if args.test_data_path is not None:
@@ -159,27 +164,29 @@ if __name__ == '__main__':
     best_metric = 1e4
 
     for epoch in range(args.epoch):
-        loss_all = 0
-        cnt = 0
+        if not args.eval_only:
+            loss_all = 0
+            cnt = 0
+
+            for i, data in tqdm(enumerate(train_dataloader)):
+                inputs, sequence, sequence_len, label = parse_batch(data, device)
+                outputs = model(inputs, sequence, sequence_len)
+
+                loss = loss_fn(outputs, label)
+
+                optimizer.zero_grad()
+                loss.backward()
+                optimizer.step()
+
+                cnt += 1
+                loss_all += loss
+
+            scheduler.step()
+
+        model.eval()
 
         valid_loss_all = 0
         valid_cnt = 0
-
-        for i, data in tqdm(enumerate(train_dataloader)):
-            inputs, sequence, sequence_len, label = parse_batch(data, device)
-            outputs = model(inputs, sequence, sequence_len)
-
-            loss = loss_fn(outputs, label)
-
-            optimizer.zero_grad()
-            loss.backward()
-            optimizer.step()
-
-            cnt += 1
-            loss_all += loss
-
-        scheduler.step()
-        model.eval()
 
         x_delay_all = []
         x_area_all = []
@@ -218,11 +225,17 @@ if __name__ == '__main__':
                 "mape_delay": mape_delay, "mape_area": mape_area,
             })
 
-        print(f"epoch {epoch}, loss {loss_all / cnt}, val_loss {valid_loss_all / valid_cnt}")
+        if not args.eval_only:
+            print(f"epoch {epoch}, loss {loss_all / cnt}, val_loss {valid_loss_all / valid_cnt}")
+        else:
+            print(f"val_loss {valid_loss_all / valid_cnt}")
         print(f"    corr_delay {corr_delay}, corr_area {corr_area}")
         print(f"    mape_delay {mape_delay}, mape_area {mape_area}")
 
-        if mape_delay < best_metric:
+        if args.eval_only:
+            break
+
+        if mape_delay < best_metric and save_path is not None:
             print('Best Model, saving the model checkpoint')
             torch.save(model.state_dict(), os.path.join(save_path, f"best.ckpt"))
             best_metric = mape_delay
