@@ -45,3 +45,7 @@ You can combine these flags with the ones in the step 1 and step 2 as well.
 **4. Run using a portion of training datasets**
 
 Add `--train_dataset_portion 0.1` to use e.g., 10% (0.1) of your training dataset. This is compatible with the other flags, i.e., any training dataset paths or circuit types. For the fine-tuning usage, make sure to load checkpoints properly using `--load_path [PATH]`.
+
+**5. Eval only**
+
+Use `--eval_only` flag to evaluate only.
