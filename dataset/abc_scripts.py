@@ -49,11 +49,11 @@ def get_index_bounds_abc(max_len):
 
     
 # list of integers (0~N) -> sinlge string of synthesis sequence
-def get_abc_sequence_from_list (idx_list, restricted):
+def get_abc_sequence_from_list (idx_list, restricted, scmapping):
     seq = abc_opener + "\n"
     for idx in idx_list:
         seq += abc_ind_ops[idx] + ";" if not restricted else abc_restricted_ops[idx] + ";"
-    seq += "\ndch -f;if -K 6 -v;mfs2\n"
+    seq += "\n&get -n;&dch -f ;&nf -v;&put;stime\n" if scmapping else "\ndch -f;if -K 6 -v;mfs2;print_stats\n"
     return seq
 
 # def get_abc_sequence_from_list_restricted (idx_list):
@@ -96,16 +96,13 @@ def parse_index(idx, restricted):
 #     print(ind_idx)
 #     return ind_idx
 
-def get_abc_sequence(idx, restricted):
-    if idx < -1:
-        return "strash; ifraig; scorr; dc2; dretime; strash; dch -f; if; mfs2\n"
+def get_abc_sequence(idx, restricted, scmapping):
     #seq = "rec_start3 " + os.path.dirname(os.path.abspath(__file__)) + "/include/rec6Lib_final_filtered3_recanon.aig\n"
     seq = abc_opener + "\n"
     idx_list = parse_index(idx)
     for op in idx_list:
         seq += abc_ind_ops[idx] + ";" if not get_abc_sequence_from_list else abc_restricted_ops[idx] + ";"
-    seq += "\n"
-    seq += "dch -f;if -K 6 -v;mfs2;print_stats\n"
+    seq += "\n&get -n;&dch -f ;&nf -v;&put;stime\n" if scmapping else "\ndch -f;if -K 6 -v;mfs2;print_stats\n"
     return seq
 
 # Helper function: index (integer) -> list of synth ops/passes

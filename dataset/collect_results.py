@@ -22,6 +22,9 @@ def merge_results_from_dir(dirname):
         except :
             print("Could not open/read file:", subdir)
             continue
+        if "Slice_LUTs" is in this_data.keys():
+            this_data["Area"] = float(this_data["Slice_LUTs"])
+            del this_data["Slice_LUTs"] 
         seq = this_data["Sequence"]
         if this_data["Sequence"] == "dch -f;if -K 6 -v;mfs" or this_data["Sequence"] == "":
             continue

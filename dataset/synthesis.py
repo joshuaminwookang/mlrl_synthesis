@@ -31,10 +31,11 @@ def gen_yosys_script(output_sub_dir, verilog_path, run_name, synth_method, index
 
     # generate sequence of ABC transformations
     synth_script = "read_verilog {0}\n".format(verilog_path)
+    is_scmapping = not synth_method == 'fpga-abc' and not synth_method == 'fpga-abc9'
     if random_seq_len > 0:
-        abc_script_string = abc_scripts.get_abc_sequence_from_list(index_list, restricted)
+        abc_script_string = abc_scripts.get_abc_sequence_from_list(index_list, restricted, is_scmapping)
     else :
-        abc_script_string = abc_scripts.get_abc_sequence(index, restricted)
+        abc_script_string = abc_scripts.get_abc_sequence(index, restricted, is_scmapping)
     print(abc_script_string)
     # generate Yosys script depending on tech mapping
     if synth_method == "fpga-abc":
@@ -101,7 +102,9 @@ if {[llength [get_ports -quiet -nocase -regexp .*cl(oc)?k.*]] != 0} {
         f.write(script)
     return xdc_file
 
-def gen_vivado_yosys_summary(summary_file, ip, index, abc_script, vivado_log):
+# Helper function to generate JSON summary of given synthesis run on Yosys-FPGA and Vivado for Design analysis
+# @params: 
+def gen_fpga_synth_summary(summary_file, ip, index, abc_script, vivado_log):
     data = {}
     data['Index'] = index
     data['Benchmark'] = ip
@@ -116,6 +119,29 @@ def gen_vivado_yosys_summary(summary_file, ip, index, abc_script, vivado_log):
             data["Path_Delay"] = float(re.findall(r'\d+.\d+', lines_that_contain("Path Delay", fp)[0])[0])
             fp.seek(0)
             data["Slice_LUTs"] = int(re.findall(r'\d+', lines_that_contain("Slice LUTs", fp)[0])[0])
+    except OSError:
+        print("Could not open/read file:", vivado_log)
+
+    with open(summary_file, "w") as f:
+        json.dump(data, f, indent=4)
+    
+def gen_asic_synth_summary(summary_file, ip, index, abc_script, yosys_log):
+    data = {}
+    data['Index'] = index
+    data['Benchmark'] = ip
+    # read ABC synthesis recipe from abc_script
+    try:
+        with open(abc_script, "r") as fp:
+            scripts = fp.readlines()
+            data['Sequence'] = scripts[1][:-2]
+    except OSError:
+        print("Could not open/read file:", abc_script)
+    # read QoR (delay and area) results from yosys.log
+    try:
+        with open(yosys_log, "r") as fp:
+            abc_stime_results = re.findall(r'\d+.\d+', lines_that_contain("Delay =", fp)[-1])
+            data["Path_Delay"] = float(abc_stime_results[-2])
+            data["Area"] = float(abc_stime_results[-4])
     except OSError:
         print("Could not open/read file:", vivado_log)
 
@@ -172,7 +198,10 @@ def run_synthesis(input_file=None, output_dir=None, index=0, synth_method='fpga-
             if not success :
                 print("ERROR in Vivado design run for {} {}".format(run_name,synth_method))
                 return 1
-            gen_vivado_yosys_summary(run_output_file, ip, index, abc_script_file, analysis_log)
+            gen_fpga_synth_summary(run_output_file, ip, index, abc_script_file, analysis_log)
+        else:
+            analysis_log = os.path.join(output_sub_dir, "yosys.log")
+            gen_asic_synth_summary(run_output_file, ip, index, abc_script_file, analysis_log)
     return 0
 
 def main():
