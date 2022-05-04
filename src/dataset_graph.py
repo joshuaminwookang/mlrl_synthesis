@@ -28,17 +28,17 @@ def types_to_ids(type_str):
         return len(NODE_TYPES)
     return TYPES_TO_IDS[type_str]
     
-#SEQ_TO_TOKEN = ["rewrite", "rewrite -z", "refactor", "refactor -z",
-#               "balance",  "dc2", "dch -f",
-#               "if -K 6 -x", "if -K 6 -g",
-#               "resub -K 8 -N 1",  "resub -K 8 -N 2",
-#               "resub -K 12 -N 1",  "resub -K 12 -N 2",
-#               "resub -K 8 -N 1 -z", "resub -K 8 -N 2 -z",
-#               "resub -K 12 -N 1 -z",  "resub -K 12 -N 2 -z"]
+SEQ_TO_TOKEN = ["rewrite", "rewrite -z", "refactor", "refactor -z",
+              "balance",  "dc2", "dch -f",
+              "if -K 6 -x", "if -K 6 -g",
+              "resub -K 8 -N 1",  "resub -K 8 -N 2",
+              "resub -K 12 -N 1",  "resub -K 12 -N 2",
+              "resub -K 8 -N 1 -z", "resub -K 8 -N 2 -z",
+              "resub -K 12 -N 1 -z",  "resub -K 12 -N 2 -z"]
 
 # restricted case where number of ops = 7
-SEQ_TO_TOKEN = ["rewrite", "rewrite -z", "refactor", "refactor -z",
-                 "balance",  "resub", "resub -z"]
+# SEQ_TO_TOKEN = ["rewrite", "rewrite -z", "refactor", "refactor -z",
+#                  "balance",  "resub", "resub -z"]
 SEQ_TO_TOKEN = {x: i for i,x in enumerate(SEQ_TO_TOKEN)}
 
 class GraphDataset(torch.utils.data.Dataset):

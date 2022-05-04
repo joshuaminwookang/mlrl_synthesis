@@ -65,7 +65,7 @@ if __name__ == '__main__':
     parser.add_argument("--parallel", action='store_true', default=False, help="run GCN and RNN in parallel")
     parser.add_argument("--dump_path", type=str, default=None, help="Save path for the best model")
     parser.add_argument("--train_data_path", type=str, 
-        default='../datasets/run_restricted_epfl_arith.pkl,../datasets/run_restricted_epfl_control.pkl', 
+        default='../dataset/run_epfl_arith.pkl,../dataset/run_epfl_control.pkl', 
         help="Dataset paths, comma separated")
     parser.add_argument("--test_data_path", type=str, default=None, help="Dataset paths, comma separated")
     parser.add_argument("--graph_data_dir", type=str, default='../epfl_gatelevel_gmls', help="graph data dir path")
