@@ -2,6 +2,7 @@ import os
 import sys
 import argparse
 from tqdm import tqdm 
+import pickle
 
 import torch
 from torch import nn
@@ -72,6 +73,7 @@ if __name__ == '__main__':
     parser.add_argument("--raw_graph", action='store_true', default=False, help="whether to use raw graph data")
     parser.add_argument("--debug", action='store_true', default=False, help="debugging mode")
     parser.add_argument("--eval_only", action='store_true', default=False, help="run eval only")
+    parser.add_argument("--dump_pred_path", type=str, default=None)
     parser.add_argument("--wandb_entity", type=str, default=None, help="wandb entity (id) name")
     parser.add_argument("--wandb_project", type=str, default=None, help="wandb project name")
     parser.add_argument("--wandb_name", type=str, default=None, help="wandb project name")
@@ -79,6 +81,9 @@ if __name__ == '__main__':
     parser.add_argument("--load_path", type=str, default=None, help="model checkpoint load path")
 
     args = parser.parse_args()
+
+    if args.dump_pred_path is not None and not args.eval_only:
+        print("Dump prediction is only compatible with `--eval_only`")
 
     if args.save_path is not None:
         save_path = args.save_path
@@ -192,9 +197,12 @@ if __name__ == '__main__':
         x_area_all = []
         label_delay_all = []
         label_area_all = []
+        names = []
 
         with torch.no_grad():
             for i, data in tqdm(enumerate(valid_dataloader)):
+                if args.dump_pred_path is not None:
+                    names += data['name']
                 inputs, sequence, sequence_len, label = parse_batch(data, device)
                 outputs = model(inputs, sequence, sequence_len)
 
@@ -233,6 +241,14 @@ if __name__ == '__main__':
         print(f"    mape_delay {mape_delay}, mape_area {mape_area}")
 
         if args.eval_only:
+            if args.dump_pred_path is not None:
+                preds = {
+                    'name': names,
+                    'true': {'delay': label_delay_all, 'area': label_area_all},
+                    'pred': {'delay': x_delay_all, 'area': x_area_all}
+                }
+                with open(args.dump_pred_path, 'wb') as f:
+                    pickle.dump(preds, f)
             break
 
         if mape_delay < best_metric and save_path is not None:

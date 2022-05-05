@@ -53,16 +53,17 @@ class GraphDataset(torch.utils.data.Dataset):
     def __getitem__(self, idx):
         name, label, sequence = self.data[idx]
         graph = self.graph_dict[name]
-        return {'graph': graph, 'sequence': sequence, 'label': label}
+        return {'graph': graph, 'sequence': sequence, 'label': label, 'name': name}
 
 
 def graph_dataset_collate_fn(data_list):
     graphs = [data['graph'] for data in data_list]
     labels = [data['label'] for data in data_list]
     sequences = [data['sequence'] for data in data_list]
+    names = [data['name'] for data in data_list]
     graph_collate =  Batch.from_data_list(graphs, [])
 
-    return {'graph': graph_collate, 'label': labels, 'sequence': sequences}
+    return {'graph': graph_collate, 'label': labels, 'sequence': sequences, 'name': names}
     
 
 class DataLoader(torch.utils.data.DataLoader):
